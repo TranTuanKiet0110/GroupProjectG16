@@ -7,7 +7,7 @@ import AdminDashboard from './pages/AdminDashboard';
 
 import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
 import AdminCategories from './pages/AdminCategories';
-import AdminSellerManagement from './pages/AdminSellerManagement';
+import AdminSellerManagement, {loadSellers} from './pages/AdminSellerManagement';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +23,7 @@ const router = createBrowserRouter([
   {
     path: "/sellerManagement",
     element: <AdminSellerManagement />,
+    loader: loadSellers,
     // errorElement: <NotFound />,
   },
 
