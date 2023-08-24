@@ -11,8 +11,29 @@ import customer from '../img/customer.png';
 import pendingSeller from '../img/pending_seller.png';
 import approvedSeller from '../img/approved_seller.png';
 import categories from '../img/categories.png';
+import { useLoaderData } from 'react-router';
+import { getSellersForDashboard } from '../api/sellers';
+
+export async function loadSellersForDashboard() {
+    const sellers = await getSellersForDashboard();
+    return sellers;
+}
 
 export default function AdminDashboard() {
+    const sellers = useLoaderData();
+    const data = sellers && sellers.map((seller) =>
+        <tr>
+            <td>{seller.id}</td>
+            <td>{seller.name}</td>
+            <td>{seller.email}</td>
+            <td>{seller.phone}</td>
+            <td>
+                <span className={`status ${seller.status}`}></span>
+                {seller.status}
+            </td>
+        </tr>
+    );
+
     return (
         <>
             <Sidebar />
@@ -85,6 +106,7 @@ export default function AdminDashboard() {
                                         <table>
                                             <thead>
                                                 <tr>
+                                                    <td>ID</td>
                                                     <td>Name</td>
                                                     <td>Email</td>
                                                     <td>Phone number</td>
@@ -92,33 +114,7 @@ export default function AdminDashboard() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>Kiet</td>
-                                                    <td>s3879300@rmit.edu.vn</td>
-                                                    <td>0913638494</td>
-                                                    <td>
-                                                        <span className="status green"></span>
-                                                        Approved
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Khanh</td>
-                                                    <td>s3804620@rmit.edu.vn</td>
-                                                    <td>0123456789</td>
-                                                    <td>
-                                                        <span className="status green"></span>
-                                                        Approved
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Minh</td>
-                                                    <td>s3879953@rmit.edu.vn</td>
-                                                    <td>0123456789</td>
-                                                    <td>
-                                                        <span className="status red"></span>
-                                                        Pending
-                                                    </td>
-                                                </tr>
+                                                {data}
                                             </tbody>
                                         </table>
                                     </div>
