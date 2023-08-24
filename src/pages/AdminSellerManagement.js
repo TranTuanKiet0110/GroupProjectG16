@@ -4,8 +4,28 @@ import "../css/admin.css";
 import Sidebar from '../components/Sidebar';
 import menu from '../img/menu.png';
 import admin from '../img/admin.png';
+import { useLoaderData } from 'react-router';
+import { async } from 'q';
+
+export async function loadSellers() {
+    const sellers = await getSellers();
+    return sellers
+}
 
 export default function AdminSellerManagement() {
+    const sellers = loadSellers();
+    const data = sellers.map((seller) =>
+        <tr>
+            <td>{seller.name}</td>
+            <td>{seller.email}</td>
+            <td>{seller.phone}</td>
+            <td>{seller.businessName}</td>
+            <td>
+                <span className="status green"></span>
+                {seller.status}
+            </td>
+        </tr>
+    );
     return (
         <>
             <Sidebar />
@@ -46,7 +66,7 @@ export default function AdminSellerManagement() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
+                                                {/* <tr>
                                                     <td>Kiet</td>
                                                     <td>s3879300@rmit.edu.vn</td>
                                                     <td>0913638494</td>
@@ -75,7 +95,8 @@ export default function AdminSellerManagement() {
                                                         <span className="status red"></span>
                                                         Pending
                                                     </td>
-                                                </tr>
+                                                </tr> */}
+                                                {data}
                                             </tbody>
                                         </table>
                                     </div>
