@@ -10,6 +10,15 @@ const sellers = [
       const result = sellers.map((seller) => {
         return {id: seller.id, name: seller.name, email: seller.email, phone: seller.phone, businessName: seller.businessName, status: seller.status}
       });
-      setTimeout(() => resolve(result), 0);
+      setTimeout(() => resolve(result), 1000);
+    });
+  }
+
+  export async function getSellersForDashboard() {
+    return new Promise((resolve) =>  {
+        const result = sellers.map((seller) => {
+            return {id: seller.id, name: seller.name, email: seller.email, phone: seller.phone, status: seller.status}
+          });
+          setTimeout(() => resolve(result), 1000);
     });
   }
