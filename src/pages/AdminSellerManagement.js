@@ -5,27 +5,29 @@ import Sidebar from '../components/Sidebar';
 import menu from '../img/menu.png';
 import admin from '../img/admin.png';
 import { useLoaderData } from 'react-router';
-import { async } from 'q';
+import { getSellers } from '../api/sellers';
 
 export async function loadSellers() {
     const sellers = await getSellers();
-    return sellers
+    return sellers;
 }
 
 export default function AdminSellerManagement() {
-    const sellers = loadSellers();
-    const data = sellers.map((seller) =>
+    const sellers = useLoaderData();
+    const data = sellers && sellers.map((seller) =>
         <tr>
+            <td>{seller.id}</td>
             <td>{seller.name}</td>
             <td>{seller.email}</td>
             <td>{seller.phone}</td>
             <td>{seller.businessName}</td>
             <td>
-                <span className="status green"></span>
+                <span className={`status ${seller.status}`}></span>
                 {seller.status}
             </td>
         </tr>
     );
+    
     return (
         <>
             <Sidebar />
@@ -58,6 +60,7 @@ export default function AdminSellerManagement() {
                                         <table>
                                             <thead>
                                                 <tr>
+                                                    <td>ID</td>
                                                     <td>Name</td>
                                                     <td>Email</td>
                                                     <td>Phone number</td>
@@ -66,36 +69,6 @@ export default function AdminSellerManagement() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {/* <tr>
-                                                    <td>Kiet</td>
-                                                    <td>s3879300@rmit.edu.vn</td>
-                                                    <td>0913638494</td>
-                                                    <td>Kiet123</td>
-                                                    <td>
-                                                        <span className="status green"></span>
-                                                        Approved
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Khanh</td>
-                                                    <td>s3804620@rmit.edu.vn</td>
-                                                    <td>0123456789</td>
-                                                    <td>Khanh123</td>
-                                                    <td>
-                                                        <span className="status green"></span>
-                                                        Approved
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Minh</td>
-                                                    <td>s3879953@rmit.edu.vn</td>
-                                                    <td>0123456789</td>
-                                                    <td>Khanh123</td>
-                                                    <td>
-                                                        <span className="status red"></span>
-                                                        Pending
-                                                    </td>
-                                                </tr> */}
                                                 {data}
                                             </tbody>
                                         </table>

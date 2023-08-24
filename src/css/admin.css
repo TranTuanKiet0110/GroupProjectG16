@@ -223,11 +223,11 @@ tr td:last-child {
     align-items: center;
 }
 
-.status.green {
+.status.approved {
     background: green;
 }
 
-.status.red {
+.status.pending {
     background: red;
 }
 
