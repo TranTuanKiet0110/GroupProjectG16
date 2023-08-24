@@ -1,6 +1,6 @@
 import React from 'react'
 // import Header from '../components/Header'
-import "../register.css";
+import "../css/register.css";
 import Radio from "../components/Radio.js"
 
 export default function Register() {
