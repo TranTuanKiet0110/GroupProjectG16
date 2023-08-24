@@ -95,10 +95,11 @@
     vertical-align: middle;
 }
 
-header {
+.main-content header {
     display: flex;
     justify-content: space-between;
     padding: 16px;
+    background: #fff;
     box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.2);
     position: fixed;
     left: 345px;
@@ -106,22 +107,6 @@ header {
     width: calc(100% - 345px);
     top: 0;
     z-index: 100;
-}
-
-.search-wrapper {
-    border: 1px solid #ccc;
-    border-radius: 30px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    overflow-x: hidden;
-}
-
-.search-wrapper input {
-    height: 100%;
-    padding: 8px;
-    border: none;
-    outline: none;
 }
 
 .user-wrapper {
@@ -155,7 +140,7 @@ main {
     grid-gap: 32px;
 }
 
-.card {
+.cards .card {
     display: flex;
     justify-content: space-between;
     background: #fff;
@@ -163,12 +148,117 @@ main {
     border-radius: 15px;
 }
 
-.card span:first-child {
+.cards .card span:first-child {
     color: var(--text-grey);
     font-size: 32px;
 }
 
-.card img {
+.cards .card img {
     width: 50px;
     height: 50px;
+}
+
+.sellers-management {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 100% auto;
+}
+
+.sellers-management .card {
+    background: #fff;
+    border-radius: 15px;
+}
+
+.sellers-management .card .card-header {
+    display: flex;
+    padding: 16px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.sellers-management .card .card-body {
+    padding: 16px 0;
+}
+
+.card-header button {
+    background: var(--main-color);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 16px;
+    border: 1px solid var(--main-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead tr {
+    /* border-top: 1px solid #f0f0f0; */
+    border-bottom: 1px solid #f0f0f0;
+}
+
+thead td {
+    font-weight: 700;
+}
+
+td {
+    padding: 8px 16px;
+    font-size: 16px;
+    color: #222;
+}
+
+td .status {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 16px;
+}
+
+tr td:last-child {
+    display: flex;
+    align-items: center;
+}
+
+.status.green {
+    background: green;
+}
+
+.status.red {
+    background: red;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+@media (max-width: 584px) {
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar-menu li {
+        padding-left: 5px;
+    }
+
+    .sidebar-menu li a span {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 70px;
+    }
+
+    .main-content header {
+        width: calc(100% - 70px);
+        left: 70px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }

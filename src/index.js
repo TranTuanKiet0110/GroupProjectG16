@@ -1,13 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+// import './index.css';
 // import App from './App';
-import Register from './pages/Register';
+// import Register from './pages/Register';
+import AdminDashboard from './pages/AdminDashboard';
+
+import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
+import AdminCategories from './pages/AdminCategories';
+import AdminSellerManagement from './pages/AdminSellerManagement';
+
+const router = createBrowserRouter([
+  {
+    path: "/dashboard",
+    element: <AdminDashboard />,
+    // errorElement: <NotFound />,
+  },
+  {
+    path: "/categories",
+    element: <AdminCategories />,
+    // errorElement: <NotFound />,
+  },
+  {
+    path: "/sellerManagement",
+    element: <AdminSellerManagement />,
+    // errorElement: <NotFound />,
+  },
+
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Register />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 

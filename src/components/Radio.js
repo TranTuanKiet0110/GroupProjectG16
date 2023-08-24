@@ -10,6 +10,7 @@ function Radio() {
 
     return (
         <>
+        
             <div className="user-type">
                 <input type="radio" name="type" id="dot-1" value="seller" checked={selected === "seller"} onChange={radioHandler} />
                 <input type="radio" name="type" id="dot-2" value="customer" checked={selected === "customer"} onChange={radioHandler} />
