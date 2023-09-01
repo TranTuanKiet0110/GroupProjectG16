@@ -2,38 +2,41 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 // import './index.css';
 // import App from './App';
-// import Register from './pages/Register';
-import AdminDashboard, {loadSellersForDashboard} from './pages/AdminDashboard';
+import Register from './pages/Register';
+// import AdminDashboard, {loadSellersForDashboard} from './pages/AdminDashboard';
 
-import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
-import AdminCategories from './pages/AdminCategories';
-import AdminSellerManagement, {loadSellers} from './pages/AdminSellerManagement';
+// import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
+// import AdminCategory from './pages/AdminCategories';
+// import AdminSellerManagement, {loadSellers} from './pages/AdminSellerManagement';
+// import ProductList from '.pages/ProductList'
 
-const router = createBrowserRouter([
-  {
-    path: "/dashboard",
-    element: <AdminDashboard />,
-    loader: loadSellersForDashboard,
-    // errorElement: <NotFound />,
-  },
-  {
-    path: "/categories",
-    element: <AdminCategories />,
-    // errorElement: <NotFound />,
-  },
-  {
-    path: "/sellerManagement",
-    element: <AdminSellerManagement />,
-    loader: loadSellers,
-    // errorElement: <NotFound />,
-  },
+// const router = createBrowserRouter([
+//   {
+//     path: "/dashboard",
+//     element: <AdminDashboard />,
+//     loader: loadSellersForDashboard,
+//     // errorElement: <NotFound />,
+//   },
+//   {
+//     path: "/category",
+//     element: <AdminCategory />,
+//     // errorElement: <NotFound />,
+//   },
+//   {
+//     path: "/sellerManagement",
+//     element: <AdminSellerManagement />,
+//     loader: loadSellers,
+//     // errorElement: <NotFound />,
+//   },
 
-]);
+// ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    {/* <RouterProvider router={router} /> */}
+    {/* <ProductList/> */}
+    <Register/>
   </React.StrictMode>
 );
 
