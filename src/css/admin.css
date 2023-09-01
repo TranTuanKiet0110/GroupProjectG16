@@ -228,6 +228,10 @@ tr td:last-child {
 }
 
 .status.pending {
+    background: yellow;
+}
+
+.status.rejected {
     background: red;
 }
 

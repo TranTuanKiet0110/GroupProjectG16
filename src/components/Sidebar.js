@@ -21,7 +21,7 @@ export default function Sidebar() {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/categories" className={({ isActive }) => isActive ? 'active' : ''}>
+                        <NavLink to="/category" className={({ isActive }) => isActive ? 'active' : ''}>
                             <img src={product} alt="Product" />
                             <span>Product Category</span>
                         </NavLink>
