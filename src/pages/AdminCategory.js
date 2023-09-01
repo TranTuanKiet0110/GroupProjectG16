@@ -12,7 +12,7 @@ import pendingSeller from '../img/pending_seller.png';
 import approvedSeller from '../img/approved_seller.png';
 import categories from '../img/categories.png';
 
-export default function AdminCategories() {
+export default function AdminCategory() {
     return (
         <>
             <Sidebar />

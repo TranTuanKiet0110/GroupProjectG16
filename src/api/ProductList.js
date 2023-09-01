@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ProductForm from './ProductForm';
+import ProductForm from '../components/ProductForm';
 
 const ProductList = () => {
   const [products, setProducts] = useState([
@@ -57,6 +57,7 @@ const ProductList = () => {
     
     return Date.now();
   };
+  
   const handleSave = (productId, editedProduct) => {
     if (productId) {
       handleEdit(productId, editedProduct);
