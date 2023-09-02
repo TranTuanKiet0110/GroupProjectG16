@@ -66,7 +66,7 @@ export default function AdminSellerManagement() {
                 <header>
                     <div className="box">
                         <img src={menu} alt="Menu" />
-                        <span>Dashboard</span>
+                        <span>Sellers Management</span>
                     </div>
 
                     <div className="user-wrapper">
