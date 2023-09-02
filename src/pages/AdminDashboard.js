@@ -13,6 +13,7 @@ import approvedSeller from '../img/approved_seller.png';
 import categories from '../img/categories.png';
 import { useLoaderData } from 'react-router';
 import { getSellersForDashboard } from '../api/sellers';
+import { Link } from 'react-router-dom';
 
 export async function loadSellersForDashboard() {
     const sellers = await getSellersForDashboard();
@@ -33,6 +34,9 @@ export default function AdminDashboard() {
             </td>
         </tr>
     );
+
+    const numOfPendingSellers = sellers && sellers.filter((seller) => seller.status === 'pending');
+    const numOfApprovedSellers = sellers && sellers.filter((seller) => seller.status === 'approved');
 
     return (
         <>
@@ -66,7 +70,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="card">
                             <div>
-                                <h1>10</h1>
+                                <h1>{numOfPendingSellers.length}</h1>
                                 <span>Pending sellers</span>
                             </div>
                             <div>
@@ -75,7 +79,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="card">
                             <div>
-                                <h1>10</h1>
+                                <h1>{numOfApprovedSellers.length}</h1>
                                 <span>Approved sellers</span>
                             </div>
                             <div>
@@ -98,7 +102,7 @@ export default function AdminDashboard() {
                             <div className="card">
                                 <div className="card-header">
                                     <h2>Sellers Management</h2>
-                                    <button>See more</button>
+                                    <button><Link to={`/sellerManagement`}>See more</Link></button>
                                 </div>
 
                                 <div className="card-body">
