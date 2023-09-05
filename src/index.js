@@ -6,8 +6,9 @@ import ReactDOM from 'react-dom/client';
 import AdminDashboard, {loadSellersForDashboard} from './pages/AdminDashboard';
 
 import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
-import AdminCategories from './pages/AdminCategories';
+import AdminCategory from './pages/AdminCategory';
 import AdminSellerManagement, {loadSellers} from './pages/AdminSellerManagement';
+// import ProductList from '.pages/ProductList';
 
 const router = createBrowserRouter([
   {
@@ -17,8 +18,8 @@ const router = createBrowserRouter([
     // errorElement: <NotFound />,
   },
   {
-    path: "/categories",
-    element: <AdminCategories />,
+    path: "/category",
+    element: <AdminCategory />,
     // errorElement: <NotFound />,
   },
   {
@@ -34,6 +35,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    {/* <ProductList/> */}
+    {/* <Register/> */}
   </React.StrictMode>
 );
 

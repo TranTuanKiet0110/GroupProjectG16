@@ -21,7 +21,7 @@ export default function Sidebar() {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/categories" className={({ isActive }) => isActive ? 'active' : ''}>
+                        <NavLink to="/category" className={({ isActive }) => isActive ? 'active' : ''}>
                             <img src={product} alt="Product" />
                             <span>Product Category</span>
                         </NavLink>
@@ -29,7 +29,7 @@ export default function Sidebar() {
                     <li>
                         <NavLink to="/sellerManagement" className={({ isActive }) => isActive ? 'active' : ''}>
                             <img src={seller} alt="Seller" />
-                            <span>Seller Management</span>
+                            <span>Sellers Management</span>
                         </NavLink>
                     </li>
                 </ul>

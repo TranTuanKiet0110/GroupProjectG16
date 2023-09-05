@@ -6,6 +6,7 @@ import menu from '../img/menu.png';
 import admin from '../img/admin.png';
 import { useLoaderData } from 'react-router';
 import { getSellers } from '../api/sellers';
+import { useState } from 'react';
 
 export async function loadSellers() {
     const sellers = await getSellers();
@@ -13,8 +14,14 @@ export async function loadSellers() {
 }
 
 export default function AdminSellerManagement() {
+    const options = ['approved', 'pending', 'rejected'];
     const sellers = useLoaderData();
-    const data = sellers && sellers.map((seller) =>
+    const data = sellers && sellers.map((seller) => { return seller }
+    );
+
+    const [sellerList, setSellerList] = useState(data)
+
+    const sellerListTable = sellerList.map((seller) =>
         <tr>
             <td>{seller.id}</td>
             <td>{seller.name}</td>
@@ -25,9 +32,33 @@ export default function AdminSellerManagement() {
                 <span className={`status ${seller.status}`}></span>
                 {seller.status}
             </td>
+            <td>
+                <select onChange={(e) => handleStatusChange(seller.id, e.target.value)}>
+
+                    <option>{seller.status}</option>
+                    {options.map((option, index) => {
+                        if (option !== seller.status) {
+                            return <option key={index} >
+                            {option}
+                        </option>
+                        }
+                        return null;
+                    })}
+                </select>
+            </td>
         </tr>
     );
-    
+
+    function handleStatusChange(sellerID, newStatus) {
+        const newData = sellerList.map((seller) => {
+            if (seller.id === sellerID) {
+                return { ...seller, status: newStatus };
+            }
+            return seller;
+        });
+        setSellerList(newData)
+    };
+
     return (
         <>
             <Sidebar />
@@ -35,7 +66,7 @@ export default function AdminSellerManagement() {
                 <header>
                     <div className="box">
                         <img src={menu} alt="Menu" />
-                        <span>Dashboard</span>
+                        <span>Sellers Management</span>
                     </div>
 
                     <div className="user-wrapper">
@@ -69,7 +100,7 @@ export default function AdminSellerManagement() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {data}
+                                                {sellerListTable}
                                             </tbody>
                                         </table>
                                     </div>
