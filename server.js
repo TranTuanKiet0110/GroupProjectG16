@@ -1,21 +1,16 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const { MongoClient } = require("mongodb");
-const url = 'mongodb://127.0.0.1:27017/';
-const client = new MongoClient(url);
+const mongoose = require('mongoose');
 
-async function connect() {
-    try {
-        await client.connect();
-        console.log("Connect to MongoDB");
-        await client.close();
-    } catch (err) {
-        console.log("Error connecting to MongoDB:", err);
-    }
-}
+mongoose.connect('mongodb://localhost/admin');
+const db = mongoose.connection;
+db.on('error', (error) => console.error(error));
+db.once('open', () => console.log('Connected to Database'));
 
 app.use(express.json());
+const adminRouter = require('./routes/admin');
+app.use('/admin', adminRouter);
 
 app.listen(port, () => {
     console.log(`Server start on port ${port}`);
