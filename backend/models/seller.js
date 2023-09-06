@@ -11,18 +11,18 @@ const sellerSchema = new mongoose.Schema({
         required: true
     },
 
-    password: {
-        type: String,
-        required: true
-    },
+    // password: {
+    //     type: String,
+    //     required: true
+    // },
 
-    businessName: {
-        type: String,
-    },
+    // businessName: {
+    //     type: String,
+    // },
 
-    phone: {
-        type: Number,
-    }
+    // phone: {
+    //     type: Number,
+    // }
 
     // products: [
     //     {
