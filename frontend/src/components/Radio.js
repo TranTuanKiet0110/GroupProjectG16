@@ -1,12 +1,16 @@
 import React from "react";
 import { useState } from "react";
 
-function Radio() {
+function Radio(setBusinessName) {
     const [selected, setSelected] = useState("");
 
     const radioHandler = e => {
         setSelected(e.target.value);
     };
+
+    function handleBusinessName(newName) {
+        setBusinessName.setBusinessName(newName);
+    }
 
     return (
         <>
@@ -16,11 +20,11 @@ function Radio() {
                 <input type="radio" name="type" id="dot-2" value="customer" checked={selected === "customer"} onChange={radioHandler} />
                 <span className="user-type-title">User Type</span>
                 <div className="category">
-                    <label for="dot-1">
+                    <label htmlFor="dot-1">
                         <span className="dot one"></span>
                         <span className="type">Seller</span>
                     </label>
-                    <label for="dot-2">
+                    <label htmlFor="dot-2">
                         <span className="dot two"></span>
                         <span className="type">Customer</span>
                     </label>
@@ -30,7 +34,7 @@ function Radio() {
                 <div aria-hidden={selected !== "seller" ? true : false}>
                     <div className="input-field">
                         <span className="details">Business Name</span>
-                        <input type="text" placeholder="Enter your business name" required />
+                        <input type="text" placeholder="Enter your business name" required onChange={(e) => {handleBusinessName(e.target.value)}} />
                     </div>
                 </div>
                 <div aria-hidden={selected !== "customer" ? true : false}>

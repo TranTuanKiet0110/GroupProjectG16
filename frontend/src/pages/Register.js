@@ -2,7 +2,7 @@ import React from 'react'
 // import Header from '../components/Header'
 import "../css/register.css";
 import { useState } from 'react';
-// import Radio from "../components/Radio.js";
+import Radio from "../components/Radio.js";
 
 export default function Register() {
 
@@ -10,22 +10,28 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [businessName, setBusinessName] = useState("");
 
+
+  const HandleBusinessName = (newName) => {
+    setBusinessName(newName);
+  }
   const HandleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/api/user/register",{
-      method:"POST",
+    fetch("http://localhost:8080/api/seller/register", {
+      method: "POST",
       crossDomain: true,
-      headers:{
-        "Content-Type":"application/json",
-        Accept:"application/json",
-        "Access-Control-Allow-Origin":"*",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
         name: name,
         email: email,
         phone: phone,
         password: password,
+        businessName: businessName,
       }),
     })
       .then((res) => res.json())
@@ -56,25 +62,10 @@ export default function Register() {
             </div>
             <div className="input-field">
               <span className="details">Password</span>
-              <input type="text" placeholder="Enter your password" required onChange={(e) => setPassword(e.target.value)}/>
+              <input type="text" placeholder="Enter your password" required onChange={(e) => setPassword(e.target.value)} />
             </div>
           </div>
-          {/* <div className="user-type">
-            <input type="radio" name="type" id="dot-1" value="seller"/>
-            <input type="radio" name="type" id="dot-2" value="customer"/>
-            <span className="user-type-title">User Type</span>
-            <div className="category">
-              <label for="dot-1">
-                <span className="dot one"></span>
-                <span className="type">Seller</span>
-              </label>
-              <label for="dot-2">
-                <span className="dot two"></span>
-                <span className="type">Customer</span>
-              </label>
-            </div>
-          </div> */}
-          {/* <Radio/> */}
+          <Radio setBusinessName = {HandleBusinessName}/>
           <div className="button">
             <input type="submit" value="Register" onClick={(e) => HandleSubmit(e)} />
           </div>

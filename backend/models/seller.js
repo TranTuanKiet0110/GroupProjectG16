@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const sellerSchema = new mongoose.Schema({
     name: String,
     email: String,
-    phone: Number,
-    password: String
+    phone: String,
+    password: String,
+    businessName: String
 
     // businessName: {
     //     type: String,
