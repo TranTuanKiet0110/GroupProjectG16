@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const { MongoClient } = require("mongodb");
-const url = 'mongodb://localhost/';
+const url = 'mongodb://127.0.0.1:27017/';
 const client = new MongoClient(url);
 
 async function connect() {
