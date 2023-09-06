@@ -1,7 +1,7 @@
 import React from 'react'
 // import Header from '../components/Header'
 import "../css/register.css";
-import Radio from "../components/Radio.js"
+// import Radio from "../components/Radio.js";
 
 export default function Register() {
   return (
@@ -11,6 +11,10 @@ export default function Register() {
         <div className="title">Registration</div>
         <form action="#">
           <div className="user-details">
+          <div className="input-field">
+              <span className="details">Name</span>
+              <input type="text" placeholder="Enter your name" required />
+            </div>
             <div className="input-field">
               <span className="details">Email</span>
               <input type="text" placeholder="Enter your email" required />
@@ -22,10 +26,6 @@ export default function Register() {
             <div className="input-field">
               <span className="details">Password</span>
               <input type="text" placeholder="Enter your password" required />
-            </div>
-            <div className="input-field">
-              <span className="details">Confirm Password</span>
-              <input type="text" placeholder="Re-enter your password" required />
             </div>
           </div>
           {/* <div className="user-type">
@@ -43,7 +43,7 @@ export default function Register() {
               </label>
             </div>
           </div> */}
-          <Radio/>
+          {/* <Radio/> */}
           <div className="button">
             <input type="submit" value="Register" />
           </div>
