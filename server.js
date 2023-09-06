@@ -16,6 +16,8 @@ async function connect() {
 }
 
 app.use(express.json());
+const adminRouter = require('./routes/admin');
+app.use('/admin', adminRouter);
 
 app.listen(port, () => {
     console.log(`Server start on port ${port}`);
