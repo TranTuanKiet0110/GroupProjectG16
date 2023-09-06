@@ -1,18 +1,22 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = 8080;
 const mongoose = require('mongoose');
+const cors = require("cors");
 
-mongoose.connect('mongodb://127.0.0.1');
-const db = mongoose.connection;
-db.on('error', (error) => console.error(error));
-db.once('open', () => console.log('Connected to Database'));
+// const adminRouter = require('./routes/admin');
+const registerRouter = require('./routes/register');
 
+app.use(cors());
 app.use(express.json());
-const adminRouter = require('../backend/routes/admin');
-app.use('/admin', adminRouter);
+// app.use('/admin', adminRouter);
+app.use('/api/user', registerRouter);
 
 app.listen(port, () => {
     console.log(`Server start on port ${port}`);
 });
 
+mongoose.connect('mongodb://127.0.0.1:27017');
+const db = mongoose.connection;
+db.on('error', (error) => console.error(error));
+db.once('open', () => console.log('Connected to Database'));

@@ -2,10 +2,22 @@ GET http://localhost:3000/admin/dashboard
 
 ###
 
-POST http://localhost:3000/admin
+POST http://localhost:8080/admin
 Content-Type: application/json
 
 {
     "name": "Kiet",
     "email": "kiet123@gmail.com"
+}
+
+###
+
+POST http://localhost:8080/register
+Content-Type: application/json
+
+{
+    "name": "Kiet",
+    "email": "kiet123@gmail.com",
+    "phone": "0123456",
+    "password": "kiet123"
 }
