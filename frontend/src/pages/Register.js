@@ -19,7 +19,7 @@ export default function Register() {
     setAddress("");
   };
 
-  const HandleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     fetch("http://localhost:8080/api/user/register", {
       method: "POST",
@@ -100,7 +100,7 @@ export default function Register() {
           </div>
           {/* <Radio setBusinessName = {HandleBusinessName} setAddress = {HandleAddress}/> */}
           <div className="button">
-            <input type="submit" value="Register" onClick={(e) => HandleSubmit(e)} />
+            <input type="submit" value="Register" onClick={(e) => handleSubmit(e)} />
           </div>
         </form>
       </div>

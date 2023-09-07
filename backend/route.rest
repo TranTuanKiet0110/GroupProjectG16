@@ -12,12 +12,12 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8080/register
+POST http://localhost:8080/api/user/register
 Content-Type: application/json
 
 {
-    "name": "Kiet",
-    "email": "kiet123@gmail.com",
-    "phone": "0123456",
-    "password": "kiet123"
+    "name": "Boss",
+    "email": "admin",
+    "phone": "admin",
+    "password": "iamadmin"
 }
