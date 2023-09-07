@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #fa8100, #fc1eb7);
+}
+
+.container {
+    max-width: 700px;
+    width: 100%;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 5px;
+}
+
+.container .title {
+    font-size: 30px;
+    font-weight: 600;
+    position: relative;
+}
+
+.container .title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background: linear-gradient(135deg, #fa8100, #fc1eb7);
+}
+
+.container form .user-details {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+form .user-details .input-field {
+    margin: 10px 0 10px 0;
+    width: 100%;
+}
+
+.user-details .input-field input {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-right-width: 2px;
+    border-bottom-width: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+.user-details .input-field .details {
+    display: block;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.user-details .input-field input:focus,
+.user-details .input-field input:valid {
+    border-color: #fc1eb7;
+}
+
+form .user-type {
+    margin-top: 10px;
+}
+
+form .user-type .user-type-title {
+    font-size: 20px;
+    font-weight: 450;
+}
+
+form .user-type .category {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin: 14px 0;
+}
+
+form .button input {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #fa8100, #fc1eb7);
+}
+
+form .button input:hover {
+    background: linear-gradient(-135deg, #fa8100, #fc1eb7);
+}
+
+@media (max-width: 584px) {
+    .container {
+        max-width: 100%;
+    }
+
+    form .user-details .input-field {
+        margin: 10px 0 10px 0;
+        width: 100%;
+    }
+
+    form .user-type .category {
+        width: 100%
+    }
+
+    .container form .user-details {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+
+    .user-details::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+[aria-hidden="true"] {
+    display: none;
+}
