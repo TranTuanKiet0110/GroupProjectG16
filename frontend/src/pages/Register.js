@@ -48,7 +48,7 @@ export default function Register() {
   return (
     <>
       {/* <Header /> */}
-      <div className="container">
+      <div className="register-container">
         <div className="title">Registration</div>
         <form>
           <div className="user-details">

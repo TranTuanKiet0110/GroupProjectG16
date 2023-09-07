@@ -14,7 +14,7 @@ body {
     background: linear-gradient(135deg, #fa8100, #fc1eb7);
 }
 
-.container {
+.register-container {
     max-width: 700px;
     width: 100%;
     background: #fff;
@@ -22,13 +22,13 @@ body {
     border-radius: 5px;
 }
 
-.container .title {
+.register-container .title {
     font-size: 30px;
     font-weight: 600;
     position: relative;
 }
 
-.container .title::before {
+.register-container .title::before {
     content: "";
     position: absolute;
     left: 0;
@@ -38,18 +38,18 @@ body {
     background: linear-gradient(135deg, #fa8100, #fc1eb7);
 }
 
-.container form .user-details {
+.register-container form .user-details {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-form .user-details .input-field {
+.register-container form .user-details .input-field {
     margin: 10px 0 10px 0;
     width: calc(100% / 2 - 20px);
 }
 
-.user-details .input-field input {
+.register-container .user-details .input-field input {
     height: 45px;
     width: 100%;
     outline: none;
@@ -62,35 +62,35 @@ form .user-details .input-field {
     transition: all 0.3s ease-in-out;
 }
 
-.user-details .input-field .details {
+.register-container .user-details .input-field .details {
     display: block;
     font-weight: 400;
     margin-bottom: 5px;
 }
 
-.user-details .input-field input:focus,
-.user-details .input-field input:valid {
+.register-container .user-details .input-field input:focus,
+.register-container .user-details .input-field input:valid {
     border-color: #fc1eb7;
 }
 
-form .user-type .user-type-title {
+.register-container form .user-type .user-type-title {
     font-size: 20px;
     font-weight: 450;
 }
 
-form .user-type .category {
+.register-container form .user-type .category {
     display: flex;
     width: 80%;
     justify-content: space-between;
     margin: 14px 0;
 }
 
-.user-type .category label {
+.register-container .user-type .category label {
     display: flex;
     align-items: center;
 }
 
-.user-type .category .dot {
+.register-container .user-type .category .dot {
     height: 20px;
     width: 20px;
     background: #d9d9d9;
@@ -100,17 +100,17 @@ form .user-type .category {
     transition: all 0.3s ease;
 }
 
-#dot-1:checked ~ .category label .one, 
-#dot-2:checked ~ .category label .two {
+.register-container #dot-1:checked ~ .category label .one, 
+.register-container #dot-2:checked ~ .category label .two {
     border-color: #d9d9d9;
     background: #fa8100
 }
 
-form input[type="radio"] {
+.register-container form input[type="radio"] {
     display: none;
 }
 
-form .button input {
+.register-container form .button input {
     height: 45px;
     width: 100%;
     outline: none;
@@ -123,7 +123,7 @@ form .button input {
     background: linear-gradient(135deg, #fa8100, #fc1eb7);
 }
 
-form .button input:hover {
+.register-container form .button input:hover {
     background: linear-gradient(-135deg, #fa8100, #fc1eb7);
 }
 
@@ -151,20 +151,20 @@ form .button input:hover {
     }
 }
 
-[aria-hidden="true"] {
+.register-container [aria-hidden="true"] {
     display: none;
 }
 
-.container form .form-extension {
+.register-container .container form .form-extension {
     display: flex;
 }
 
-form .form-extension .input-field {
+.register-container form .form-extension .input-field {
     margin: 10px 0 10px 0;
     width: 300px;
 }
 
-.form-extension .input-field input {
+.register-container .form-extension .input-field input {
     height: 45px;
     width: 100%;
     outline: none;
@@ -177,14 +177,14 @@ form .form-extension .input-field {
     transition: all 0.3s ease-in-out;
 }
 
-.form-extension .input-field .details {
+.register-container .form-extension .input-field .details {
     display: block;
     font-weight: 400;
     margin-bottom: 5px;
 }
 
-.form-extension .input-field input:focus,
-.form-extension .input-field input:valid {
+.register-container .form-extension .input-field input:focus,
+.register-container .form-extension .input-field input:valid {
     border-color: #fc1eb7;
 }
 

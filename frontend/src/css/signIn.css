@@ -14,7 +14,7 @@ body {
     background: linear-gradient(135deg, #fa8100, #fc1eb7);
 }
 
-.container {
+.sign-in-container {
     max-width: 700px;
     width: 100%;
     background: #fff;
@@ -22,13 +22,13 @@ body {
     border-radius: 5px;
 }
 
-.container .title {
+.sign-in-container .title {
     font-size: 30px;
     font-weight: 600;
     position: relative;
 }
 
-.container .title::before {
+.sign-in-container .title::before {
     content: "";
     position: absolute;
     left: 0;
@@ -38,17 +38,17 @@ body {
     background: linear-gradient(135deg, #fa8100, #fc1eb7);
 }
 
-.container form .user-details {
+.sign-in-container form .user-details {
     display: flex;
     flex-wrap: wrap;
 }
 
-form .user-details .input-field {
+.sign-in-container form .user-details .input-field {
     margin: 10px 0 10px 0;
     width: 100%;
 }
 
-.user-details .input-field input {
+.sign-in-container .user-details .input-field input {
     height: 45px;
     width: 100%;
     outline: none;
@@ -61,34 +61,34 @@ form .user-details .input-field {
     transition: all 0.3s ease-in-out;
 }
 
-.user-details .input-field .details {
+.sign-in-container .user-details .input-field .details {
     display: block;
     font-weight: 400;
     margin-bottom: 5px;
 }
 
-.user-details .input-field input:focus,
-.user-details .input-field input:valid {
+.sign-in-container .user-details .input-field input:focus,
+.sign-in-container .user-details .input-field input:valid {
     border-color: #fc1eb7;
 }
 
-form .user-type {
+.sign-in-container form .user-type {
     margin-top: 10px;
 }
 
-form .user-type .user-type-title {
+.sign-in-container form .user-type .user-type-title {
     font-size: 20px;
     font-weight: 450;
 }
 
-form .user-type .category {
+.sign-in-container form .user-type .category {
     display: flex;
     width: 80%;
     justify-content: space-between;
     margin: 14px 0;
 }
 
-form .button input {
+.sign-in-container form .button input {
     height: 45px;
     width: 100%;
     outline: none;
@@ -101,7 +101,7 @@ form .button input {
     background: linear-gradient(135deg, #fa8100, #fc1eb7);
 }
 
-form .button input:hover {
+.sign-in-container form .button input:hover {
     background: linear-gradient(-135deg, #fa8100, #fc1eb7);
 }
 
@@ -129,6 +129,6 @@ form .button input:hover {
     }
 }
 
-[aria-hidden="true"] {
+.sign-in-container [aria-hidden="true"] {
     display: none;
 }

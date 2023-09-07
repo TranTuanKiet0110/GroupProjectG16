@@ -19,7 +19,7 @@ export default function SignIn() {
     return (
         <>
             {/* <Header /> */}
-            <div className="container">
+            <div className="sign-in-container">
                 <div className="title">Sign In</div>
                 <form>
                     <div className="user-type">
@@ -34,15 +34,15 @@ export default function SignIn() {
                     <div className="user-details">
                         <div className="input-field" aria-hidden={selected !== "email" ? true : false}>
                             <span className="details">Email</span>
-                            <input type="text" placeholder="Your email" required />
+                            <input type="text" placeholder="Your email" required onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div className="input-field" aria-hidden={selected !== "phone" ? true : false}>
                             <span className="details">Phone</span>
-                            <input type="text" placeholder="Your phone number" required />
+                            <input type="text" placeholder="Your phone number" required onChange={(e) => setPhone(e.target.value)}/>
                         </div>
                         <div className="input-field">
                             <span className="details">Password</span>
-                            <input type="text" placeholder="Your password" required />
+                            <input type="text" placeholder="Your password" required onChange={(e) => setPassword(e.target.value)}/>
                         </div>
                     </div>
 
