@@ -13,7 +13,7 @@ export default function Register() {
   const [address, setAddress] = useState("");
   const [selected, setSelected] = useState("seller");
 
-  const radioHandler = e => {
+  const radioHandler = (e) => {
     setSelected(e.target.value);
     setBusinessName("");
     setAddress("");
@@ -48,61 +48,63 @@ export default function Register() {
   return (
     <>
       {/* <Header /> */}
-      <div className="register-container">
-        <div className="title">Registration</div>
-        <form>
-          <div className="user-details">
-            <div className="input-field">
-              <span className="details">Name</span>
-              <input type="text" placeholder="Enter your name" required onChange={(e) => setName(e.target.value)} />
-            </div>
-            <div className="input-field">
-              <span className="details">Email</span>
-              <input type="text" placeholder="Enter your email" required onChange={(e) => setEmail(e.target.value)} />
-            </div>
-            <div className="input-field">
-              <span className="details">Phone Number</span>
-              <input type="text" placeholder="Enter your number" required onChange={(e) => setPhone(e.target.value)} />
-            </div>
-            <div className="input-field">
-              <span className="details">Password</span>
-              <input type="text" placeholder="Enter your password" required onChange={(e) => setPassword(e.target.value)} />
-            </div>
-          </div>
-          <div className="user-type">
-            <input type="radio" name="type" id="dot-1" value="seller" checked={selected === "seller"} onChange={radioHandler} />
-            <input type="radio" name="type" id="dot-2" value="customer" checked={selected === "customer"} onChange={radioHandler} />
-            <span className="user-type-title">User Type</span>
-            <div className="category">
-              <label htmlFor="dot-1">
-                <span className="dot one"></span>
-                <span className="type">Seller</span>
-              </label>
-              <label htmlFor="dot-2">
-                <span className="dot two"></span>
-                <span className="type">Customer</span>
-              </label>
-            </div>
-          </div>
-          <div className="form-extension">
-            <div aria-hidden={selected !== "seller" ? true : false}>
+      <div className="register-main">
+        <div className="register-container">
+          <div className="title">Registration</div>
+          <form>
+            <div className="user-details">
               <div className="input-field">
-                <span className="details">Business Name</span>
-                <input type="text" placeholder="Enter your business name" required onChange={(e) => setBusinessName(e.target.value)} />
+                <span className="details">Name</span>
+                <input type="text" placeholder="Enter your name" required onChange={(e) => setName(e.target.value)} />
+              </div>
+              <div className="input-field">
+                <span className="details">Email</span>
+                <input type="text" placeholder="Enter your email" required onChange={(e) => setEmail(e.target.value)} />
+              </div>
+              <div className="input-field">
+                <span className="details">Phone Number</span>
+                <input type="text" placeholder="Enter your number" required onChange={(e) => setPhone(e.target.value)} />
+              </div>
+              <div className="input-field">
+                <span className="details">Password</span>
+                <input type="text" placeholder="Enter your password" required onChange={(e) => setPassword(e.target.value)} />
               </div>
             </div>
-            <div aria-hidden={selected !== "customer" ? true : false}>
-              <div className="input-field">
-                <span className="details">Address</span>
-                <input type="text" placeholder="Enter your address" required onChange={(e) => setAddress(e.target.value)} />
+            <div className="user-type">
+              <input type="radio" name="type" id="dot-1" value="seller" checked={selected === "seller"} onChange={radioHandler} />
+              <input type="radio" name="type" id="dot-2" value="customer" checked={selected === "customer"} onChange={radioHandler} />
+              <span className="user-type-title">User Type</span>
+              <div className="category">
+                <label htmlFor="dot-1">
+                  <span className="dot one"></span>
+                  <span className="type">Seller</span>
+                </label>
+                <label htmlFor="dot-2">
+                  <span className="dot two"></span>
+                  <span className="type">Customer</span>
+                </label>
               </div>
             </div>
-          </div>
-          {/* <Radio setBusinessName = {HandleBusinessName} setAddress = {HandleAddress}/> */}
-          <div className="button">
-            <input type="submit" value="Register" onClick={(e) => handleSubmit(e)} />
-          </div>
-        </form>
+            <div className="form-extension">
+              <div aria-hidden={selected !== "seller" ? true : false}>
+                <div className="input-field">
+                  <span className="details">Business Name</span>
+                  <input type="text" placeholder="Enter your business name" required onChange={(e) => setBusinessName(e.target.value)} />
+                </div>
+              </div>
+              <div aria-hidden={selected !== "customer" ? true : false}>
+                <div className="input-field">
+                  <span className="details">Address</span>
+                  <input type="text" placeholder="Enter your address" required onChange={(e) => setAddress(e.target.value)} />
+                </div>
+              </div>
+            </div>
+            {/* <Radio setBusinessName = {HandleBusinessName} setAddress = {HandleAddress}/> */}
+            <div className="button">
+              <input type="submit" value="Register" onClick={(e) => handleSubmit(e)} />
+            </div>
+          </form>
+        </div>
       </div>
     </>
   )

@@ -111,55 +111,57 @@ export default function AdminSellerManagement() {
 
     return (
         <>
-            <Sidebar />
-            <div className="main-content">
-                <header>
-                    <div className="box">
-                        <img src={menu} alt="Menu" />
-                        <span>Sellers Management</span>
-                    </div>
-
-                    <div className="user-wrapper">
-                        <img src={admin} width="30px" height="30px" alt="Admin" />
-                        <div>
-                            <h4>Welcome,</h4>
-                            <small>{userName} !</small>
+            <div className="admin-container">
+                <Sidebar />
+                <div className="main-content">
+                    <header>
+                        <div className="box">
+                            <img src={menu} alt="Menu" />
+                            <span>Sellers Management</span>
                         </div>
-                    </div>
-                </header>
 
-                <main>
-                    <div className="sellers-management">
-                        <div className="accounts">
-                            <div className="card">
-                                <div className="card-header">
-                                    <h2>Sellers Management</h2>
-                                </div>
+                        <div className="user-wrapper">
+                            <img src={admin} width="30px" height="30px" alt="Admin" />
+                            <div>
+                                <h4>Welcome,</h4>
+                                <small>{userName} !</small>
+                            </div>
+                        </div>
+                    </header>
 
-                                <div className="card-body">
-                                    <div className="table-responsive">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <td>ID</td>
-                                                    <td>Name</td>
-                                                    <td>Email</td>
-                                                    <td>Phone number</td>
-                                                    <td>Business name</td>
-                                                    <td>Status</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {/* {sellerListTable} */}
-                                                {data}
-                                            </tbody>
-                                        </table>
+                    <main>
+                        <div className="sellers-management">
+                            <div className="accounts">
+                                <div className="card">
+                                    <div className="card-header">
+                                        <h2>Sellers Management</h2>
+                                    </div>
+
+                                    <div className="card-body">
+                                        <div className="table-responsive">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <td>ID</td>
+                                                        <td>Name</td>
+                                                        <td>Email</td>
+                                                        <td>Phone number</td>
+                                                        <td>Business name</td>
+                                                        <td>Status</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {/* {sellerListTable} */}
+                                                    {data}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </main>
+                    </main>
+                </div>
             </div>
         </>
     )
