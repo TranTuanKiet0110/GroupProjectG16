@@ -35,7 +35,7 @@ export default function SignIn() {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                if(data.status === 201) {
+                if (data.status === 201) {
                     alert("login successful");
                     window.localStorage.setItem("token", data.data);
                     window.location.href = "./dashboard";
@@ -47,37 +47,39 @@ export default function SignIn() {
     return (
         <>
             {/* <Header /> */}
-            <div className="sign-in-container">
-                <div className="title">Sign In</div>
-                <form>
-                    <div className="user-type">
-                        <span className="user-type-title">Select way to sign in</span>
-                        <div className="category">
-                            <select className="dropdown" value={selected} onChange={dropdownHandler}>
-                                <option value="email" >Email</option>
-                                <option value="phone" >Phone</option>
-                            </select>
+            <div className="sign-in-main">
+                <div className="sign-in-container">
+                    <div className="title">Sign In</div>
+                    <form>
+                        <div className="user-type">
+                            <span className="user-type-title">Select way to sign in</span>
+                            <div className="category">
+                                <select className="dropdown" value={selected} onChange={dropdownHandler}>
+                                    <option value="email" >Email</option>
+                                    <option value="phone" >Phone</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div className="user-details">
-                        <div className="input-field" aria-hidden={selected !== "email" ? true : false}>
-                            <span className="details">Email</span>
-                            <input type="text" placeholder="Your email" required onChange={(e) => setEmail(e.target.value)} />
+                        <div className="user-details">
+                            <div className="input-field" aria-hidden={selected !== "email" ? true : false}>
+                                <span className="details">Email</span>
+                                <input type="text" placeholder="Your email" required onChange={(e) => setEmail(e.target.value)} />
+                            </div>
+                            <div className="input-field" aria-hidden={selected !== "phone" ? true : false}>
+                                <span className="details">Phone</span>
+                                <input type="text" placeholder="Your phone number" required onChange={(e) => setPhone(e.target.value)} />
+                            </div>
+                            <div className="input-field">
+                                <span className="details">Password</span>
+                                <input type="text" placeholder="Your password" required onChange={(e) => setPassword(e.target.value)} />
+                            </div>
                         </div>
-                        <div className="input-field" aria-hidden={selected !== "phone" ? true : false}>
-                            <span className="details">Phone</span>
-                            <input type="text" placeholder="Your phone number" required onChange={(e) => setPhone(e.target.value)} />
-                        </div>
-                        <div className="input-field">
-                            <span className="details">Password</span>
-                            <input type="text" placeholder="Your password" required onChange={(e) => setPassword(e.target.value)} />
-                        </div>
-                    </div>
 
-                    <div className="button">
-                        <input type="submit" value="Log In" onClick={(e) => handleSubmit(e)} />
-                    </div>
-                </form>
+                        <div className="button">
+                            <input type="submit" value="Log In" onClick={(e) => handleSubmit(e)} />
+                        </div>
+                    </form>
+                </div>
             </div>
         </>
     )
