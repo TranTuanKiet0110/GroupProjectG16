@@ -9,6 +9,11 @@ export default function SignIn() {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [selected, setSelected] = useState("email");
+    const [radioSelected, setRadioSelected] = useState("seller");
+
+    const radioHandler = (e) => {
+        setRadioSelected(e.target.value);
+    };
 
     const dropdownHandler = e => {
         setSelected(e.target.value);
@@ -28,8 +33,9 @@ export default function SignIn() {
             },
             body: JSON.stringify({
                 email: email,
-                // phone: phone,
+                phone: phone,
                 password: password,
+                radioSelected: radioSelected,
             }),
         })
             .then((res) => res.json())
@@ -74,7 +80,26 @@ export default function SignIn() {
                                 <input type="text" placeholder="Your password" required onChange={(e) => setPassword(e.target.value)} />
                             </div>
                         </div>
-
+                        <div className="user-type">
+                            <input type="radio" name="type" id="dot-1" value="seller" checked={radioSelected === "seller"} onChange={radioHandler} />
+                            <input type="radio" name="type" id="dot-2" value="customer" checked={radioSelected === "customer"} onChange={radioHandler} />
+                            <input type="radio" name="type" id="dot-3" value="admin" checked={radioSelected === "admin"} onChange={radioHandler} />
+                            <span className="user-type-title">User Type</span>
+                            <div className="category">
+                                <label htmlFor="dot-1">
+                                    <span className="dot one"></span>
+                                    <span className="type">Seller</span>
+                                </label>
+                                <label htmlFor="dot-2">
+                                    <span className="dot two"></span>
+                                    <span className="type">Customer</span>
+                                </label>
+                                <label htmlFor="dot-3">
+                                    <span className="dot three"></span>
+                                    <span className="type">Admin</span>
+                                </label>
+                            </div>
+                        </div>
                         <div className="button">
                             <input type="submit" value="Log In" onClick={(e) => handleSubmit(e)} />
                         </div>
