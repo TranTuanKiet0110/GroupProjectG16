@@ -14,6 +14,7 @@ import categories from '../img/categories.png';
 import { useLoaderData } from 'react-router';
 import { getSellersForDashboard } from '../api/sellers';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 export async function loadSellersForDashboard() {
     const sellers = await getSellersForDashboard();
@@ -21,18 +22,42 @@ export async function loadSellersForDashboard() {
 }
 
 export default function AdminDashboard() {
+
+    const [userName, setUserName] = useState("");
+
+    fetch("http://localhost:8080/api/user/adminData", {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+            token: window.localStorage.getItem("token"),
+        }),
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            setUserName(data.data.name);
+        })
+        .catch((error) => console.log(error));
+
     const sellers = useLoaderData();
     const data = sellers && sellers.map((seller) =>
-        <tr>
-            <td>{seller.id}</td>
-            <td>{seller.name}</td>
-            <td>{seller.email}</td>
-            <td>{seller.phone}</td>
-            <td>
-                <span className={`status ${seller.status}`}></span>
-                {seller.status}
-            </td>
-        </tr>
+        <React.Fragment key={seller.id}>
+            <tr>
+                <td>{seller.id}</td>
+                <td>{seller.name}</td>
+                <td>{seller.email}</td>
+                <td>{seller.phone}</td>
+                <td>
+                    <span className={`status ${seller.status}`}></span>
+                    {seller.status}
+                </td>
+            </tr>
+        </React.Fragment>
     );
 
     const numOfPendingSellers = sellers && sellers.filter((seller) => seller.status === 'pending');
@@ -52,7 +77,7 @@ export default function AdminDashboard() {
                         <img src={admin} width="30px" height="30px" alt="Admin" />
                         <div>
                             <h4>Welcome,</h4>
-                            <small>Admin !</small>
+                            <small> {userName} !</small>
                         </div>
                     </div>
                 </header>

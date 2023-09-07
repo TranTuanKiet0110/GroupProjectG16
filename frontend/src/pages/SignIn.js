@@ -16,6 +16,34 @@ export default function SignIn() {
         setPhone("");
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        fetch("http://localhost:8080/api/user/signin", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                email: email,
+                // phone: phone,
+                password: password,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if(data.status === 201) {
+                    alert("login successful");
+                    window.localStorage.setItem("token", data.data);
+                    window.location.href = "./dashboard";
+                }
+            })
+            .catch((error) => console.log(error));
+    };
+
     return (
         <>
             {/* <Header /> */}
@@ -38,16 +66,16 @@ export default function SignIn() {
                         </div>
                         <div className="input-field" aria-hidden={selected !== "phone" ? true : false}>
                             <span className="details">Phone</span>
-                            <input type="text" placeholder="Your phone number" required onChange={(e) => setPhone(e.target.value)}/>
+                            <input type="text" placeholder="Your phone number" required onChange={(e) => setPhone(e.target.value)} />
                         </div>
                         <div className="input-field">
                             <span className="details">Password</span>
-                            <input type="text" placeholder="Your password" required onChange={(e) => setPassword(e.target.value)}/>
+                            <input type="text" placeholder="Your password" required onChange={(e) => setPassword(e.target.value)} />
                         </div>
                     </div>
 
                     <div className="button">
-                        <input type="submit" value="Log In" />
+                        <input type="submit" value="Log In" onClick={(e) => handleSubmit(e)} />
                     </div>
                 </form>
             </div>

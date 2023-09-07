@@ -6,12 +6,12 @@ const cors = require("cors");
 
 
 // const adminRouter = require('./routes/admin');
-const registerRouter = require('./routes/register');
+const userRouter = require('./routes/user');
 
 app.use(cors());
 app.use(express.json());
 // app.use('/admin', adminRouter);
-app.use('/api/user', registerRouter);
+app.use('/api/user', userRouter);
 
 app.listen(port, () => {
     console.log(`Server start on port ${port}`);
