@@ -95,6 +95,32 @@
     margin: 14px 0;
 }
 
+.sign-in-container .user-type .category label {
+    display: flex;
+    align-items: center;
+}
+
+.sign-in-container .user-type .category .dot {
+    height: 20px;
+    width: 20px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 5px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.sign-in-container #dot-1:checked ~ .category label .one, 
+.sign-in-container #dot-2:checked ~ .category label .two,
+.sign-in-container #dot-3:checked ~ .category label .three {
+    border-color: #d9d9d9;
+    background: #fa8100
+}
+
+.sign-in-container form input[type="radio"] {
+    display: none;
+}
+
 .sign-in-container form .button input {
     height: 45px;
     width: 100%;

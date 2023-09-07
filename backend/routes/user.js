@@ -112,24 +112,46 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/signin", async (req, res) => {
-    const { email, password } = req.body
+    const { email, phone, password } = req.body
 
-    const admin = await Admin.findOne({ email: email })
-    if (!admin) {
-        return res.json({ error: "User not found!" })
-    }
+    if (req.body.radioSelected == 'admin') {
+        if (req.body.email != '') {
+            const admin = await Admin.findOne({ email: email })
+            //cannot find email
+            if (!admin) {
+                return res.json({ error: "User not found!" })
+            }
+            //compare password in database
+            if (await bcrypt.compare(password, admin.password)) {
+                const token = jwt.sign({ email: admin.email }, JWT_SECRET)
 
-    if (await bcrypt.compare(password, admin.password)) {
-        const token = jwt.sign({email: admin.email}, JWT_SECRET)
-
-        if (res.status(201)) {
-            return res.json({ status: 201, data: token })
+                if (res.status(201)) {
+                    return res.json({ status: 201, data: token })
+                } else {
+                    return res.json({ error: "error " })
+                }
+            }
+            //failed to login
+            res.json({ status: "error", error: "Invalid email or password!" })
         } else {
-            return res.json({ error: "error " })
+            const admin = await Admin.findOne({ phone: phone })
+            //cannot find phone number
+            if (!admin) {
+                return res.json({ error: "User not found!" })
+            }
+            if (await bcrypt.compare(password, admin.password)) {
+                const token = jwt.sign({ email: admin.email }, JWT_SECRET)
+
+                if (res.status(201)) {
+                    return res.json({ status: 201, data: token })
+                } else {
+                    return res.json({ error: "error " })
+                }
+            }
+            //failed to login
+            res.json({ status: "error", error: "Invalid email or password!" })
         }
     }
-
-    res.json({ status: "error", error: "Invalid email or password!" })
 });
 
 router.post("/adminData", async (req, res) => {
@@ -143,7 +165,7 @@ router.post("/adminData", async (req, res) => {
                 res.send({ status: 201, data: data })
             })
             .catch((error) => {
-                res.send({status: "error", data: error})
+                res.send({ status: "error", data: error })
             })
     } catch (err) {
 
