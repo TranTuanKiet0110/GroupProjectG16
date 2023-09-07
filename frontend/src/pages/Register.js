@@ -11,14 +11,20 @@ export default function Register() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [businessName, setBusinessName] = useState("");
+  const [address, setAddress] = useState("");
 
 
   const HandleBusinessName = (newName) => {
     setBusinessName(newName);
   }
+
+  const HandleAddress = (newAddress) => {
+    setAddress(newAddress);
+  }
+
   const HandleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/api/seller/register", {
+    fetch("http://localhost:8080/api/usser/register", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -32,6 +38,7 @@ export default function Register() {
         phone: phone,
         password: password,
         businessName: businessName,
+        address: address,
       }),
     })
       .then((res) => res.json())
@@ -65,7 +72,7 @@ export default function Register() {
               <input type="text" placeholder="Enter your password" required onChange={(e) => setPassword(e.target.value)} />
             </div>
           </div>
-          <Radio setBusinessName = {HandleBusinessName}/>
+          <Radio setBusinessName = {HandleBusinessName} setAddress = {HandleAddress}/>
           <div className="button">
             <input type="submit" value="Register" onClick={(e) => HandleSubmit(e)} />
           </div>

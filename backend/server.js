@@ -10,7 +10,7 @@ const registerRouter = require('./routes/register');
 app.use(cors());
 app.use(express.json());
 // app.use('/admin', adminRouter);
-app.use('/api/seller', registerRouter);
+app.use('/api/user', registerRouter);
 
 app.listen(port, () => {
     console.log(`Server start on port ${port}`);

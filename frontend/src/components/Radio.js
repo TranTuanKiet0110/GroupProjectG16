@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 
-function Radio(setBusinessName) {
-    const [selected, setSelected] = useState("");
+function Radio(setBusinessName, setAddress) {
+    const [selected, setSelected] = useState("seller");
 
     const radioHandler = e => {
         setSelected(e.target.value);
@@ -12,9 +12,12 @@ function Radio(setBusinessName) {
         setBusinessName.setBusinessName(newName);
     }
 
+    function handleAddress(newAddress) {
+        setAddress.setAddress(newAddress);
+    }
+
     return (
         <>
-        
             <div className="user-type">
                 <input type="radio" name="type" id="dot-1" value="seller" checked={selected === "seller"} onChange={radioHandler} />
                 <input type="radio" name="type" id="dot-2" value="customer" checked={selected === "customer"} onChange={radioHandler} />
@@ -40,7 +43,7 @@ function Radio(setBusinessName) {
                 <div aria-hidden={selected !== "customer" ? true : false}>
                     <div className="input-field">
                         <span className="details">Address</span>
-                        <input type="text" placeholder="Enter your address" required />
+                        <input type="text" placeholder="Enter your address" required onChange={(e) => {handleAddress(e.target.value)}} />
                     </div>
                 </div>
             </div>
