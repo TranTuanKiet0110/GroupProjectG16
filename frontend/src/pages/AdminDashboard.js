@@ -12,12 +12,13 @@ import pendingSeller from '../img/pending_seller.png';
 import approvedSeller from '../img/approved_seller.png';
 import categories from '../img/categories.png';
 import { useLoaderData } from 'react-router';
-import { getSellersForDashboard } from '../api/sellers';
+// import { getSellersForDashboard } from '../api/sellers';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export async function loadSellersForDashboard() {
-    const sellers = await getSellersForDashboard();
+    const res = await fetch("http://localhost:8080/api/user/getallseller");
+    const sellers = await res.json();
     return sellers;
 }
 
@@ -25,30 +26,32 @@ export default function AdminDashboard() {
 
     const [userName, setUserName] = useState("");
 
-    fetch("http://localhost:8080/api/user/adminData", {
-        method: "POST",
-        crossDomain: true,
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-            token: window.localStorage.getItem("token"),
-        }),
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            setUserName(data.data.name);
+    useEffect(() => {
+        fetch("http://localhost:8080/api/user/adminData", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                token: window.localStorage.getItem("token"),
+            }),
         })
-        .catch((error) => console.log(error));
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setUserName(data.data.name);
+            })
+            .catch((error) => console.log(error));
+    }, []);
 
     const sellers = useLoaderData();
-    const data = sellers && sellers.map((seller) =>
-        <React.Fragment key={seller.id}>
+    const data = sellers && sellers.data.map((seller, index) => 
+        <React.Fragment key={index + 1}>
             <tr>
-                <td>{seller.id}</td>
+                <td>{index + 1}</td>
                 <td>{seller.name}</td>
                 <td>{seller.email}</td>
                 <td>{seller.phone}</td>
@@ -60,8 +63,8 @@ export default function AdminDashboard() {
         </React.Fragment>
     );
 
-    const numOfPendingSellers = sellers && sellers.filter((seller) => seller.status === 'pending');
-    const numOfApprovedSellers = sellers && sellers.filter((seller) => seller.status === 'approved');
+    const numOfPendingSellers = sellers && sellers.data.filter((seller) => seller.status === 'pending');
+    const numOfApprovedSellers = sellers && sellers.data.filter((seller) => seller.status === 'approved');
 
     return (
         <>

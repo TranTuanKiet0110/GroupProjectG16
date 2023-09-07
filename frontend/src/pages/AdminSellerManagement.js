@@ -5,59 +5,109 @@ import Sidebar from '../components/Sidebar';
 import menu from '../img/menu.png';
 import admin from '../img/admin.png';
 import { useLoaderData } from 'react-router';
-import { getSellers } from '../api/sellers';
-import { useState } from 'react';
+// import { getSellers } from '../api/sellers';
+import { useState, useEffect } from 'react';
 
 export async function loadSellers() {
-    const sellers = await getSellers();
+    const res = await fetch("http://localhost:8080/api/user/getallseller");
+    const sellers = await res.json();
     return sellers;
 }
 
 export default function AdminSellerManagement() {
     const options = ['approved', 'pending', 'rejected'];
+
+    // const data = sellers && sellers.map((seller) => { return seller });
+
+    // const [sellerList, setSellerList] = useState(data);
+    const [userName, setUserName] = useState("");
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/user/adminData", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                token: window.localStorage.getItem("token"),
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setUserName(data.data.name);
+            })
+            .catch((error) => console.log(error));
+    }, []);
+
     const sellers = useLoaderData();
-    const data = sellers && sellers.map((seller) => { return seller }
+    const data = sellers && sellers.data.map((seller, index) =>
+        <React.Fragment key={index + 1}>
+            <tr>
+                <td>{index + 1}</td>
+                <td>{seller.name}</td>
+                <td>{seller.email}</td>
+                <td>{seller.phone}</td>
+                <td>
+                    <span className={`status ${seller.status}`}></span>
+                    {seller.status}
+                </td>
+                <td>
+                    <select>
+                        <option>{seller.status}</option>
+                        {options.map((option, index) => {
+                            if (option !== seller.status) {
+                                return <option key={index} >
+                                    {option}
+                                </option>
+                            }
+                            return null;
+                        })}
+                    </select>
+                </td>
+            </tr>
+        </React.Fragment>
     );
+    // const sellerListTable = sellerList.map((seller) =>
+    //     <tr>
+    //         <td>{seller.id}</td>
+    //         <td>{seller.name}</td>
+    //         <td>{seller.email}</td>
+    //         <td>{seller.phone}</td>
+    //         <td>{seller.businessName}</td>
+    //         <td>
+    //             <span className={`status ${seller.status}`}></span>
+    //             {seller.status}
+    //         </td>
+    // <td>
+    //     <select onChange={(e) => handleStatusChange(seller.id, e.target.value)}>
 
-    const [sellerList, setSellerList] = useState(data)
+    //         <option>{seller.status}</option>
+    //         {options.map((option, index) => {
+    //             if (option !== seller.status) {
+    //                 return <option key={index} >
+    //                 {option}
+    //             </option>
+    //             }
+    //             return null;
+    //         })}
+    //     </select>
+    // </td>
+    //     </tr>
+    // );
 
-    const sellerListTable = sellerList.map((seller) =>
-        <tr>
-            <td>{seller.id}</td>
-            <td>{seller.name}</td>
-            <td>{seller.email}</td>
-            <td>{seller.phone}</td>
-            <td>{seller.businessName}</td>
-            <td>
-                <span className={`status ${seller.status}`}></span>
-                {seller.status}
-            </td>
-            <td>
-                <select onChange={(e) => handleStatusChange(seller.id, e.target.value)}>
-
-                    <option>{seller.status}</option>
-                    {options.map((option, index) => {
-                        if (option !== seller.status) {
-                            return <option key={index} >
-                            {option}
-                        </option>
-                        }
-                        return null;
-                    })}
-                </select>
-            </td>
-        </tr>
-    );
-
-    function handleStatusChange(sellerID, newStatus) {
-        const newData = sellerList.map((seller) => {
-            if (seller.id === sellerID) {
-                return { ...seller, status: newStatus };
-            }
-            return seller;
-        });
-        setSellerList(newData)
-    };
+    // function handleStatusChange(sellerID, newStatus) {
+    //     const newData = sellerList.map((seller) => {
+    //         if (seller.id === sellerID) {
+    //             return { ...seller, status: newStatus };
+    //         }
+    //         return seller;
+    //     });
+    //     setSellerList(newData)
+    // };
 
     return (
         <>
@@ -73,7 +123,7 @@ export default function AdminSellerManagement() {
                         <img src={admin} width="30px" height="30px" alt="Admin" />
                         <div>
                             <h4>Welcome,</h4>
-                            <small>Admin !</small>
+                            <small>{userName} !</small>
                         </div>
                     </div>
                 </header>
@@ -100,7 +150,8 @@ export default function AdminSellerManagement() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {sellerListTable}
+                                                {/* {sellerListTable} */}
+                                                {data}
                                             </tbody>
                                         </table>
                                     </div>
