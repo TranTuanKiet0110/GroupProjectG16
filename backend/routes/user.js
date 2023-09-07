@@ -150,4 +150,13 @@ router.post("/adminData", async (req, res) => {
     }
 });
 
+router.get("/getAllSeller", async (req, res) => {
+    try {
+        const allSeller = await Seller.find({})
+        res.send({ status: 200, data: allSeller })
+    } catch (error) {
+        console.log(error)
+    }
+});
+
 module.exports = router;
