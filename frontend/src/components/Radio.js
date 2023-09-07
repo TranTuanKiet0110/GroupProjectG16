@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-function Radio(setBusinessName, setAddress) {
+function Radio(BusinessName, Address) {
     const [selected, setSelected] = useState("seller");
 
     const radioHandler = e => {
@@ -9,11 +9,11 @@ function Radio(setBusinessName, setAddress) {
     };
 
     function handleBusinessName(newName) {
-        setBusinessName.setBusinessName(newName);
+        BusinessName.setBusinessName(newName);
     }
 
     function handleAddress(newAddress) {
-        setAddress.setAddress(newAddress);
+        Address.setAddress(newAddress);
     }
 
     return (

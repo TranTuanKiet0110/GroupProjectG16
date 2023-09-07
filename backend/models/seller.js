@@ -2,10 +2,17 @@ const mongoose = require('mongoose');
 
 const sellerSchema = new mongoose.Schema({
     name: String,
-    email: String,
+    email: { 
+        type: String,
+        unique: true
+    },
     phone: String,
     password: String,
-    businessName: String
+    businessName: String,
+    status: {
+        type: String,
+        default: 'pending'
+    }
 
     // businessName: {
     //     type: String,
