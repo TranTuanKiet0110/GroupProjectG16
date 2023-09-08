@@ -28,7 +28,7 @@ export default function SignIn() {
             },
             body: JSON.stringify({
                 email: email,
-                // phone: phone,
+                phone: phone,
                 password: password,
             }),
         })

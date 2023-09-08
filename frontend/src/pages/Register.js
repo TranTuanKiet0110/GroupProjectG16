@@ -73,6 +73,7 @@ export default function Register() {
             <div className="user-type">
               <input type="radio" name="type" id="dot-1" value="seller" checked={selected === "seller"} onChange={radioHandler} />
               <input type="radio" name="type" id="dot-2" value="customer" checked={selected === "customer"} onChange={radioHandler} />
+              <input type="radio" name="type" id="dot-3" value="admin" checked={selected === "admin"} onChange={radioHandler} />
               <span className="user-type-title">User Type</span>
               <div className="category">
                 <label htmlFor="dot-1">
@@ -82,6 +83,10 @@ export default function Register() {
                 <label htmlFor="dot-2">
                   <span className="dot two"></span>
                   <span className="type">Customer</span>
+                </label>
+                <label htmlFor="dot-3">
+                  <span className="dot three"></span>
+                  <span className="type">Admin</span>
                 </label>
               </div>
             </div>
@@ -99,7 +104,6 @@ export default function Register() {
                 </div>
               </div>
             </div>
-            {/* <Radio setBusinessName = {HandleBusinessName} setAddress = {HandleAddress}/> */}
             <div className="button">
               <input type="submit" value="Register" onClick={(e) => handleSubmit(e)} />
             </div>
