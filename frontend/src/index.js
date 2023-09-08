@@ -8,6 +8,11 @@ import AdminDashboard, {loaderForDashboard} from './pages/AdminDashboard';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminCategory, {loaderForCategory} from './pages/AdminCategory';
 import AdminSellerManagement, {loaderForSellerManagement} from './pages/AdminSellerManagement';
+// import SelerPage from './pages/SelerPage';
+// import ProductPage from './pages/ProductPage';
+// import OrderPage from './pages/OrderPage';
+// import StatisticsPage from './pages/StatisticsPage';
+
 // import ProductList from '.pages/ProductList';
 
 const router = createBrowserRouter([
@@ -39,6 +44,26 @@ const router = createBrowserRouter([
     element: <SignIn />,
     // errorElement: <NotFound />,
   },
+  // {
+  //   path: '/',
+  //   element: <SelerPage />,
+  // },
+  // {
+  //   path: '/product',
+  //   element: <ProductPage />,
+   
+  // },
+  
+  // {
+  //   path: '/order',
+  //   element: <OrderPage />,
+  // },
+  // {
+  //   path: '/statistic',
+  //   element: <StatisticsPage />,
+  // },
+
+
 
 ]);
 
