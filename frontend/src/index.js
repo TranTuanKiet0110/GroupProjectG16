@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom/client';
 // import App from './App';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
-import AdminDashboard, {loadSellersForDashboard} from './pages/AdminDashboard';
+import AdminDashboard, {loaderForDashboard} from './pages/AdminDashboard';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AdminCategory from './pages/AdminCategory';
-import AdminSellerManagement, {loadSellers} from './pages/AdminSellerManagement';
-import SelerPage from './pages/SelerPage';
-import ProductPage from './pages/ProductPage';
-import OrderPage from './pages/OrderPage';
-import StatisticsPage from './pages/StatisticsPage';
+import AdminCategory, {loaderForCategory} from './pages/AdminCategory';
+import AdminSellerManagement, {loaderForSellerManagement} from './pages/AdminSellerManagement';
+// import SelerPage from './pages/SelerPage';
+// import ProductPage from './pages/ProductPage';
+// import OrderPage from './pages/OrderPage';
+// import StatisticsPage from './pages/StatisticsPage';
 
 // import ProductList from '.pages/ProductList';
 
@@ -19,18 +19,19 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <AdminDashboard />,
-    loader: loadSellersForDashboard,
+    loader: loaderForDashboard,
     // errorElement: <NotFound />,
   },
   {
     path: "/category",
     element: <AdminCategory />,
+    loader: loaderForCategory,
     // errorElement: <NotFound />,
   },
   {
     path: "/sellerManagement",
     element: <AdminSellerManagement />,
-    loader: loadSellers,
+    loader: loaderForSellerManagement,
     // errorElement: <NotFound />,
   },
   {
@@ -43,24 +44,24 @@ const router = createBrowserRouter([
     element: <SignIn />,
     // errorElement: <NotFound />,
   },
-  {
-    path: '/',
-    element: <SelerPage />,
-  },
-  {
-    path: '/product',
-    element: <ProductPage />,
+  // {
+  //   path: '/',
+  //   element: <SelerPage />,
+  // },
+  // {
+  //   path: '/product',
+  //   element: <ProductPage />,
    
-  },
+  // },
   
-  {
-    path: '/order',
-    element: <OrderPage />,
-  },
-  {
-    path: '/statistic',
-    element: <StatisticsPage />,
-  },
+  // {
+  //   path: '/order',
+  //   element: <OrderPage />,
+  // },
+  // {
+  //   path: '/statistic',
+  //   element: <StatisticsPage />,
+  // },
 
 
 

@@ -7,11 +7,13 @@ const cors = require("cors");
 
 // const adminRouter = require('./routes/admin');
 const userRouter = require('./routes/user');
+const categoryRouter = require('./routes/category');
 
 app.use(cors());
 app.use(express.json());
 // app.use('/admin', adminRouter);
 app.use('/api/user', userRouter);
+app.use('/api/category', categoryRouter);
 
 app.listen(port, () => {
     console.log(`Server start on port ${port}`);

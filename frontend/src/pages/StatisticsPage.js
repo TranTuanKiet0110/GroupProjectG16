@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 //import sellerData from '../api/sellerdata'; // Update the path to your sellerData file
-import ordersData from '../api/orderproduct'; // Update the path to your ordersData file
+// import ordersData from '../api/orderproduct'; // Update the path to your ordersData file
 import '../css/statistic.css';
 import statistic from '../api/statistic';
 import Navbar from '../components/Navbar';
