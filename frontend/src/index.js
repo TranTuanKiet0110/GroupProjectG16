@@ -12,7 +12,7 @@ import SelerPage from './pages/SelerPage';
 import ProductPage from './pages/ProductPage';
 import OrderPage from './pages/OrderPage';
 import StatisticsPage from './pages/StatisticsPage';
-import Navbar from './components/Navbar';
+
 // import ProductList from '.pages/ProductList';
 
 const router = createBrowserRouter([
@@ -52,6 +52,7 @@ const router = createBrowserRouter([
     element: <ProductPage />,
    
   },
+  
   {
     path: '/order',
     element: <OrderPage />,
@@ -60,10 +61,7 @@ const router = createBrowserRouter([
     path: '/statistic',
     element: <StatisticsPage />,
   },
-  {
-    path: '/nav',
-    element: <Navbar />,
-  },
+
 
 
 ]);

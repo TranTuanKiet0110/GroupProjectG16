@@ -50,10 +50,6 @@ import sellerData from "../api/sellerdata";
                     "No data available"
                 )}
             </div>
-            <div class='selleroption'>
-            <Navbar>
-            </Navbar>
-            </div>
             
             
         </div>
