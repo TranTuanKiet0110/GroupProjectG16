@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = "hfdsah984yth3ofnw9fyhfh984yt93h98wy98shfdvsdfyg8s7ghfuibvaiuv9"
 
 router.post("/register", async (req, res) => {
-    if (req.body.businessName != '') {
+    if (req.body.selected == 'seller') {
 
         //validate seller's email
         const existEmail = await Seller.findOne({ email: req.body.email })
@@ -42,7 +42,7 @@ router.post("/register", async (req, res) => {
         } catch (err) {
             res.send({ status: 400, message: err.message })
         }
-    } else {
+    } else if (req.body.selected == 'customer') {
         //validate customer's email
         const existEmail = await Customer.findOne({ email: req.body.email })
 
@@ -75,40 +75,40 @@ router.post("/register", async (req, res) => {
         } catch (err) {
             res.send({ status: 400, message: err.message })
         }
+    } else {
+        //validate admin's email
+        const existEmail = await Customer.findOne({ email: req.body.email })
+
+        //validate admin's phone
+        const existPhone = await Customer.findOne({ phone: req.body.phone })
+
+        //encrypt admin's password
+        const encryptedPassword = await bcrypt.hash(req.body.password, 10)
+
+        const admin = new Admin({
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            password: encryptedPassword,
+            address: req.body.address
+        })
+
+        try {
+            //error for email validation
+            if (existEmail) {
+                return res.json({ error: "Email has been used!" })
+            }
+            //error for phone validation
+            if (existPhone) {
+                return res.json({ error: "Phone number has been used!" })
+            }
+
+            await admin.save()
+            res.send({ status: 201 })
+        } catch (err) {
+            res.send({ status: 400, message: err.message })
+        }
     }
-
-    // //validate customer's email
-    // const existEmail = await Customer.findOne({ email: req.body.email })
-
-    // //validate customer's phone
-    // const existPhone = await Customer.findOne({ phone: req.body.phone })
-
-    // //encrypt customer's password
-    // const encryptedPassword = await bcrypt.hash(req.body.password, 10)
-
-    // const admin = new Admin({
-    //     name: req.body.name,
-    //     email: req.body.email,
-    //     phone: req.body.phone,
-    //     password: encryptedPassword,
-    //     address: req.body.address
-    // })
-
-    // try {
-    //     //error for email validation
-    //     if (existEmail) {
-    //         return res.json({ error: "Email has been used!" })
-    //     }
-    //     //error for phone validation
-    //     if (existPhone) {
-    //         return res.json({ error: "Phone number has been used!" })
-    //     }
-
-    //     await admin.save()
-    //     res.send({ status: 201 })
-    // } catch (err) {
-    //     res.send({ status: 400, message: err.message })
-    // }
 });
 
 router.post("/signin", async (req, res) => {
@@ -181,4 +181,22 @@ router.get("/getAllSeller", async (req, res) => {
     }
 });
 
+router.patch("/updateSeller/:id", async (req, res) => {
+    const { id, newStatus } = req.body
+
+    const seller = await Seller.findOne( { _id: id })
+    if (!seller) {
+        return res.json({ error: "User not found!" })
+    }
+    if (newStatus != null) {
+        seller.status = newStatus
+    }
+
+    try {
+        await seller.save()
+        res.send({ status: 201 })
+    } catch (error) {
+        res.send({ status: 400, message: err.message })
+    }
+})
 module.exports = router;
