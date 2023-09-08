@@ -5,7 +5,6 @@ import Sidebar from '../components/Sidebar';
 import menu from '../img/menu.png';
 import admin from '../img/admin.png';
 import { useLoaderData } from 'react-router';
-// import { getSellers } from '../api/sellers';
 import { useState, useEffect } from 'react';
 
 export async function loadSellers() {
@@ -15,11 +14,8 @@ export async function loadSellers() {
 }
 
 export default function AdminSellerManagement() {
+
     const options = ['approved', 'pending', 'rejected'];
-
-    // const data = sellers && sellers.map((seller) => { return seller });
-
-    // const [sellerList, setSellerList] = useState(data);
     const [userName, setUserName] = useState("");
 
     useEffect(() => {
@@ -73,7 +69,7 @@ export default function AdminSellerManagement() {
     );
 
     function handleStatusChange(sellerID, newStatus) {
-        fetch(`http://localhost:8080/api/user/updateseller/${sellerID}` , {
+        fetch(`http://localhost:8080/api/user/updateseller/${sellerID}`, {
             method: "PATCH",
             crossDomain: true,
             headers: {
@@ -95,43 +91,6 @@ export default function AdminSellerManagement() {
             })
             .catch((error) => console.log(error));
     };
-    // const sellerListTable = sellerList.map((seller) =>
-    //     <tr>
-    //         <td>{seller.id}</td>
-    //         <td>{seller.name}</td>
-    //         <td>{seller.email}</td>
-    //         <td>{seller.phone}</td>
-    //         <td>{seller.businessName}</td>
-    //         <td>
-    //             <span className={`status ${seller.status}`}></span>
-    //             {seller.status}
-    //         </td>
-    // <td>
-    //     <select onChange={(e) => handleStatusChange(seller.id, e.target.value)}>
-
-    //         <option>{seller.status}</option>
-    //         {options.map((option, index) => {
-    //             if (option !== seller.status) {
-    //                 return <option key={index} >
-    //                 {option}
-    //             </option>
-    //             }
-    //             return null;
-    //         })}
-    //     </select>
-    // </td>
-    //     </tr>
-    // );
-
-    // function handleStatusChange(sellerID, newStatus) {
-    //     const newData = sellerList.map((seller) => {
-    //         if (seller.id === sellerID) {
-    //             return { ...seller, status: newStatus };
-    //         }
-    //         return seller;
-    //     });
-    //     setSellerList(newData)
-    // };
 
     return (
         <>
@@ -175,7 +134,6 @@ export default function AdminSellerManagement() {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {/* {sellerListTable} */}
                                                     {data}
                                                 </tbody>
                                             </table>

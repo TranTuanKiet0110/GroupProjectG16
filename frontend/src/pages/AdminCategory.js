@@ -7,33 +7,36 @@ import Sidebar from '../components/Sidebar';
 // import seller from '../img/seller.png';
 import menu from '../img/menu.png';
 import admin from '../img/admin.png';
-import customer from '../img/customer.png';
-import pendingSeller from '../img/pending_seller.png';
-import approvedSeller from '../img/approved_seller.png';
-import categories from '../img/categories.png';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function AdminCategory() {
     const [userName, setUserName] = useState("");
+    const [showForm, setShowForm] = useState(false)
 
-    fetch("http://localhost:8080/api/user/adminData", {
-        method: "POST",
-        crossDomain: true,
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-            token: window.localStorage.getItem("token"),
-        }),
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            setUserName(data.data.name);
+    useEffect(() => {
+        fetch("http://localhost:8080/api/user/adminData", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                token: window.localStorage.getItem("token"),
+            }),
         })
-        .catch((error) => console.log(error));
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setUserName(data.data.name);
+            })
+            .catch((error) => console.log(error));
+    }, []);
+
+    function handleShowForm() {
+        setShowForm(!showForm);
+    }
 
     return (
         <>
@@ -43,7 +46,7 @@ export default function AdminCategory() {
                     <header>
                         <div className="box">
                             <img src={menu} alt="Menu" />
-                            <span>Dashboard</span>
+                            <span>Category</span>
                         </div>
 
                         <div className="user-wrapper">
@@ -56,51 +59,30 @@ export default function AdminCategory() {
                     </header>
 
                     <main>
-                        <div className="cards">
-                            <div className="card">
-                                <div>
-                                    <h1>10</h1>
-                                    <span>Customers</span>
-                                </div>
-                                <div>
-                                    <img src={customer} width="30px" height="30px" alt="Customer" />
-                                </div>
-                            </div>
-                            <div className="card">
-                                <div>
-                                    <h1>10</h1>
-                                    <span>Pending sellers</span>
-                                </div>
-                                <div>
-                                    <img src={pendingSeller} width="30px" height="30px" alt="Pending seller" />
+                        {showForm && (
+                            <div className="form-main">
+                                <div className="form-container">
+                                    <div className="title"> Create category</div>
+                                    <form>
+                                        <div className="category-details">
+                                            <div className="input-field">
+                                                <span className="details">Category's name</span>
+                                                <input type="text" placeholder="Enter category's name" required />
+                                            </div>
+                                        </div>
+                                        <div className="button">
+                                            <input type="submit" value="Create" />
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <div className="card">
-                                <div>
-                                    <h1>10</h1>
-                                    <span>Approved sellers</span>
-                                </div>
-                                <div>
-                                    <img src={approvedSeller} width="30px" height="30px" alt="Approved seller" />
-                                </div>
-                            </div>
-                            <div className="card">
-                                <div>
-                                    <h1>10</h1>
-                                    <span>Categories</span>
-                                </div>
-                                <div>
-                                    <img src={categories} width="30px" height="30px" alt="Categories" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="sellers-management">
-                            <div className="accounts">
+                        )}
+                        <div className="category-management">
+                            <div className="category">
                                 <div className="card">
                                     <div className="card-header">
-                                        <h2>Sellers Management</h2>
-                                        <button>See more</button>
+                                        <h2>Categories Management</h2>
+                                        <button onClick={handleShowForm}>+ Create</button>
                                     </div>
 
                                     <div className="card-body">
@@ -108,35 +90,34 @@ export default function AdminCategory() {
                                             <table>
                                                 <thead>
                                                     <tr>
+                                                        <td>ID</td>
                                                         <td>Name</td>
-                                                        <td>Email</td>
-                                                        <td>Phone number</td>
-                                                        <td>Status</td>
+                                                        <td>Number of product</td>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>Kiet</td>
-                                                        <td>s3879300@rmit.edu.vn</td>
-                                                        <td>0913638494</td>
+                                                        <td>1</td>
+                                                        <td>Clothes</td>
+                                                        <td>3</td>
                                                         <td>
                                                             <span className="status green"></span>
                                                             Approved
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Khanh</td>
-                                                        <td>s3804620@rmit.edu.vn</td>
-                                                        <td>0123456789</td>
+                                                        <td>2</td>
+                                                        <td>Electrics</td>
+                                                        <td>4</td>
                                                         <td>
                                                             <span className="status green"></span>
                                                             Approved
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Minh</td>
-                                                        <td>s3879953@rmit.edu.vn</td>
-                                                        <td>0123456789</td>
+                                                        <td>3</td>
+                                                        <td>Vehicles</td>
+                                                        <td>8</td>
                                                         <td>
                                                             <span className="status red"></span>
                                                             Pending
