@@ -42,7 +42,7 @@ export default function SignIn() {
             .then((data) => {
                 console.log(data);
                 if (data.status === 201) {
-                    alert("login successful");
+                    // alert("login successful");
                     window.localStorage.setItem("token", data.data);
                     window.location.href = "./dashboard";
                 }

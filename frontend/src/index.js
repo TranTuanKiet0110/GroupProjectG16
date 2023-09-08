@@ -4,28 +4,29 @@ import ReactDOM from 'react-dom/client';
 // import App from './App';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
-import AdminDashboard, {loadSellersForDashboard} from './pages/AdminDashboard';
+import AdminDashboard, {loaderForDashboard} from './pages/AdminDashboard';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AdminCategory from './pages/AdminCategory';
-import AdminSellerManagement, {loadSellers} from './pages/AdminSellerManagement';
+import AdminCategory, {loaderForCategory} from './pages/AdminCategory';
+import AdminSellerManagement, {loaderForSellerManagement} from './pages/AdminSellerManagement';
 // import ProductList from '.pages/ProductList';
 
 const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <AdminDashboard />,
-    loader: loadSellersForDashboard,
+    loader: loaderForDashboard,
     // errorElement: <NotFound />,
   },
   {
     path: "/category",
     element: <AdminCategory />,
+    loader: loaderForCategory,
     // errorElement: <NotFound />,
   },
   {
     path: "/sellerManagement",
     element: <AdminSellerManagement />,
-    loader: loadSellers,
+    loader: loaderForSellerManagement,
     // errorElement: <NotFound />,
   },
   {

@@ -7,7 +7,7 @@ import admin from '../img/admin.png';
 import { useLoaderData } from 'react-router';
 import { useState, useEffect } from 'react';
 
-export async function loadSellers() {
+export async function loaderForSellerManagement() {
     const res = await fetch("http://localhost:8080/api/user/getallseller");
     const sellers = await res.json();
     return sellers;
@@ -19,7 +19,7 @@ export default function AdminSellerManagement() {
     const [userName, setUserName] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/user/adminData", {
+        fetch("http://localhost:8080/api/user/admindata", {
             method: "POST",
             crossDomain: true,
             headers: {

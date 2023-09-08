@@ -21,3 +21,23 @@ Content-Type: application/json
     "phone": "admin",
     "password": "iamadmin"
 }
+
+###
+
+POST http://localhost:8080/api/category/createcategory
+Content-Type: application/json
+
+{
+    "name": "Ball",
+    "additionalAttribute": [{ "type":"64faf16eb27cf9955fc05d48"}]
+}
+
+###
+
+POST http://localhost:8080/api/category/createAdditionAttribute
+Content-Type: application/json
+
+{
+    "name": "Size",
+    "value": 3
+}

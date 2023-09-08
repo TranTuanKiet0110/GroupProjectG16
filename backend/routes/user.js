@@ -198,5 +198,6 @@ router.patch("/updateSeller/:id", async (req, res) => {
     } catch (error) {
         res.send({ status: 400, message: err.message })
     }
-})
+});
+
 module.exports = router;
