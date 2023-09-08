@@ -36,11 +36,15 @@ export default function Register() {
         password: password,
         businessName: businessName,
         address: address,
+        selected: selected,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        if (data.status === 201) {
+          alert("register successful");
+          window.location.href = "./signin";
+      }
       })
       .catch((error) => console.log(error));
   };

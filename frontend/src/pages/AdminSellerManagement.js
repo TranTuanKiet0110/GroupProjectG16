@@ -56,11 +56,11 @@ export default function AdminSellerManagement() {
                     {seller.status}
                 </td>
                 <td>
-                    <select>
+                    <select onChange={(e) => handleStatusChange(seller._id, e.target.value)}>
                         <option>{seller.status}</option>
                         {options.map((option, index) => {
                             if (option !== seller.status) {
-                                return <option key={index} >
+                                return <option key={index + 1} >
                                     {option}
                                 </option>
                             }
@@ -71,6 +71,30 @@ export default function AdminSellerManagement() {
             </tr>
         </React.Fragment>
     );
+
+    function handleStatusChange(sellerID, newStatus) {
+        fetch(`http://localhost:8080/api/user/updateseller/${sellerID}` , {
+            method: "PATCH",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                id: sellerID,
+                newStatus: newStatus,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data.status === 201) {
+                    window.location.href = "./sellermanagement";
+                }
+            })
+            .catch((error) => console.log(error));
+    };
     // const sellerListTable = sellerList.map((seller) =>
     //     <tr>
     //         <td>{seller.id}</td>
