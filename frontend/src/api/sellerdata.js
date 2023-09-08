@@ -1,5 +1,5 @@
 const sellerData = [
-    {name: "Khanh", products: [1, 2]}
+    {id: 1, name: "Khanh", products: ["TV", "Book"]},
     
 ];
 export default sellerData;

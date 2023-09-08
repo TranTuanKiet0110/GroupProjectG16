@@ -4,39 +4,56 @@ import '../css/Navbar.css';
 export default function Navbar() {
   return (
     <>
-        <h1>Là Giá Da</h1>
-        <ul>
-          <li>
-            <Link
-              to="/"
-              className={({ isActive }) =>
-                isActive ? 'active' : ''
-              }
-            >
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              to='/product'
-              className={({ isActive }) =>
-                isActive ? 'active' : ''
-              }
-            >
-              Products
-            </Link>
-          </li>
-          <li>
-            <Link
-              to='/order'
-              className={({ isActive }) =>
-                isActive ? 'active' : ''
-              }
-            >
-              Oder Managament
-            </Link>
-          </li>
-        </ul>
+        <div className='header'>
+  <h1>Lazada</h1>
+  <nav className="nav">
+    <ul>
+      <li className='button'>
+        <Link
+          to="/"
+          className={({ isActive }) =>
+            isActive ? 'active' : ''
+          }
+        >
+          Seller
+        </Link>
+      </li>
+      <li className='button'>
+        <Link
+          to='/product'
+          className={({ isActive }) =>
+            isActive ? 'active' : ''
+          }
+        >
+          Products
+        </Link>
+      </li>
+      <li className='button'>
+        <Link
+          to='/order'
+          className={({ isActive }) =>
+            isActive ? 'active' : ''
+          }
+        >
+          Order Management
+        </Link>
+      </li>
+      <li className='button'>
+        <Link
+          to='/statistic'
+          className={({ isActive }) =>
+            isActive ? 'active' : ''
+          }
+        >
+          Sales Statistics
+        </Link>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+
+      
 
     </>
   )
