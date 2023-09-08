@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import ordersData from '../api/orderproduct';
-import sellerData from '../api/sellerdata';
-
+import sellerData from '../api/sellerdata'; // Update the path to your sellerData file
+import ordersData from '../api/orderproduct'; // Update the path to your ordersData file
+import '../css/orderpage.css';
+import Navbar from '../components/Navbar';
 function OrderPage() {
-    const [updatedOrders, setUpdatedOrders] = useState([...ordersData]);
+  const [updatedOrders, setUpdatedOrders] = useState([...ordersData]);
 
   // Function to handle status change for a product in an order
   const handleStatusChange = (orderIndex, newStatus) => {
@@ -11,22 +12,26 @@ function OrderPage() {
     updatedOrdersCopy[orderIndex].status = newStatus;
     setUpdatedOrders(updatedOrdersCopy);
   };
-    // Function to filter ordersData based on productId from sellerData
+
+  // Function to filter ordersData based on productId from sellerData
   const filteredOrders = sellerData.map(seller => {
     const sellerProducts = seller.products;
-    const filteredOrders = ordersData.filter(order => sellerProducts.includes(order.product));
+    const filteredOrders = updatedOrders.filter(order => sellerProducts.includes(order.product));
     return { sellerName: seller.name, orders: filteredOrders };
   });
 
   return (
-    <div>
+    
+    <div class="orderpage">
+     <Navbar />
+      <div class="order-container">
       {filteredOrders.map((seller, index) => (
         <div key={index}>
-          <h2>{seller.sellerName}'s Orders:</h2>
+          <h2 className="seller-header">{seller.sellerName}'s Orders:</h2>
           <table>
             <thead>
               <tr>
-                <th>Product ID</th>
+                <th>Product </th>
                 <th>Quantity</th>
                 <th>Customer ID</th>
                 <th>Status</th>
@@ -55,7 +60,9 @@ function OrderPage() {
         </div>
       ))}
     </div>
+    </div>
+    
   );
-  }
-  
-  export default OrderPage;
+}
+
+export default OrderPage;

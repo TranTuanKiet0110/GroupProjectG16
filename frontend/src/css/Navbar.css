@@ -1,16 +1,52 @@
-/* Navbar.css */
-ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    display: inline;
-    margin-right: 20px;
-  }
-  
-  .active {
-    font-weight: bold;
-    color: #007bff; /* Change this color to your desired active link color */
-  }
-  
+/* Header container */
+.header {
+  background-color: #6695c8; /* Background color for the header */
+  color: #fff; /* Text color for the header */
+  padding: 20px; /* Add padding for spacing */
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Vertically center items */
+}
+
+/* Header title (h1) styling */
+.header h1 {
+  font-size: 40px;
+  margin: 0;
+  color: #000083;
+}
+
+/* Navigation menu (ul) styling */
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+/* Navigation menu items (li) styling */
+.nav li {
+  margin-right: 20px; /* Add spacing between menu items */
+}
+
+/* Style the links (buttons) */
+.nav a {
+  text-decoration: none;
+  color: #000083; /* Text color for links */
+  font-weight: bold; /* Make the text bold */
+  transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+/* Style the links when hovered */
+.nav a:hover {
+  color: #ff7f00; /* Change the text color on hover */
+}
+
+/* Active link (current page) styling */
+.nav .active {
+  color: #ff7f00; /* Highlight the active link with a different color */
+}
+
+/* Position the navigation menu to the top right */
+.nav {
+  margin-left: auto; /* Push the menu to the right */
+}
