@@ -133,6 +133,71 @@
     padding-right: 16px;
 }
 
+.admin-container .form-main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-container .form-container {
+    max-width: 500px;
+    width: 100%;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 5px;
+}
+
+.admin-container .form-container .title {
+    font-size: 30px;
+    font-weight: 600;
+    position: relative;
+}
+
+.admin-container .form-container .title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background: linear-gradient(135deg, #fa8100, #fc1eb7);
+}
+
+.admin-container .form-container form .category-details {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.admin-container .form-container form .category-details .input-field {
+    margin: 10px 0 10px 0;
+    width: 100%;
+}
+
+.admin-container .form-container .category-details .input-field input {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-right-width: 2px;
+    border-bottom-width: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+.admin-container .form-container .category-details .input-field input:focus,
+.admin-container .form-container .category-details .input-field input:valid {
+    border-color: #fc1eb7;
+}
+
+.admin-container .form-container .category-details .input-field .details {
+    display: block;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
 .admin-container .cards {
     margin-top: 16px;
     display: grid;
@@ -181,11 +246,39 @@
     padding: 16px 0;
 }
 
+.admin-container .category-management {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 100% auto;
+}
+
+.admin-container .category-management .card {
+    background: #fff;
+    border-radius: 15px;
+}
+
+.admin-container .category-management .card .card-header {
+    display: flex;
+    padding: 16px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.admin-container .category-management .card .card-body {
+    padding: 16px 0;
+}
+
 .admin-container .card-header button {
     background: var(--main-color);
     border-radius: 10px;
     padding: 8px 16px;
     border: 1px solid var(--main-color);
+}
+
+.admin-container .card-header button {
+    color: #fff;
+    font-size: 14px;
 }
 
 .admin-container .card-header button a {
