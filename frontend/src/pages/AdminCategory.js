@@ -46,6 +46,9 @@ export default function AdminCategory() {
             <tr>
                 <td>{index + 1}</td>
                 <td>{category.name}</td>
+                {/* {category.additionalAttribute.map((index) =>
+                    <td>{index + 1}</td>
+                )} */}
                 <td>0</td>
             </tr>
         </React.Fragment>
@@ -76,6 +79,17 @@ export default function AdminCategory() {
         list[index].name = e.target.value;
         setAdditionalAttributes(list);
     }
+
+    const dropdownHandler = e => {
+        categories.data && categories.data.filter((category) => {
+            if (category.name === e.target.value) {
+                category.additionalAttribute && category.additionalAttribute.map((attribute) =>
+                    setAdditionalAttributes([...additionalAttributes, { name: attribute.name, value: null }])
+                )
+            }
+            return null;
+        })
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -133,13 +147,13 @@ export default function AdminCategory() {
                                                 <span className="details">Category's name</span>
                                                 <input type="text" placeholder="Enter category's name" required onChange={(e) => setName(e.target.value)} />
                                             </div>
-                                            <div className="input-field">
+                                            {/* <div className="input-field">
                                                 <span className="details">Sub-category of:</span>
-                                                <select className="dropdown">
+                                                <select className="dropdown" onChange={dropdownHandler}>
                                                     <option defaultValue="none">--None--</option>
                                                     {dataForSelector}
                                                 </select>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         {additionalAttributes.map((attribute, index) => (
                                             <React.Fragment key={index + 1}>
@@ -168,6 +182,15 @@ export default function AdminCategory() {
                                                 </div>
                                             </React.Fragment>
                                         ))}
+                                        <div className="category-details">
+                                            <div className="input-field">
+                                                <span className="details">Sub-category of:</span>
+                                                <select className="dropdown" onChange={dropdownHandler}>
+                                                    <option defaultValue="none">--None--</option>
+                                                    {dataForSelector}
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div className="button">
                                             <input type="submit" value="Create" onClick={(e) => handleSubmit(e)} />
                                         </div>
