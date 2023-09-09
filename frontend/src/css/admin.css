@@ -276,6 +276,47 @@
     padding: 16px 0;
 }
 
+.admin-container .category-management .card .card-body .editBtn {
+    height: 50px;
+    width: 100px;
+    outline: none;
+    color: blue;
+    font-size: 16px;
+    background: none;
+    font-weight: 500;
+    border-width: 2px;
+    border-radius: 15px;
+    border-color: blue;
+    margin-right: 15px;
+}
+
+.admin-container .category-management .card .card-body .deleteBtn {
+    height: 50px;
+    width: 100px;
+    outline: none;
+    color: red;
+    font-size: 16px;
+    background: none;
+    font-weight: 500;
+    border-width: 2px;
+    border-radius: 15px;
+    border-color: red;
+}
+
+.admin-container .category-management .card .card-body .deleteBtnDisable {
+    height: 50px;
+    width: 100px;
+    outline: none;
+    color: red;
+    font-size: 16px;
+    background: none;
+    font-weight: 500;
+    border-width: 2px;
+    border-radius: 15px;
+    border-color: red;
+    opacity: 0.1;
+}
+
 .admin-container .card-header button {
     background: var(--main-color);
     border-radius: 10px;
@@ -349,6 +390,17 @@
     justify-content: space-between;
 }
 
+.admin-container .form-container form button {
+    height: 60px;
+    width: 50%;
+    outline: none;
+    color: blue;
+    border: none;
+    font-size: 16px;
+    background: none;
+    font-weight: 500;
+}
+
 .admin-container .form-container form .category-additional-details .input-field {
     margin: 10px 0 10px 0;
     width: calc(100% / 2 - 20px);
@@ -393,18 +445,6 @@
     border-radius: 10px;
     border-color: red;
     background: none;
-}
-
-.admin-container .form-container .category-additional-details .button {
-    height: 60px;
-    width: 50%;
-    outline: none;
-    color: blue;
-    border: none;
-    font-size: 16px;
-    background: none;
-    font-weight: 500;
-    
 }
 
 .admin-container .form-container .category-additional-details .input-field input:focus,
