@@ -1,10 +1,6 @@
-import React from 'react'
-// import Header from '../components/Header'
+import React from 'react';
 import "../../css/admin.css";
 import Sidebar from '../../components/Sidebar';
-// import home from '../img/home.png';
-// import product from '../img/product.png';
-// import seller from '../img/seller.png';
 import menu from '../../img/menu.png';
 import admin from '../../img/admin.png';
 import customer from '../../img/customer.png';
@@ -12,7 +8,6 @@ import pendingSeller from '../../img/pending_seller.png';
 import approvedSeller from '../../img/approved_seller.png';
 import categoriesImage from '../../img/categories.png';
 import { useLoaderData } from 'react-router';
-// import { getSellersForDashboard } from '../api/sellers';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 

@@ -3,17 +3,29 @@ const router = express.Router();
 const Category = require('../models/category');
 
 router.post("/createCategory", async (req, res) => {
-    const category = new Category({
-        name: req.body.name,
-        subcategoryOf: req.body.subcategoryOf,
-        additionalAttributes: req.body.additionalAttributes
-    })
-
-    try {
-        await category.save()
-        res.send({ status: 201, data: category})
-    } catch (error) {
-        res.send({ status: 400, message: error.message })
+    if(req.body.subcategoryOf == '') {
+        const category = new Category({
+            name: req.body.name,
+            additionalAttributes: req.body.additionalAttributes
+        })
+        try {
+            await category.save()
+            res.send({ status: 201, data: category})
+        } catch (error) {
+            res.send({ status: 400, message: error.message })
+        }
+    } else {
+        const category = new Category({
+            name: req.body.name,
+            subcategoryOf: req.body.subcategoryOf,
+            additionalAttributes: req.body.additionalAttributes
+        })
+        try {
+            await category.save()
+            res.send({ status: 201, data: category})
+        } catch (error) {
+            res.send({ status: 400, message: error.message })
+        }
     }
 });
 
@@ -48,10 +60,8 @@ router.patch("/updateCategory/:id", async (req, res) => {
 router.post("/deleteCategory", async (req, res) => {
     const { id } = req.body
     try {
-        await Category.deleteOne({ _id: id }, function (err, res) {
-            console.log(err);
-        });
-        res.send({ status: 201 })
+        await Category.deleteOne({ _id: id })
+        res.send({ status: 204 })
     } catch (error) {
         res.send({ status: 400, message: error.message })
     }

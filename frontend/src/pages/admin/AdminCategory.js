@@ -18,7 +18,7 @@ export default function AdminCategory() {
     const [userName, setUserName] = useState("");
     const [showForm, setShowForm] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [additionalAttributes, setAdditionalAttributes] = useState([{ name: "", value: null }]);
+    const [additionalAttributes, setAdditionalAttributes] = useState([]);
     const [editId, setEditId] = useState("");
     const [newName, setNewName] = useState("");
 
@@ -65,8 +65,8 @@ export default function AdminCategory() {
                     <td>{categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
                     <td>0</td>
                     <td>
-                        <button onClick={() => handleEdit(category._id)}>Edit</button>
-                        {categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length === 0 ? <button onClick={() => handleDelete(category._id, category.name)}>Delete</button> : <button>Cannot Delete</button>}
+                        <button className="editBtn" onClick={() => handleEdit(category._id)}>Edit</button>
+                        {categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length === 0 ? <button className="deleteBtn" onClick={() => handleDelete(category._id, category.name)}>Delete</button> : <button className="deleteBtnDisable" disabled>Delete</button>}
                         {/* <button>Delete</button> */}
                     </td>
                 </tr>
@@ -101,22 +101,28 @@ export default function AdminCategory() {
     }
 
     function dropdownHandler(selectedCategory) {
-        categories.data && categories.data.filter((category) => {
-            if (category._id === selectedCategory) {
-                setSelectedCategory(category._id);
-                category.additionalAttribute && category.additionalAttribute.map((attribute) =>
-                    setAdditionalAttributes([...additionalAttributes, { name: attribute.name, value: null }])
-                )
+        const storeAttribute  = []
+        if (selectedCategory === "none") {
+            setAdditionalAttributes([]);
+        } else {
+            for (const category of categories.data) {
+                if (category._id === selectedCategory) {
+                    setSelectedCategory(selectedCategory);
+                    for (const attribute of category.additionalAttributes) {
+                        storeAttribute.push({ name: attribute.name, value: attribute.value });
+                    }
+                }
             }
-            return null;
-        })
+            // setAdditionalAttributes([]);
+            setAdditionalAttributes(storeAttribute);
+        }
     };
 
     function handleEdit(categoryId) {
         setEditId(categoryId);
     };
 
-    function handleDelete(categoryId, categoryName) {
+    const handleDelete = (categoryId, categoryName) => {
         if (window.confirm(`Are you sure you want to delete ${categoryName}?`)) {
             fetch("http://localhost:8080/api/category/deletecategory", {
                 method: "POST",
@@ -132,7 +138,7 @@ export default function AdminCategory() {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    if (data.status === 201) {
+                    if (data.status === 204) {
                         window.location.href = "./category";
                     }
                 })
@@ -224,6 +230,15 @@ export default function AdminCategory() {
                                                 <input type="text" placeholder="Enter category's name" required onChange={(e) => setName(e.target.value)} />
                                             </div>
                                         </div>
+                                        <div className="category-details">
+                                            <div className="input-field">
+                                                <span className="details">Sub-category of:</span>
+                                                <select className="dropdown" onChange={(e) => dropdownHandler(e.target.value)}>
+                                                    <option value="none">--None--</option>
+                                                    {dataForSelector}
+                                                </select>
+                                            </div>
+                                        </div>
                                         {additionalAttributes.map((attribute, index) => (
                                             <React.Fragment key={index + 1}>
                                                 <div className="category-additional-details">
@@ -232,7 +247,7 @@ export default function AdminCategory() {
                                                         <input type="text" placeholder="Enter attribute's name" required value={attribute.name} onChange={(e) => handleAttributeName(e, index)} />
                                                     </div>
                                                     <div className="input-field">
-                                                        {additionalAttributes.length > 1 &&
+                                                        {additionalAttributes.length > 0 &&
                                                             (
                                                                 <button className="button" onClick={() => handleRemoveAttribute(index)}>
                                                                     <span>Remove</span>
@@ -240,26 +255,12 @@ export default function AdminCategory() {
                                                             )
                                                         }
                                                     </div>
-
-                                                    {additionalAttributes.length - 1 === index &&
-                                                        (
-                                                            <button className="button" onClick={handleAddAttribute}>
-                                                                <span>+ Add more attributes</span>
-                                                            </button>
-                                                        )
-                                                    }
                                                 </div>
                                             </React.Fragment>
                                         ))}
-                                        <div className="category-details">
-                                            <div className="input-field">
-                                                <span className="details">Sub-category of:</span>
-                                                <select className="dropdown" onChange={(e) => dropdownHandler(e.target.value)}>
-                                                    <option defaultValue="none">--None--</option>
-                                                    {dataForSelector}
-                                                </select>
-                                            </div>
-                                        </div>
+                                        <button className="button" onClick={handleAddAttribute}>
+                                            <span>+ Add more attributes</span>
+                                        </button>
                                         <div className="button">
                                             <input type="submit" value="Create" onClick={(e) => handleSubmit(e)} />
                                         </div>
