@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../css/admin.css";
+import "../../css/admin/admin.css";
 import Sidebar from '../../components/Sidebar';
 import menu from '../../img/menu.png';
 import admin from '../../img/admin.png';
