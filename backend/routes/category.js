@@ -25,4 +25,14 @@ router.get("/getAllCategory", async (req, res) => {
     }
 });
 
+// router.get("/getSelectedCategory", async (req, res) => {
+//     const name = req.body
+//     try {
+//         const category = await Category.find({ name: name })
+//         res.send({ status: 200, data: category })
+//     } catch (error) {
+//         console.log(error)
+//     }
+// });
+
 module.exports = router;

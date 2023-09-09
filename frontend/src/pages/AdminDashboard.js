@@ -22,11 +22,6 @@ export async function loaderForDashboard() {
         fetch("http://localhost:8080/api/user/getallseller").then((response) => response.json()),
         fetch("http://localhost:8080/api/category/getallcategory").then((response) => response.json()),
     ]);
-    // const res = await fetch("http://localhost:8080/api/user/getallseller");
-    // const sellers = await res.json();
-    // const secondRes = await fetch("http://localhost:8080/api/category/getallcategory");
-    // const categories = await secondRes.json();
-    // return sellers && categories;
     return {sellers, categories};
 };
 
