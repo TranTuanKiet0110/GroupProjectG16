@@ -37,16 +37,16 @@
 }
 
 /* Style the links when hovered */
-.nav a:hover {
-  color: #ff7f00; /* Change the text color on hover */
-}
+/* .nav a:hover {
+  color: #ff7f00;
+} */
 
 /* Active link (current page) styling */
-.nav .active {
-  color: #ff7f00; /* Highlight the active link with a different color */
-}
+/* .nav .active {
+  color: #ff7f00; 
+} */
 
 /* Position the navigation menu to the top right */
-.nav {
-  margin-left: auto; /* Push the menu to the right */
-}
+/* .nav {
+  margin-left: auto; 
+} */

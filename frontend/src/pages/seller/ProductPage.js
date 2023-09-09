@@ -5,9 +5,9 @@ import categories, {  getAllProducts,
   addProduct as addProductApi,
   updateProduct as updateProductApi,
   deleteProduct as deleteProductApi, 
- } from '../api/products'; 
-  import '../css/ProductPage.css';
-  import Navbar from '../components/Navbar';
+ } from '../../api/products'; 
+  import '../../css/ProductPage.css';
+  import Navbar from '../../components/Navbar';
 
   const initialProduct = {
     id: null,

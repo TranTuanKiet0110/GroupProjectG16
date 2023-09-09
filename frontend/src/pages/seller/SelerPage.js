@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import '../css/seller.css';
-import sellerData from "../api/sellerdata";
+import Navbar from "../../components/Navbar";
+import '../../css/seller.css';
+import sellerData from "../../api/sellerdata";
  function SelerPage(){
     const [sellerInfo, setSellerInfo] = useState(null);
     const [selectedId, setSelectedId] = useState("");

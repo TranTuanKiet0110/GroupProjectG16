@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import sellerData from '../api/sellerdata'; // Update the path to your sellerData file
-import ordersData from '../api/orderproduct'; // Update the path to your ordersData file
-import '../css/orderpage.css';
-import Navbar from '../components/Navbar';
+import sellerData from '../../api/sellerdata'; // Update the path to your sellerData file
+import ordersData from '../../api/orderproduct'; // Update the path to your ordersData file
+import '../../css/orderpage.css';
+import Navbar from '../../components/Navbar';
 function OrderPage() {
   const [updatedOrders, setUpdatedOrders] = useState([...ordersData]);
 

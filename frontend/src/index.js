@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom/client';
 // import App from './App';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
-import AdminDashboard, {loaderForDashboard} from './pages/AdminDashboard';
+import AdminDashboard, {loaderForDashboard} from './pages/admin/AdminDashboard';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AdminCategory, {loaderForCategory} from './pages/AdminCategory';
-import AdminSellerManagement, {loaderForSellerManagement} from './pages/AdminSellerManagement';
-import SelerPage from './pages/SelerPage';
-import ProductPage from './pages/ProductPage';
-import OrderPage from './pages/OrderPage';
-import StatisticsPage from './pages/StatisticsPage';
+import AdminCategory, {loaderForCategory} from './pages/admin/AdminCategory';
+import AdminSellerManagement, {loaderForSellerManagement} from './pages/admin/AdminSellerManagement';
+import SelerPage from './pages/seller/SelerPage';
+import ProductPage from './pages/seller/ProductPage';
+import OrderPage from './pages/seller/OrderPage';
+import StatisticsPage from './pages/seller/StatisticsPage';
 
 // import ProductList from '.pages/ProductList';
 

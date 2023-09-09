@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -6,17 +6,17 @@
     font-family: 'Poppins', sans-serif;
 }
 .header{
-  padding: 30px 20px; /* Add padding to the header */
-  display: flex; /* Make it a flex container */
-  justify-content: space-between; /* Align items horizontally */
-  align-items: center; /* Align items vertically */
-  position: fixed; /* Set the header's position to fixed */
-  top: 0; /* Position it at the top of the viewport */
-  width: 100%; /* Set the width to 100% */
+  padding: 30px 20px; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
   z-index: 999; 
-}
+} */
 /* Style for the container div */
-.orderpage {
+/* .orderpage {
     width: 100%;
     display: flex;
     height: 100vh;
@@ -47,26 +47,26 @@
     text-align: left;
     padding: 20px 40px;
     border: 1px solid #ddd;
-  }
+  } */
   
   /* Style for the table rows */
-  table td {
+  /* table td {
     padding: 10px;
     border: 1px solid #ddd;
-  }
+  } */
   
   /* Style for the select element */
-  select {
+  /* select {
     padding: 5px;
     border: 1px solid #ddd;
     border-radius: 4px;
     width: 100%;
   }
-  
+   */
   /* Style for the select options */
-  select option {
+  /* select option {
     background-color: #fff;
-  }
+  } */
 
   
 

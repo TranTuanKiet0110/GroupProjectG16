@@ -1,9 +1,9 @@
 import React from 'react'
 // import Header from '../components/Header'
-import "../css/admin.css";
-import Sidebar from '../components/Sidebar';
-import menu from '../img/menu.png';
-import admin from '../img/admin.png';
+import "../../css/admin.css";
+import Sidebar from '../../components/Sidebar';
+import menu from '../../img/menu.png';
+import admin from '../../img/admin.png';
 import { useLoaderData } from 'react-router';
 import { useState, useEffect } from 'react';
 
