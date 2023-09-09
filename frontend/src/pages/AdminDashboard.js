@@ -50,8 +50,6 @@ export default function AdminDashboard() {
             .catch((error) => console.log(error));
     }, []);
 
-    // const sellers = useLoaderData();
-    // const categories = useLoaderData();
     const { sellers, categories } = useLoaderData();
     const data = sellers && sellers.data.map((seller, index) =>
         <React.Fragment key={index + 1}>
