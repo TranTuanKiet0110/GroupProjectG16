@@ -17,7 +17,10 @@ export default function AdminCategory() {
     const [name, setName] = useState("");
     const [userName, setUserName] = useState("");
     const [showForm, setShowForm] = useState(false);
-    const [additionalAttributes, setAdditionalAttributes] = useState([{ name: "", value: "" }]);
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [additionalAttributes, setAdditionalAttributes] = useState([{ name: "", value: null }]);
+    const [editId, setEditId] = useState("");
+    const [newName, setNewName] = useState("");
 
     useEffect(() => {
         fetch("http://localhost:8080/api/user/adminData", {
@@ -41,24 +44,41 @@ export default function AdminCategory() {
     }, []);
 
     const categories = useLoaderData();
-    const data = categories && categories.data.map((category, index) =>
-        <React.Fragment key={index + 1}>
-            <tr>
-                <td>{index + 1}</td>
-                <td>{category.name}</td>
-                {/* {category.additionalAttribute.map((index) =>
+    const data = categories && categories.data.map((category, index) => (
+        category._id === editId ?
+            <React.Fragment key={index + 1}>
+                <tr>
                     <td>{index + 1}</td>
-                )} */}
-                <td>0</td>
-            </tr>
-        </React.Fragment>
+                    <td><input type="text" placeholder={category.name} onChange={(e) => setNewName(e.target.value)}></input></td>
+                    <td>{categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
+                    <td>0</td>
+                    <td>
+                        <button onClick={(e) => handleUpdate(category._id)}>Update</button>
+                    </td>
+                </tr>
+            </React.Fragment>
+            :
+            <React.Fragment key={index + 1}>
+                <tr>
+                    <td>{index + 1}</td>
+                    <td>{category.name}</td>
+                    <td>{categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
+                    <td>0</td>
+                    <td>
+                        <button onClick={() => handleEdit(category._id)}>Edit</button>
+                        {categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length === 0 ? <button onClick={() => handleDelete(category._id, category.name)}>Delete</button> : <button>Cannot Delete</button>}
+                        {/* <button>Delete</button> */}
+                    </td>
+                </tr>
+            </React.Fragment>)
     );
 
     const dataForSelector = categories && categories.data.map((category, index) =>
         <React.Fragment key={index + 1}>
-            <option value={category.name}>{category.name}</option>
+            <option value={category._id}>{category.name}</option>
         </React.Fragment>
     );
+
 
     function handleShowForm() {
         setShowForm(!showForm);
@@ -80,9 +100,10 @@ export default function AdminCategory() {
         setAdditionalAttributes(list);
     }
 
-    const dropdownHandler = e => {
+    function dropdownHandler(selectedCategory) {
         categories.data && categories.data.filter((category) => {
-            if (category.name === e.target.value) {
+            if (category._id === selectedCategory) {
+                setSelectedCategory(category._id);
                 category.additionalAttribute && category.additionalAttribute.map((attribute) =>
                     setAdditionalAttributes([...additionalAttributes, { name: attribute.name, value: null }])
                 )
@@ -91,7 +112,61 @@ export default function AdminCategory() {
         })
     };
 
-    const handleSubmit = (e) => {
+    function handleEdit(categoryId) {
+        setEditId(categoryId);
+    };
+
+    function handleDelete(categoryId, categoryName) {
+        if (window.confirm(`Are you sure you want to delete ${categoryName}?`)) {
+            fetch("http://localhost:8080/api/category/deletecategory", {
+                method: "POST",
+                crossDomain: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify({
+                    id: categoryId,
+                }),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.status === 201) {
+                        window.location.href = "./category";
+                    }
+                })
+                .catch((error) => console.log(error));
+        } else {
+
+        }
+    }
+
+    function handleUpdate(categoryId) {
+        fetch(`http://localhost:8080/api/category/updatecategory/${categoryId}`, {
+            method: "PATCH",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                id: categoryId,
+                newName: newName,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data.status === 201) {
+                    window.location.href = "./category";
+                }
+            })
+            .catch((error) => console.log(error));
+    }
+
+    function handleSubmit(e) {
         e.preventDefault();
         fetch("http://localhost:8080/api/category/createcategory", {
             method: "POST",
@@ -103,7 +178,8 @@ export default function AdminCategory() {
             },
             body: JSON.stringify({
                 name: name,
-                additionalAttribute: additionalAttributes,
+                subcategoryOf: selectedCategory,
+                additionalAttributes: additionalAttributes,
             }),
         })
             .then((res) => res.json())
@@ -147,13 +223,6 @@ export default function AdminCategory() {
                                                 <span className="details">Category's name</span>
                                                 <input type="text" placeholder="Enter category's name" required onChange={(e) => setName(e.target.value)} />
                                             </div>
-                                            {/* <div className="input-field">
-                                                <span className="details">Sub-category of:</span>
-                                                <select className="dropdown" onChange={dropdownHandler}>
-                                                    <option defaultValue="none">--None--</option>
-                                                    {dataForSelector}
-                                                </select>
-                                            </div> */}
                                         </div>
                                         {additionalAttributes.map((attribute, index) => (
                                             <React.Fragment key={index + 1}>
@@ -185,7 +254,7 @@ export default function AdminCategory() {
                                         <div className="category-details">
                                             <div className="input-field">
                                                 <span className="details">Sub-category of:</span>
-                                                <select className="dropdown" onChange={dropdownHandler}>
+                                                <select className="dropdown" onChange={(e) => dropdownHandler(e.target.value)}>
                                                     <option defaultValue="none">--None--</option>
                                                     {dataForSelector}
                                                 </select>
@@ -213,7 +282,9 @@ export default function AdminCategory() {
                                                     <tr>
                                                         <td>ID</td>
                                                         <td>Name</td>
+                                                        <td>Number of subcategories</td>
                                                         <td>Number of product</td>
+                                                        <td>Action</td>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

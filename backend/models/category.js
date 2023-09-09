@@ -6,15 +6,11 @@ const categorySchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-
-    // subcategories: [
-    //     {
-    //         type: Schema.Types.ObjectId,
-    //         ref: "Category"
-    //     }
-    // ],
-
-    additionalAttribute: [{}]
+    subcategoryOf: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Category"
+        },
+    additionalAttributes: [{}]
 
 });
 
