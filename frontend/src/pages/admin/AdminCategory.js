@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 // import Header from '../components/Header'
 import "../../css/admin/admin.css";
 import Sidebar from '../../components/Sidebar';
@@ -44,7 +44,7 @@ export default function AdminCategory() {
     }, []);
 
     const categories = useLoaderData();
-    const data = categories && categories.data.map((category, index) => (
+    const data = categories.data && categories.data.map((category, index) => (
         category._id === editId ?
             <React.Fragment key={index + 1}>
                 <tr>

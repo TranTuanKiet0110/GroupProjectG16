@@ -140,7 +140,7 @@ router.post("/signin", async (req, res) => {
                 return res.json({ error: "User not found!" })
             }
             if (await bcrypt.compare(password, admin.password)) {
-                const token = jwt.sign({ email: admin.email }, JWT_SECRET)
+                const token = jwt.sign({ phone: admin.phone }, JWT_SECRET)
 
                 if (res.status(201)) {
                     return res.json({ status: 201, data: token })
@@ -151,6 +151,49 @@ router.post("/signin", async (req, res) => {
             //failed to login
             res.json({ status: "error", error: "Invalid email or password!" })
         }
+    } else if (req.body.radioSelected == 'seller') {
+        if (req.body.email != '') {
+            const seller = await Seller.findOne({ email: email })
+            //cannot find email
+            if (!seller) {
+                return res.json({ error: "User not found!" })
+            }
+            //compare password in database
+            if (seller.status == "approved") {
+                if (await bcrypt.compare(password, seller.password)) {
+                    const token = jwt.sign({ email: seller.email }, JWT_SECRET)
+    
+                    if (res.status(201)) {
+                        return res.json({ status: 201, data: token })
+                    } else {
+                        return res.json({ error: "error " })
+                    }
+                }
+                res.json({ status: "error", error: "Invalid email or password!" })
+            }
+            res.send({status: 404, msg: "Acount not yet approved"})
+        } else {
+            const seller = await Seller.findOne({ phone: phone })
+            //cannot find phone number
+            if (!seller) {
+                return res.json({ error: "User not found!" })
+            }
+
+            if (seller.status == "approved") {
+                if (await bcrypt.compare(password, seller.password)) {
+                    const token = jwt.sign({ phone: seller.phone }, JWT_SECRET)
+    
+                    if (res.status(201)) {
+                        return res.json({ status: 201, data: token })
+                    } else {
+                        return res.json({ error: "error " })
+                    }
+                }
+                res.json({ status: "error", error: "Invalid email or password!" })
+            }
+            //failed to login
+            res.send({ status: 404, msg: "Account not yet approved"})
+        }   
     }
 });
 
@@ -160,13 +203,54 @@ router.post("/adminData", async (req, res) => {
     try {
         const admin = jwt.verify(token, JWT_SECRET)
         const adminEmail = admin.email;
-        Admin.findOne({ email: adminEmail })
-            .then((data) => {
-                res.send({ status: 201, data: data })
-            })
-            .catch((error) => {
-                res.send({ status: "error", data: error })
-            })
+        const adminPhone = admin.phone;
+        if (adminEmail != null) {
+            Admin.findOne({ email: adminEmail })
+                .then((data) => {
+                    res.send({ status: 201, data: data })
+                })
+                .catch((error) => {
+                    res.send({ status: "error", data: error })
+                })
+        } else {
+            Admin.findOne({ phone: adminPhone })
+                .then((data) => {
+                    res.send({ status: 201, data: data })
+                })
+                .catch((error) => {
+                    res.send({ status: "error", data: error })
+                })
+        }
+    } catch (err) {
+
+    }
+});
+
+router.post("/sellerData", async (req, res) => {
+    const { token } = req.body
+
+    try {
+        const seller = jwt.verify(token, JWT_SECRET)
+        const sellerEmail = seller.email;
+        const sellerPhone = seller.phone;
+        
+        if (sellerEmail != null) {
+            Seller.findOne({ email: sellerEmail })
+                .then((data) => {
+                    res.send({ status: 201, data: data })
+                })
+                .catch((error) => {
+                    res.send({ status: "error", data: error })
+                })
+        } else {
+            Seller.findOne({ phone: sellerPhone })
+                .then((data) => {
+                    res.send({ status: 201, data: data })
+                })
+                .catch((error) => {
+                    res.send({ status: "error", data: error })
+                })
+        }
     } catch (err) {
 
     }
@@ -184,7 +268,7 @@ router.get("/getAllSeller", async (req, res) => {
 router.patch("/updateSeller/:id", async (req, res) => {
     const { id, newStatus } = req.body
 
-    const seller = await Seller.findOne( { _id: id })
+    const seller = await Seller.findOne({ _id: id })
     if (!seller) {
         return res.json({ error: "User not found!" })
     }

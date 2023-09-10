@@ -483,6 +483,20 @@
     letter-spacing: 1px;
     border-radius: 10px;
     background: linear-gradient(135deg, #fa8100, #fc1eb7);
+    margin-top: 20px;
+}
+
+.admin-container .form-container form .cancelButton input { 
+    height: 45px;
+    width: 100%;
+    margin-top: 20px;
+    outline: none;
+    border-color: grey;
+    border-radius: 2px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .admin-container .form-container form .button input:hover {
