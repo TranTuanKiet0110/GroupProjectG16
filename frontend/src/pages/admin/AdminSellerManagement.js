@@ -68,6 +68,11 @@ export default function AdminSellerManagement() {
         </React.Fragment>
     );
 
+    function logOut() {
+        window.localStorage.clear();
+        window.location.href = "./signin";
+    };
+
     function handleStatusChange(sellerID, newStatus) {
         fetch(`http://localhost:8080/api/user/updateseller/${sellerID}`, {
             method: "PATCH",
@@ -104,6 +109,7 @@ export default function AdminSellerManagement() {
                         </div>
 
                         <div className="user-wrapper">
+                            <button onClick={() => logOut()}>Log out</button>
                             <img src={admin} width="30px" height="30px" alt="Admin" />
                             <div>
                                 <h4>Welcome,</h4>

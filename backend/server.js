@@ -3,9 +3,6 @@ const app = express();
 const port = 8080;
 const mongoose = require('mongoose');
 const cors = require("cors");
-
-
-// const adminRouter = require('./routes/admin');
 const userRouter = require('./routes/user');
 const categoryRouter = require('./routes/category');
 const { productRoute } = require("./routes/product");
@@ -14,7 +11,6 @@ const { orderRoute } = require("./routes/order");
 
 app.use(cors());
 app.use(express.json());
-// app.use('/admin', adminRouter);
 app.use('/api/user', userRouter);
 app.use('/api/category', categoryRouter);
 app.use("/products", productRoute);
