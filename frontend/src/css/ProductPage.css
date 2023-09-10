@@ -1,151 +1,391 @@
-/* ProductPage.css */
+/* all */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
 
-/* Container for the entire page */
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 } */
 
-/* .productpage {
-  font-family: Arial, sans-serif;
-  margin: 0px;
+:root {
+  --main-blue: #71b7e6;
+  --main-purple: #9b59b6;
+  --main-grey: #ccc;
+  --sub-grey: #d9d9d9;
+}
+
+.productpage {
+  background: #4b79a1;
+  background: -webkit-linear-gradient(to left, #74acdd, #283e51);
+  background: linear-gradient(to left, #0865b6, #283e51);
+}
+
+.productpage .filterandsort {
+  display: flex;
+  justify-content: center; /* This centers the table horizontally */
+  /* align-items: center; */ /* This centers the table vertically */
+  /* This takes the full viewport height */
+  padding: 30px;
+}
+.productpage .container-wrapper {
+  display: flex;
+  justify-content: center; /* This centers the table horizontally */
+  /* align-items: center; */ /* This centers the table vertically */
+  /* This takes the full viewport height */
+   padding: 30px;
+}
+/* container and form */
+.productpage .container {
+  max-width: 700px;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #fa8100, #fc1eb7);
-} */
-
-/* Form container */
-/* .product-form-container {
-  background-color: #f4f4f4;
-  padding: 25px;
+  background: #fff;
+  padding: 25px 30px;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-} */
+}
+.productpage .container .title {
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+}
 
-/* .product-form-container h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-} */
+.productpage .container .title::before {
+  content: "";
+  position: absolute;
+  height: 3.5px;
+  width: 30px;
+  background: linear-gradient(135deg, var(--main-blue), var(--main-purple));
+  left: 0;
+  bottom: 0;
+}
 
-/* .form input,
-.form select {
+.productpage .container form .user__details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+/* inside the form user details */
+.productpage form .user__details .input__box {
+  width: calc(100% / 2 - 20px);
+  margin-bottom: 15px;
+}
+
+.productpage .user__details .input__box .details {
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: block;
+}
+.productpage .user__details .input__box input {
+  height: 45px;
   width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid var(--main-grey);
+  padding-left: 15px;
   font-size: 16px;
-} */
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+}
 
-/* .form .attr-input {
+.productpage .user__details .input__box input:focus,
+.productpage .user__details .input__box input:valid {
+  border-color: var(--main-purple);
+}
+
+/* inside the form gender details */
+
+.productpage form .gender__details .gender__title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.productpage form .gender__details .category {
   display: flex;
-  align-items: center;
-  margin: 10px 0;
-}
-
-.form .attr-input input {
-  flex: 1;
-}
-
-.form .attr-input button {
-  margin-left: 10px;
-} */
-
-/* Buttons */
-/* .primary-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.second-button {
-  background-color: #6c757d;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 3px;
-  cursor: pointer;
-} */
-
-/* Filter and sort container */
-/* .filterandsort {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
+  width: 80%;
+  margin: 15px 0;
   justify-content: space-between;
 }
 
-.filter,
-.sort {
-  width: 45%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  font-size: 16px;
-} */
-
-/* Product table */
-/* .product-table table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+.productpage .gender__details .category label {
+  display: flex;
+  align-items: center;
 }
 
-.product-table th,
-.product-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
+.productpage .gender__details .category .dot {
+  height: 18px;
+  width: 18px;
+  background: var(--sub-grey);
+  border-radius: 50%;
+  margin: 10px;
+  border: 5px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.productpage #dot-1:checked ~ .category .one,
+.productpage #dot-2:checked ~ .category .two,
+.productpage #dot-3:checked ~ .category .three {
+  border-color: var(--sub-grey);
+  background: var(--main-purple);
+}
+
+.productpage form input[type="radio"] {
+  display: none;
+}
+
+/* submit button */
+.productpage form .button {
+  height: 45px;
+  margin: 45px 0;
+}
+
+.productpage form .button input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 5px;
+  background: linear-gradient(135deg, var(--main-blue), var(--main-purple));
+  transition: all 0.3s ease;
+}
+
+.productpage form .button input:hover {
+  background: linear-gradient(-135deg, var(--main-blue), var(--main-purple));
+}
+
+@media only screen and (max-width: 584px) {
+  .productpage .container {
+    max-width: 100%;
+  }
+
+  .productpage form .user__details .input__box {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  .productpage form .gender__details .category {
+    width: 100%;
+  }
+
+  .productpage .container form .user__details {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+
+  .productpage .user__details::-webkit-scrollbar {
+    width: 0;
+  }
+}
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:600,700";
+
+* {
+  font-family: "Open Sans", sans-serif;
+} */
+
+.productpage .seller-orders-title {
+  padding: 30px; /* Adjust this value as needed */
+}
+
+.productpage .table-wrapper {
+  display: flex;
+  justify-content: center; /* This centers the table horizontally */
+  /* align-items: center; */ /* This centers the table vertically */
+  height: 100vh; /* This takes the full viewport height */
+}
+
+.productpage .rwd-table {
+  width: 90%; /* You can adjust this value */
+  margin: auto; /* This will keep the table centered */
+  min-width: 1100px;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+/* Increase the font size for the entire table */
+.productpage .rwd-table,
+.productpage .rwd-table th,
+.productpage .rwd-table td {
+  font-size: 25px; /* Adjust this value as needed */
+}
+
+/* If you want headers to have a different font size */
+.productpage .rwd-table th {
+  font-size: 30px; /* Adjust this value as needed */
+}
+
+/* .rwd-table tr:first-child {
+  border-top: none;
+  background: #428bca;
+  color: #fff;
+} */
+
+.productpage .rwd-table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background-color: #f5f9fc;
+}
+
+.productpage .rwd-table tr:nth-child(odd):not(:first-child) {
+  background-color: #ebf3f9;
+}
+
+.productpage .rwd-table th {
+  display: none;
+}
+
+.productpage .rwd-table td {
+  display: block;
+}
+
+.productpage .rwd-table td:first-child {
+  margin-top: 0.5em;
+}
+
+.productpage .rwd-table td:last-child {
+  margin-bottom: 0.5em;
+}
+
+.productpage .rwd-table td:before {
+  content: attr(data-th) ": ";
+  font-weight: bold;
+  width: 120px;
+  display: inline-block;
+  color: #000;
+}
+
+.productpage .rwd-table th,
+.productpage .rwd-table td {
   text-align: left;
 }
 
-.product-table th {
-  background-color: #f4f4f4;
+.productpage .rwd-table {
+  color: #333;
+  border-radius: 0.4em;
+  overflow: hidden;
 }
 
-.product-table .edit-button {
-  background-color: #044b2e;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
-  cursor: pointer;
-  margin-right: 5px;
+.productpage .rwd-table tr {
+  border-color: #bfbfbf;
 }
 
-.product-table .delete-button {
-  background-color: #960808;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
-  cursor: pointer;
-  margin-right: 5px;
-} */
+.productpage .rwd-table th,
+.productpage .rwd-table td {
+  padding: 0.5em 1em;
+}
+@media screen and (max-width: 601px) {
+  .productpage .rwd-table tr:nth-child(2) {
+    border-top: none;
+  }
+}
+@media screen and (min-width: 600px) {
+  .productpage .rwd-table tr:hover:not(:first-child) {
+    background-color: #d8e7f3;
+  }
+  .productpage .rwd-table td:before {
+    display: none;
+  }
+  .productpage .rwd-table th,
+  .productpage .rwd-table td {
+    display: table-cell;
+    padding: 0.25em 0.5em;
+  }
+  .productpage .rwd-table th:first-child,
+  .productpage .rwd-table td:first-child {
+    padding-left: 0;
+  }
+  .productpage .rwd-table th:last-child,
+  .productpage .rwd-table td:last-child {
+    padding-right: 0;
+  }
+  .productpage .rwd-table th,
+  .productpage .rwd-table td {
+    padding: 1em !important;
+  }
+}
 
-/* Loading message */
-/* .loading {
+/* THE END OF THE IMPORTANT STUFF */
+
+/* Basic Styling */
+
+.productpage h1 {
   text-align: center;
-  font-size: 18px;
-  margin-top: 20px;
-} */
-
-/* Responsive styles */
-/* @media (max-width: 768px) {
-  .filterandsort {
-    flex-direction: column;
-    align-items: flex-start;
+  font-size: 2.4em;
+  color: #f2f2f2;
+}
+.productpage .container {
+  display: block;
+  text-align: center;
+}
+.productpage h3 {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  font-size: 1.5em;
+  color: #cecece;
+}
+.productpage h3:before {
+  content: "\25C0";
+  position: absolute;
+  left: -50px;
+  -webkit-animation: leftRight 2s linear infinite;
+  animation: leftRight 2s linear infinite;
+}
+.productpage h3:after {
+  content: "\25b6";
+  position: absolute;
+  right: -50px;
+  -webkit-animation: leftRight 2s linear infinite reverse;
+  animation: leftRight 2s linear infinite reverse;
+}
+@-webkit-keyframes leftRight {
+  0% {
+    -webkit-transform: translateX(0);
   }
-
-  .filter,
-  .sort {
-    width: 100%;
-    margin-bottom: 10px;
+  25% {
+    -webkit-transform: translateX(-10px);
   }
-} */
+  75% {
+    -webkit-transform: translateX(10px);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+  }
+}
+@keyframes leftRight {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/*
+    Don't look at this last part. It's unnecessary. I was just playing with pixel gradients... Don't judge.
+*/
+/*
+@media screen and (max-width: 601px) {
+  .rwd-table tr {
+    background-image: -webkit-linear-gradient(left, #428bca 137px, #f5f9fc 1px, #f5f9fc 100%);
+    background-image: -moz-linear-gradient(left, #428bca 137px, #f5f9fc 1px, #f5f9fc 100%);
+    background-image: -o-linear-gradient(left, #428bca 137px, #f5f9fc 1px, #f5f9fc 100%);
+    background-image: -ms-linear-gradient(left, #428bca 137px, #f5f9fc 1px, #f5f9fc 100%);
+    background-image: linear-gradient(left, #428bca 137px, #f5f9fc 1px, #f5f9fc 100%);
+  }
+  .rwd-table tr:nth-child(odd) {
+    background-image: -webkit-linear-gradient(left, #428bca 137px, #ebf3f9 1px, #ebf3f9 100%);
+    background-image: -moz-linear-gradient(left, #428bca 137px, #ebf3f9 1px, #ebf3f9 100%);
+    background-image: -o-linear-gradient(left, #428bca 137px, #ebf3f9 1px, #ebf3f9 100%);
+    background-image: -ms-linear-gradient(left, #428bca 137px, #ebf3f9 1px, #ebf3f9 100%);
+    background-image: linear-gradient(left, #428bca 137px, #ebf3f9 1px, #ebf3f9 100%);
+  }
+}*/
