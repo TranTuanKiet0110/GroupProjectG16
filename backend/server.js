@@ -5,11 +5,17 @@ const mongoose = require('mongoose');
 const cors = require("cors");
 const userRouter = require('./routes/user');
 const categoryRouter = require('./routes/category');
+const { productRoute } = require("./routes/product");
+const { customerRoute } = require("./routes/customer");
+const { orderRoute } = require("./routes/order");
 
 app.use(cors());
 app.use(express.json());
 app.use('/api/user', userRouter);
 app.use('/api/category', categoryRouter);
+app.use("/products", productRoute);
+app.use("/customers", customerRoute);
+app.use("/orders", orderRoute);
 
 app.listen(port, () => {
     console.log(`Server start on port ${port}`);
