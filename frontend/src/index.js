@@ -19,19 +19,19 @@ const isAdminLoggedIn = window.localStorage.getItem("adminLoggedIn");
 const router = createBrowserRouter([
   {
     path: "/dashboard",
-    element: isAdminLoggedIn == "true" ? <AdminDashboard /> : <SignIn />,
+    element: isAdminLoggedIn === "true" ? <AdminDashboard /> : <SignIn />,
     loader: loaderForDashboard,
     // errorElement: <NotFound />,
   },
   {
     path: "/category",
-    element: isAdminLoggedIn == "true" ? <AdminCategory /> : <SignIn />,
+    element: isAdminLoggedIn === "true" ? <AdminCategory /> : <SignIn />,
     loader: loaderForCategory,
     // errorElement: <NotFound />,
   },
   {
     path: "/sellerManagement",
-    element: isAdminLoggedIn == "true" ? <AdminSellerManagement /> : <SignIn />,
+    element: isAdminLoggedIn === "true" ? <AdminSellerManagement /> : <SignIn />,
     loader: loaderForSellerManagement,
     // errorElement: <NotFound />,
   },
