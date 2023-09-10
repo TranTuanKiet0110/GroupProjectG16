@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 // import RegisterForm from '../components/RegisterForm'
-import LoginForm from '../components/LoginForm'
-import ProductCard from '../components/ProductCard'
-import ShoppingCart from '../components/ShoppingCart'
-import { ProductContext } from '../contexts/ProductContext'
-import { AuthContext } from '../contexts/AuthContext'
-import OrderList from '../components/OrderList'
+// import LoginForm from '../../components/LoginForm'
+import ProductCard from '../../components/customer/ProductCard'
+import ShoppingCart from '../../components/customer/ShoppingCart'
+import { ProductContext } from '../../contexts/ProductContext'
+import { AuthContext } from '../../contexts/AuthContext'
+import OrderList from '../../components/customer/OrderList'
 // import { CustomerContext } from '../contexts/CustomerContext'
 
 function Customer() {
@@ -61,9 +61,9 @@ function Customer() {
             {/* <div className='container'>
                 <RegisterForm />
             </div> */}
-            <div className='container'>
+            {/* <div className='container'>
                 <LoginForm />
-            </div>
+            </div> */}
 
             <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
 
