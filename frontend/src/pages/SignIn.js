@@ -46,8 +46,11 @@ export default function SignIn() {
                     window.localStorage.setItem("token", data.data);
                     if (radioSelected === "admin") {
                         window.localStorage.setItem("adminLoggedIn", true);
+                        window.location.href = "./dashboard";
+                    } else if (radioSelected === "seller") {
+                        window.localStorage.setItem("sellerLoggedIn", true);
+                        window.location.href = "./product";
                     }
-                    window.location.href = "./dashboard";
                 }
             })
             .catch((error) => console.log(error));
@@ -55,7 +58,6 @@ export default function SignIn() {
 
     return (
         <>
-            {/* <Header /> */}
             <div className="sign-in-main">
                 <div className="sign-in-container">
                     <div className="title">Sign In</div>

@@ -8,14 +8,15 @@ import AdminDashboard, { loaderForDashboard } from './pages/admin/AdminDashboard
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminCategory, { loaderForCategory } from './pages/admin/AdminCategory';
 import AdminSellerManagement, { loaderForSellerManagement } from './pages/admin/AdminSellerManagement';
-// import SellerPage from './pages/seller/SellerPage';
-import ProductPage from './pages/seller/ProductPage';
+import SellerPage from './pages/seller/SellerPage';
+import ProductPage, { loaderForProductPage } from './pages/seller/ProductPage';
 import OrderPage from './pages/seller/OrderPage';
 import StatisticsPage from './pages/seller/StatisticsPage';
 import Customer from './pages/customer/Customer';
 
 // import ProductList from '.pages/ProductList';
 const isAdminLoggedIn = window.localStorage.getItem("adminLoggedIn");
+const isSellerLoggedIn = window.localStorage.getItem("sellerLoggedIn");
 const router = createBrowserRouter([
   {
     path: "/dashboard",
@@ -45,13 +46,14 @@ const router = createBrowserRouter([
     element: <SignIn />,
     // errorElement: <NotFound />,
   },
-  // {
-  //   path: '/sellerpage',
-  //   element: <SellerPage />,
-  // },
+  {
+    path: '/sellerpage',
+    element: isSellerLoggedIn === "true" ? <SellerPage /> : <SignIn />,
+  },
   {
     path: '/product',
-    element: <ProductPage />,
+    element: isSellerLoggedIn === "true" ? <ProductPage /> : <SignIn />,
+    loader: loaderForProductPage,
 
   },
   {

@@ -6,7 +6,7 @@ const productScheme = new mongoose.Schema(
             type: String,
             required: true
         },
-        desription: {
+        description: {
             type: String,
             required: true
         },
@@ -29,7 +29,8 @@ const productScheme = new mongoose.Schema(
         dateAdded: {
             type: Date,
             default: Date.now
-        }
+        },
+        additionalAttributes: [{}]
     }
 );
 
