@@ -8,7 +8,7 @@ import AdminDashboard, { loaderForDashboard } from './pages/admin/AdminDashboard
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminCategory, { loaderForCategory } from './pages/admin/AdminCategory';
 import AdminSellerManagement, { loaderForSellerManagement } from './pages/admin/AdminSellerManagement';
-import SelerPage from './pages/seller/SelerPage';
+// import SellerPage from './pages/seller/SellerPage';
 import ProductPage from './pages/seller/ProductPage';
 import OrderPage from './pages/seller/OrderPage';
 import StatisticsPage from './pages/seller/StatisticsPage';
@@ -45,10 +45,10 @@ const router = createBrowserRouter([
     element: <SignIn />,
     // errorElement: <NotFound />,
   },
-  {
-    path: '/sellerpage',
-    element: <SelerPage />,
-  },
+  // {
+  //   path: '/sellerpage',
+  //   element: <SellerPage />,
+  // },
   {
     path: '/product',
     element: <ProductPage />,

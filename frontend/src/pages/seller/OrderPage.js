@@ -21,47 +21,56 @@ function OrderPage() {
   });
 
   return (
-    
     <div class="orderpage">
-     <Navbar />
+      <Navbar />
       <div class="order-container">
-      {filteredOrders.map((seller, index) => (
-        <div key={index}>
-          <h2 className="seller-header">{seller.sellerName}'s Orders:</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Product </th>
-                <th>Quantity</th>
-                <th>Customer ID</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {seller.orders.map((order, orderIndex) => (
-                <tr key={orderIndex}>
-                  <td>{order.product}</td>
-                  <td>{order.quantity}</td>
-                  <td>{order.customer}</td>
-                  <td>
-                    <select
-                      value={order.status}
-                      onChange={(e) => handleStatusChange(orderIndex, e.target.value)}
-                    >
-                      <option value="new">New</option>
-                      <option value="Shipped">Shipped</option>
-                      <option value="Canceled">Canceled</option>
-                    </select>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ))}
+        {filteredOrders.map((seller, index) => (
+          <div key={index}>
+            <div className="table-wrapper">
+              <table>
+                <div class="container">
+                  <h1 className="seller-orders-title">
+                    {seller.sellerName}'s Orders:
+                  </h1>
+                  <table class="rwd-table">
+                    <tbody>
+                      <tr className="table-title">
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Customer ID</th>
+                        <th>Status</th>
+                      </tr>
+                    </tbody>
+                    {seller.orders.map((order, orderIndex) => (
+                      <tbody>
+                        <tr>
+                          <td data-th="Product">{order.product}</td>
+                          <td data-th="Quantity">{order.quantity}</td>
+                          <td data-th="Customer ID">{order.customer}</td>
+                          <td data-th="Status">
+                            {" "}
+                            <select
+                              value={order.status}
+                              onChange={(e) =>
+                                handleStatusChange(orderIndex, e.target.value)
+                              }
+                            >
+                              <option value="new">New</option>
+                              <option value="Shipped">Shipped</option>
+                              <option value="Canceled">Canceled</option>
+                            </select>
+                          </td>
+                        </tr>
+                      </tbody>
+                    ))}
+                  </table>
+                </div>
+              </table>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-    </div>
-    
   );
 }
 

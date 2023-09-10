@@ -267,6 +267,12 @@
     padding: 16px 0;
 }
 
+.admin-container .sellers-management .card .card-body select {
+    width: 110px;
+    height: 35px;
+    font-size: 14px;
+}
+
 .admin-container .category-management {
     margin-top: 32px;
     display: grid;
