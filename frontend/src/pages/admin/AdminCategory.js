@@ -63,6 +63,7 @@ export default function AdminCategory() {
                     <td>{index + 1}</td>
                     <td>{category.name}</td>
                     <td>{categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
+                    <td>{categories && categories.data.map((subcategory) => (category.subcategoryOf === subcategory._id ? subcategory.name : null))}</td>
                     <td>0</td>
                     <td>
                         <button className="editBtn" onClick={() => handleEdit(category._id)}>Edit</button>
@@ -290,6 +291,7 @@ export default function AdminCategory() {
                                                         <td>ID</td>
                                                         <td>Name</td>
                                                         <td>Number of subcategories</td>
+                                                        <td>Subcategories of</td>
                                                         <td>Number of product</td>
                                                         <td>Action</td>
                                                     </tr>
