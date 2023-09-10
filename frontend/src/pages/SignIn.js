@@ -44,6 +44,9 @@ export default function SignIn() {
                 if (data.status === 201) {
                     // alert("login successful");
                     window.localStorage.setItem("token", data.data);
+                    if (radioSelected === "admin") {
+                        window.localStorage.setItem("adminLoggedIn", true);
+                    }
                     window.location.href = "./dashboard";
                 }
             })

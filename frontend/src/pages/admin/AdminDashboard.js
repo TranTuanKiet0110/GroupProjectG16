@@ -13,11 +13,11 @@ import { useState, useEffect } from 'react';
 
 
 export async function loaderForDashboard() {
-    const [sellers, categories ] = await Promise.all([
+    const [sellers, categories] = await Promise.all([
         fetch("http://localhost:8080/api/user/getallseller").then((response) => response.json()),
         fetch("http://localhost:8080/api/category/getallcategory").then((response) => response.json()),
     ]);
-    return {sellers, categories};
+    return { sellers, categories };
 };
 
 export default function AdminDashboard() {
@@ -65,6 +65,11 @@ export default function AdminDashboard() {
     const numOfApprovedSellers = sellers && sellers.data.filter((seller) => seller.status === 'approved');
     const numOfCategories = categories && categories.data.filter((category) => category.name !== '');
 
+    function logOut() {
+        window.localStorage.clear();
+        window.location.href = "./signin";
+    };
+    
     return (
         <>
             <div className="admin-container">
@@ -77,6 +82,7 @@ export default function AdminDashboard() {
                         </div>
 
                         <div className="user-wrapper">
+                            <button onClick={() => logOut()}>Log out</button>
                             <img src={admin} width="30px" height="30px" alt="Admin" />
                             <div>
                                 <h4>Welcome,</h4>

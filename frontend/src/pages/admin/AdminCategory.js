@@ -101,7 +101,7 @@ export default function AdminCategory() {
     }
 
     function dropdownHandler(selectedCategory) {
-        const storeAttribute  = []
+        const storeAttribute = []
         if (selectedCategory === "none") {
             setAdditionalAttributes([]);
         } else {
@@ -146,7 +146,7 @@ export default function AdminCategory() {
         } else {
 
         }
-    }
+    };
 
     function handleUpdate(categoryId) {
         fetch(`http://localhost:8080/api/category/updatecategory/${categoryId}`, {
@@ -170,7 +170,12 @@ export default function AdminCategory() {
                 }
             })
             .catch((error) => console.log(error));
-    }
+    };
+
+    function logOut() {
+        window.localStorage.clear();
+        window.location.href = "./signin";
+    };
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -210,6 +215,7 @@ export default function AdminCategory() {
                         </div>
 
                         <div className="user-wrapper">
+                            <button onClick={() => logOut()}>Log out</button>
                             <img src={admin} width="30px" height="30px" alt="Admin" />
                             <div>
                                 <h4>Welcome,</h4>

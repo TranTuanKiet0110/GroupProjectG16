@@ -4,33 +4,33 @@ import ReactDOM from 'react-dom/client';
 // import App from './App';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
-import AdminDashboard, {loaderForDashboard} from './pages/admin/AdminDashboard';
+import AdminDashboard, { loaderForDashboard } from './pages/admin/AdminDashboard';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AdminCategory, {loaderForCategory} from './pages/admin/AdminCategory';
-import AdminSellerManagement, {loaderForSellerManagement} from './pages/admin/AdminSellerManagement';
+import AdminCategory, { loaderForCategory } from './pages/admin/AdminCategory';
+import AdminSellerManagement, { loaderForSellerManagement } from './pages/admin/AdminSellerManagement';
 import SelerPage from './pages/seller/SelerPage';
 import ProductPage from './pages/seller/ProductPage';
 import OrderPage from './pages/seller/OrderPage';
 import StatisticsPage from './pages/seller/StatisticsPage';
 
 // import ProductList from '.pages/ProductList';
-
+const isAdminLoggedIn = window.localStorage.getItem("adminLoggedIn");
 const router = createBrowserRouter([
   {
     path: "/dashboard",
-    element: <AdminDashboard />,
+    element: isAdminLoggedIn == "true" ? <AdminDashboard /> : <SignIn />,
     loader: loaderForDashboard,
     // errorElement: <NotFound />,
   },
   {
     path: "/category",
-    element: <AdminCategory />,
+    element: isAdminLoggedIn == "true" ? <AdminCategory /> : <SignIn />,
     loader: loaderForCategory,
     // errorElement: <NotFound />,
   },
   {
     path: "/sellerManagement",
-    element: <AdminSellerManagement />,
+    element: isAdminLoggedIn == "true" ? <AdminSellerManagement /> : <SignIn />,
     loader: loaderForSellerManagement,
     // errorElement: <NotFound />,
   },
@@ -51,9 +51,9 @@ const router = createBrowserRouter([
   {
     path: '/product',
     element: <ProductPage />,
-   
+
   },
-  
+
   {
     path: '/order',
     element: <OrderPage />,
@@ -62,8 +62,6 @@ const router = createBrowserRouter([
     path: '/statistic',
     element: <StatisticsPage />,
   },
-
-
 
 ]);
 
