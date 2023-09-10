@@ -12,6 +12,7 @@ import SelerPage from './pages/seller/SelerPage';
 import ProductPage from './pages/seller/ProductPage';
 import OrderPage from './pages/seller/OrderPage';
 import StatisticsPage from './pages/seller/StatisticsPage';
+import Customer from './pages/customer/Customer';
 
 // import ProductList from '.pages/ProductList';
 
@@ -53,7 +54,6 @@ const router = createBrowserRouter([
     element: <ProductPage />,
    
   },
-  
   {
     path: '/order',
     element: <OrderPage />,
@@ -61,6 +61,10 @@ const router = createBrowserRouter([
   {
     path: '/statistic',
     element: <StatisticsPage />,
+  },
+  {
+    path: '/customer',
+    element: <Customer />,
   },
 
 
