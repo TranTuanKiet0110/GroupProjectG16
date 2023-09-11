@@ -1,5 +1,4 @@
 import React from 'react'
-// import Header from '../components/Header'
 import "../../css/admin/admin.css";
 import SellerSidebar from '../../components/SellerSidebar';
 import menu from '../../img/menu.png';
@@ -51,31 +50,32 @@ export default function OrderPage() {
         <td>{index + 1}</td>
         <td>Order #{index + 1}</td>
         <td>
-          <tr>
-            <td>
-              Item's name: {cartItems.data && cartItems.data.map((cartItem) => (products.data && products.data.map((product) => (cartItem.product === product._id ? product.name : ""))))}
-            </td>
-            <td>
-              Quantity: {cartItems.data && cartItems.data.map((cartItem) => (products.data && products.data.map((product) => (cartItem.product === product._id ? cartItem.quantity : ""))))}
-            </td>
-            <td>
-              Status: <span className={`status ${cartItems.data.map((cartItem) => (products.data && products.data.map((product) => (cartItem.product === product._id ? cartItem.status : ""))))}`}></span>
-              {cartItems.data && cartItems.data.map((cartItem) => (products.data && products.data.map((product) => (cartItem.product === product._id ? cartItem.status : ""))))}
-            </td>
-            <td>
-              <select onChange={(e) => handleStatusChange(cartItems.data.map((cartItem) => (products.data && products.data.map((product) => (cartItem.product === product._id ? cartItem._id : "")))), e.target.value)}>
-                <option>New</option>
-                {options.map((option, index) =>
-                  <option key={index + 1} >
-                    {option}
-                  </option>
-                )}
-              </select>
-            </td>
-          </tr>
+          {order.cartItems.map((item) =>
+            <tr>
+              <td>
+                Item's name: {cartItems.data.map((cartItem) => (products.data.map((product) => (product.seller === userId && product._id === cartItem.product && cartItem._id === item) ? product.name : "")))}
+              </td>
+              <td>
+                Quantity: {cartItems.data.map((cartItem) => (cartItem._id === item) ? cartItem.quantity : "")}
+              </td>
+              <td>
+                Status: <span className={`status ${cartItems.data.filter((cartItem) => cartItem._id === item).map((result) => result.status)}`}></span>
+                {cartItems.data.map((cartItem) => (cartItem._id === item) ? cartItem.status : "")}
+              </td>
+              <td>
+                <select onChange={(e) => handleStatusChange(`${cartItems.data.filter((cartItem) => cartItem._id === item).map((result) => result._id)}`, e.target.value)}>
+                  <option selected>--Status--</option>
+                  {options.map((option, index) =>
+                    <option key={index + 1} >
+                      {option}
+                    </option>
+                  )}
+                </select>
+              </td>
+            </tr>
+          )}
         </td>
         <td></td>
-
       </tr>
     </React.Fragment>
   );
@@ -86,27 +86,27 @@ export default function OrderPage() {
   };
 
   function handleStatusChange(cartItemID, newStatus) {
-      fetch(`http://localhost:8080/api/cartitem/updatecartitem/${cartItemID}`, {
-          method: "PATCH",
-          crossDomain: true,
-          headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify({
-              id: cartItemID,
-              newStatus: newStatus,
-          }),
+    fetch(`http://localhost:8080/api/cartitem/updatecartitem/${cartItemID}`, {
+      method: "PATCH",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        id: cartItemID,
+        newStatus: newStatus,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.status === 201) {
+          window.location.href = "./order";
+        }
       })
-          .then((res) => res.json())
-          .then((data) => {
-              console.log(data);
-              if (data.status === 201) {
-                  window.location.href = "./order";
-              }
-          })
-          .catch((error) => console.log(error));
+      .catch((error) => console.log(error));
   };
 
   return (

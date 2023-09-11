@@ -1,17 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import './index.css';
-// import App from './App';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
 import AdminDashboard, { loaderForDashboard } from './pages/admin/AdminDashboard';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminCategory, { loaderForCategory } from './pages/admin/AdminCategory';
 import AdminSellerManagement, { loaderForSellerManagement } from './pages/admin/AdminSellerManagement';
-import SellerPage from './pages/seller/SellerPage';
 import ProductPage, { loaderForProductPage } from './pages/seller/ProductPage';
 import OrderPage, {loaderForOrderManagement} from './pages/seller/OrderPage';
-import StatisticsPage from './pages/seller/StatisticsPage';
 import Customer from './pages/customer/Customer';
 import ProductsContextProvider from './contexts/ProductContext';
 import CustomerContextProvider from './contexts/CustomerContext';
@@ -58,57 +54,49 @@ const router = createBrowserRouter([
       }
     ]
   },
-  // {
-  //   path: "/dashboard",
-  //   element: isAdminLoggedIn === "true" ? <AdminDashboard /> : <SignIn />,
-  //   loader: loaderForDashboard,
-  //   // errorElement: <NotFound />,
-  // },
-  // {
-  //   path: "/category",
-  //   element: isAdminLoggedIn === "true" ? <AdminCategory /> : <SignIn />,
-  //   loader: loaderForCategory,
-  //   // errorElement: <NotFound />,
-  // },
-  // {
-  //   path: "/sellerManagement",
-  //   element: isAdminLoggedIn === "true" ? <AdminSellerManagement /> : <SignIn />,
-  //   loader: loaderForSellerManagement,
-  //   // errorElement: <NotFound />,
-  // },
-  // {
-  //   path: "/register",
-  //   element: <Register />,
-  //   // errorElement: <NotFound />,
-  // },
-  // {
-  //   path: "/signIn",
-  //   element: <SignIn />,
-  //   // errorElement: <NotFound />,
-  // },
-  // {
-  //   path: '/sellerpage',
-  //   element: isSellerLoggedIn === "true" ? <SellerPage /> : <SignIn />,
-  // },
-  // {
-  //   path: '/product',
-  //   element: isSellerLoggedIn === "true" ? <ProductPage /> : <SignIn />,
-  //   loader: loaderForProductPage,
+  {
+    path: "/dashboard",
+    element: isAdminLoggedIn === "true" ? <AdminDashboard /> : <SignIn />,
+    loader: loaderForDashboard,
+    // errorElement: <NotFound />,
+  },
+  {
+    path: "/category",
+    element: isAdminLoggedIn === "true" ? <AdminCategory /> : <SignIn />,
+    loader: loaderForCategory,
+    // errorElement: <NotFound />,
+  },
+  {
+    path: "/sellerManagement",
+    element: isAdminLoggedIn === "true" ? <AdminSellerManagement /> : <SignIn />,
+    loader: loaderForSellerManagement,
+    // errorElement: <NotFound />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+    // errorElement: <NotFound />,
+  },
+  {
+    path: "/signIn",
+    element: <SignIn />,
+    // errorElement: <NotFound />,
+  },
+  {
+    path: '/product',
+    element: isSellerLoggedIn === "true" ? <ProductPage /> : <SignIn />,
+    loader: loaderForProductPage,
 
-  // },
-  // {
-  //   path: '/order',
-  //   element: isSellerLoggedIn === "true" ? <OrderPage /> : <SignIn />,
-  //   loader: loaderForOrderManagement,
-  // },
-  // {
-  //   path: '/statistic',
-  //   element: <StatisticsPage />,
-  // },
-  // {
-  //   path: '/customer',
-  //   element: <AuthContextProvider><ProductsContextProvider><CustomerContextProvider><Customer /></CustomerContextProvider></ProductsContextProvider></AuthContextProvider>,
-  // },
+  },
+  {
+    path: '/order',
+    element: isSellerLoggedIn === "true" ? <OrderPage /> : <SignIn />,
+    loader: loaderForOrderManagement,
+  },
+  {
+    path: '/customer',
+    element: <AuthContextProvider><ProductsContextProvider><CustomerContextProvider><Customer /></CustomerContextProvider></ProductsContextProvider></AuthContextProvider>,
+  },
 
 ]);
 

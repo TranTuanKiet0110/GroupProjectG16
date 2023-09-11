@@ -60,12 +60,11 @@ export default function ProductPage() {
     if (product.seller === userId) {
       return <React.Fragment key={index + 1}>
         <tr>
-          <td>{index + 1}</td>
           <td>{product.name}</td>
           <td>{product.description}</td>
-          <td>{product.imgURL}</td>
+          <td><a href={product.imgURL}>View image</a></td>
           <td>{product.price}</td>
-          <td>{categories && categories.data.map((category) => (category._id === product.category ? category.name : null))}</td>
+          <td>{categories.data && categories.data.map((category) => (category._id === product.category ? category.name : null))}</td>
           <td>{product.additionalAttributes.map((attribute) => <div><span>{attribute.name}:</span><span> {attribute.value}</span></div>)}</td>
           <td>
             <button className="editBtn" onClick={() => handleEdit(product._id)}>Edit</button>
@@ -100,11 +99,10 @@ export default function ProductPage() {
 
           for (const attribute of category.additionalAttributes) {
             storeAttribute.push({ name: attribute.name, value: attribute.value });
-            setAdditionalAttributes(storeAttribute);
           }
         }
       }
-      // setAdditionalAttributes(storeAttribute);
+      setAdditionalAttributes(storeAttribute);
     }
   };
 
@@ -218,7 +216,7 @@ export default function ProductPage() {
           <header>
             <div className="box">
               <img src={menu} alt="Menu" />
-              <span>Product Management</span>
+              <span>Products Management</span>
             </div>
 
             <div className="user-wrapper">
@@ -368,7 +366,6 @@ export default function ProductPage() {
                       <table>
                         <thead>
                           <tr>
-                            <td>ID</td>
                             <td>Name</td>
                             <td>Description</td>
                             <td>Image</td>
