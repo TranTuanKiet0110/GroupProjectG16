@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { createContext } from "react";
 import axios from 'axios';
+import { Outlet } from 'react-router-dom';
+
 
 const API_URL = 'http://localhost:8080';
 
 
 export const ProductContext = createContext();
 
-const ProductContextProvider = ({ children }) => {
+const ProductContextProvider = () => {
     const [products, setProducts] = useState([]);
 
     const loadProducts = async () => {
@@ -24,7 +26,7 @@ const ProductContextProvider = ({ children }) => {
     const productContextData = {products};
 
     return (
-        <ProductContext.Provider value={productContextData}>{children}</ProductContext.Provider>
+        <ProductContext.Provider value={productContextData}><Outlet/></ProductContext.Provider>
     )
 }
 

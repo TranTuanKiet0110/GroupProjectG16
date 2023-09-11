@@ -6,6 +6,7 @@ const Admin = require('../models/admin');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "hfdsah984yth3ofnw9fyhfh984yt93h98wy98shfdvsdfyg8s7ghfuibvaiuv9"
+const verifyToken = require('../middlewares/auth');
 
 //register user (actually there is no admin option for register, I put it there to make it easy for testing)
 router.post("/register", async (req, res) => {
@@ -122,7 +123,7 @@ router.post("/register", async (req, res) => {
 
 //sign in 
 router.post("/signin", async (req, res) => {
-    const { email, phone, password } = req.body
+    const { email, phone, password, radioSelected } = req.body
 
     if (req.body.radioSelected == 'admin') {
         if (req.body.email != '') {
@@ -208,6 +209,74 @@ router.post("/signin", async (req, res) => {
         }   
     }
 });
+router.post('/signin/customer', async (req, res) => {
+    const { phone, email, password, loginMethod } = req.body
+
+    if (loginMethod == 'emailLogin') {
+        try {
+            const customer = await Customer.findOne({ email: email });
+            if (!customer) {
+                return res.status(400).json({ success: false, msg: 'Invalid email or password' })
+            }
+
+            const passwordMatched = await bcrypt.compare(password, customer.password)
+            if (!passwordMatched) {
+                return res.status(400).json({ success: false, msg: 'Invalid email or password' })
+            }
+            const accessToken = jwt.sign({ customerID: customer._id }, JWT_SECRET)
+            res.json({ status: 201, success: true, msg: 'Successfully logged in', accessToken })
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ success: false, msg: 'Server error' })
+        }
+    }
+    if (loginMethod == 'phoneLogin') {
+        try {
+            const customer = await Customer.findOne({ phone: phone })
+            if (!customer) {
+                return res.status(400).json({ success: false, msg: 'Invalid phone or password' })
+            }
+
+            const passwordMatched = await bcrypt.compare(password, user.password)
+            if (!passwordMatched) {
+                return res.status(400).json({ success: false, msg: 'Invalid phone or password' })
+            }
+
+            const accessToken = jwt.sign({ customerID: customer._id }, JWT_SECRET)
+
+            res.json({ status: 201, success: true, msg: 'Successfully logged in', accessToken })
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ success: false, msg: 'Server error' })
+        }
+    }
+})
+
+router.get('/auth', verifyToken, async (req, res) => {
+    try {
+        const customer = await Customer.findById(req.customerID).populate([
+            {
+                path: 'shoppingCart',
+                populate: { path: 'product' }
+            },
+            {
+                path: 'orders',
+                populate: {
+                    path: 'cartItems',
+                    populate: { path: 'product' }
+                }
+            }
+        ]);
+        if (customer) {
+            res.json({ success: true, msg: 'Authorized user', user: customer })
+        } else {
+            res.status(400).json({ success: false, msg: 'User not found' })
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ success: false, msg: 'Server error' })
+    }
+})
 
 //get a specific admin's data
 router.post("/adminData", async (req, res) => {

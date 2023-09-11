@@ -9,11 +9,51 @@ import AdminSellerManagement, { loaderForSellerManagement } from './pages/admin/
 import ProductPage, { loaderForProductPage } from './pages/seller/ProductPage';
 import OrderPage, {loaderForOrderManagement} from './pages/seller/OrderPage';
 import Customer from './pages/customer/Customer';
+import ProductsContextProvider from './contexts/ProductContext';
+import CustomerContextProvider from './contexts/CustomerContext';
+import AuthContextProvider from './contexts/AuthContext';
+import CustomerLoginForm from './components/customer/CustomerLoginForm';
+import ShoppingCart from './components/customer/ShoppingCart';
+import OrderList from './components/customer/OrderList';
 
 // import ProductList from '.pages/ProductList';
 const isAdminLoggedIn = window.localStorage.getItem("adminLoggedIn");
 const isSellerLoggedIn = window.localStorage.getItem("sellerLoggedIn");
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AuthContextProvider />,
+    children: [
+      {
+        path: "/",
+        element: <ProductsContextProvider />,
+        children: [
+          {
+            path: "/",
+            element: <CustomerContextProvider />,
+            children: [
+              {
+                path: "/",
+                element: <Customer />
+              },
+              {
+                path: "/customer/cart",
+                element: <ShoppingCart />
+              },
+              {
+                path: "/customer/orders",
+                element: <OrderList/>
+              }
+            ]
+          }
+        ]
+      },
+      {
+        path: "/login",
+        element: <CustomerLoginForm />,
+      }
+    ]
+  },
   {
     path: "/dashboard",
     element: isAdminLoggedIn === "true" ? <AdminDashboard /> : <SignIn />,
@@ -55,7 +95,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/customer',
-    element: <Customer />,
+    element: <AuthContextProvider><ProductsContextProvider><CustomerContextProvider><Customer /></CustomerContextProvider></ProductsContextProvider></AuthContextProvider>,
   },
 
 ]);
@@ -64,6 +104,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    {/* <App /> */}
   </React.StrictMode>
 );
 
