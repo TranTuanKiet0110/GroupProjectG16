@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 // import Header from '../components/Header'
 import "../../css/admin/admin.css";
 import Sidebar from '../../components/Sidebar';
@@ -8,9 +8,12 @@ import { useLoaderData } from 'react-router';
 import { useState, useEffect } from 'react';
 
 export async function loaderForCategory() {
-    const res = await fetch("http://localhost:8080/api/category/getallcategory");
-    const categories = await res.json();
-    return categories;
+    
+    const [products, categories] = await Promise.all([
+        fetch("http://localhost:8080/api/product/getallproduct").then((response) => response.json()),
+        fetch("http://localhost:8080/api/category/getallcategory").then((response) => response.json()),
+    ]);
+    return { products, categories };
 }
 
 export default function AdminCategory() {
@@ -43,14 +46,14 @@ export default function AdminCategory() {
             .catch((error) => console.log(error));
     }, []);
 
-    const categories = useLoaderData();
-    const data = categories && categories.data.map((category, index) => (
+    const { products,categories } = useLoaderData();
+    const data = categories.data && categories.data.map((category, index) => (
         category._id === editId ?
             <React.Fragment key={index + 1}>
                 <tr>
                     <td>{index + 1}</td>
                     <td><input type="text" placeholder={category.name} onChange={(e) => setNewName(e.target.value)}></input></td>
-                    <td>{categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
+                    <td>{categories.data && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
                     <td>0</td>
                     <td>
                         <button onClick={(e) => handleUpdate(category._id)}>Update</button>
@@ -62,11 +65,12 @@ export default function AdminCategory() {
                 <tr>
                     <td>{index + 1}</td>
                     <td>{category.name}</td>
-                    <td>{categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
-                    <td>0</td>
+                    <td>{categories.data && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
+                    <td>{categories.data && categories.data.map((subcategory) => (category.subcategoryOf === subcategory._id ? subcategory.name : null))}</td>
+                    <td>{products.data && products.data.filter((product) => product.category === category._id).length}</td>
                     <td>
                         <button className="editBtn" onClick={() => handleEdit(category._id)}>Edit</button>
-                        {categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length === 0 ? <button className="deleteBtn" onClick={() => handleDelete(category._id, category.name)}>Delete</button> : <button className="deleteBtnDisable" disabled>Delete</button>}
+                        {categories.data && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length === 0 && products.data && products.data.filter((product) => product.category === category._id).length === 0 ? <button className="deleteBtn" onClick={() => handleDelete(category._id, category.name)}>Delete</button> : <button className="deleteBtnDisable" disabled>Delete</button>}
                         {/* <button>Delete</button> */}
                     </td>
                 </tr>
@@ -101,7 +105,7 @@ export default function AdminCategory() {
     }
 
     function dropdownHandler(selectedCategory) {
-        const storeAttribute  = []
+        const storeAttribute = []
         if (selectedCategory === "none") {
             setAdditionalAttributes([]);
         } else {
@@ -146,7 +150,7 @@ export default function AdminCategory() {
         } else {
 
         }
-    }
+    };
 
     function handleUpdate(categoryId) {
         fetch(`http://localhost:8080/api/category/updatecategory/${categoryId}`, {
@@ -170,7 +174,12 @@ export default function AdminCategory() {
                 }
             })
             .catch((error) => console.log(error));
-    }
+    };
+
+    function logOut() {
+        window.localStorage.clear();
+        window.location.href = "./signin";
+    };
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -210,6 +219,7 @@ export default function AdminCategory() {
                         </div>
 
                         <div className="user-wrapper">
+                            <button onClick={() => logOut()}>Log out</button>
                             <img src={admin} width="30px" height="30px" alt="Admin" />
                             <div>
                                 <h4>Welcome,</h4>
@@ -284,6 +294,7 @@ export default function AdminCategory() {
                                                         <td>ID</td>
                                                         <td>Name</td>
                                                         <td>Number of subcategories</td>
+                                                        <td>Subcategories of</td>
                                                         <td>Number of product</td>
                                                         <td>Action</td>
                                                     </tr>

@@ -44,7 +44,13 @@ export default function SignIn() {
                 if (data.status === 201) {
                     // alert("login successful");
                     window.localStorage.setItem("token", data.data);
-                    window.location.href = "./dashboard";
+                    if (radioSelected === "admin") {
+                        window.localStorage.setItem("adminLoggedIn", true);
+                        window.location.href = "./dashboard";
+                    } else if (radioSelected === "seller") {
+                        window.localStorage.setItem("sellerLoggedIn", true);
+                        window.location.href = "./product";
+                    }
                 }
             })
             .catch((error) => console.log(error));
@@ -52,7 +58,6 @@ export default function SignIn() {
 
     return (
         <>
-            {/* <Header /> */}
             <div className="sign-in-main">
                 <div className="sign-in-container">
                     <div className="title">Sign In</div>
@@ -77,7 +82,7 @@ export default function SignIn() {
                             </div>
                             <div className="input-field">
                                 <span className="details">Password</span>
-                                <input type="text" placeholder="Your password" required onChange={(e) => setPassword(e.target.value)} />
+                                <input type="password" placeholder="Your password" required onChange={(e) => setPassword(e.target.value)} />
                             </div>
                         </div>
                         <div className="user-type">

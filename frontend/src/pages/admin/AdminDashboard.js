@@ -13,11 +13,12 @@ import { useState, useEffect } from 'react';
 
 
 export async function loaderForDashboard() {
-    const [sellers, categories ] = await Promise.all([
+    const [sellers, categories, customers] = await Promise.all([
         fetch("http://localhost:8080/api/user/getallseller").then((response) => response.json()),
         fetch("http://localhost:8080/api/category/getallcategory").then((response) => response.json()),
+        fetch("http://localhost:8080/api/customer/getallcustomer").then((response) => response.json()),
     ]);
-    return {sellers, categories};
+    return { sellers, categories, customers };
 };
 
 export default function AdminDashboard() {
@@ -45,8 +46,8 @@ export default function AdminDashboard() {
             .catch((error) => console.log(error));
     }, []);
 
-    const { sellers, categories } = useLoaderData();
-    const data = sellers && sellers.data.map((seller, index) =>
+    const { sellers, categories, customers } = useLoaderData();
+    const data = sellers.data && sellers.data.map((seller, index) =>
         <React.Fragment key={index + 1}>
             <tr>
                 <td>{index + 1}</td>
@@ -61,10 +62,16 @@ export default function AdminDashboard() {
         </React.Fragment>
     );
 
-    const numOfPendingSellers = sellers && sellers.data.filter((seller) => seller.status === 'pending');
-    const numOfApprovedSellers = sellers && sellers.data.filter((seller) => seller.status === 'approved');
-    const numOfCategories = categories && categories.data.filter((category) => category.name !== '');
+    const numOfPendingSellers = sellers.data && sellers.data.filter((seller) => seller.status === 'pending');
+    const numOfApprovedSellers = sellers.data && sellers.data.filter((seller) => seller.status === 'approved');
+    const numOfCategories = categories.data && categories.data.filter((category) => category.name !== '');
+    const numOfCustomers = customers.data && customers.data.filter((customer) => customer.name !== '');
 
+    function logOut() {
+        window.localStorage.clear();
+        window.location.href = "./signin";
+    };
+    
     return (
         <>
             <div className="admin-container">
@@ -77,6 +84,7 @@ export default function AdminDashboard() {
                         </div>
 
                         <div className="user-wrapper">
+                            <button onClick={() => logOut()}>Log out</button>
                             <img src={admin} width="30px" height="30px" alt="Admin" />
                             <div>
                                 <h4>Welcome,</h4>
@@ -89,7 +97,7 @@ export default function AdminDashboard() {
                         <div className="cards">
                             <div className="card">
                                 <div>
-                                    <h1>10</h1>
+                                    <h1>{numOfCustomers.length}</h1>
                                     <span>Customers</span>
                                 </div>
                                 <div>

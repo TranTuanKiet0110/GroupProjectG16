@@ -8,9 +8,9 @@ import AdminDashboard, { loaderForDashboard } from './pages/admin/AdminDashboard
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminCategory, { loaderForCategory } from './pages/admin/AdminCategory';
 import AdminSellerManagement, { loaderForSellerManagement } from './pages/admin/AdminSellerManagement';
-import SelerPage from './pages/seller/SelerPage';
-import ProductPage from './pages/seller/ProductPage';
-import OrderPage from './pages/seller/OrderPage';
+import SellerPage from './pages/seller/SellerPage';
+import ProductPage, { loaderForProductPage } from './pages/seller/ProductPage';
+import OrderPage, {loaderForOrderManagement} from './pages/seller/OrderPage';
 import StatisticsPage from './pages/seller/StatisticsPage';
 import Customer from './pages/customer/Customer';
 import ProductsContextProvider from './contexts/ProductContext';
@@ -19,23 +19,24 @@ import AuthContextProvider from './contexts/AuthContext';
 import App from './App';
 
 // import ProductList from '.pages/ProductList';
-
+const isAdminLoggedIn = window.localStorage.getItem("adminLoggedIn");
+const isSellerLoggedIn = window.localStorage.getItem("sellerLoggedIn");
 const router = createBrowserRouter([
   {
     path: "/dashboard",
-    element: <AdminDashboard />,
+    element: isAdminLoggedIn === "true" ? <AdminDashboard /> : <SignIn />,
     loader: loaderForDashboard,
     // errorElement: <NotFound />,
   },
   {
     path: "/category",
-    element: <AdminCategory />,
+    element: isAdminLoggedIn === "true" ? <AdminCategory /> : <SignIn />,
     loader: loaderForCategory,
     // errorElement: <NotFound />,
   },
   {
     path: "/sellerManagement",
-    element: <AdminSellerManagement />,
+    element: isAdminLoggedIn === "true" ? <AdminSellerManagement /> : <SignIn />,
     loader: loaderForSellerManagement,
     // errorElement: <NotFound />,
   },
@@ -51,16 +52,18 @@ const router = createBrowserRouter([
   },
   {
     path: '/sellerpage',
-    element: <SelerPage />,
+    element: isSellerLoggedIn === "true" ? <SellerPage /> : <SignIn />,
   },
   {
     path: '/product',
-    element: <ProductPage />,
+    element: isSellerLoggedIn === "true" ? <ProductPage /> : <SignIn />,
+    loader: loaderForProductPage,
 
   },
   {
     path: '/order',
-    element: <OrderPage />,
+    element: isSellerLoggedIn === "true" ? <OrderPage /> : <SignIn />,
+    loader: loaderForOrderManagement,
   },
   {
     path: '/statistic',
@@ -70,8 +73,6 @@ const router = createBrowserRouter([
     path: '/customer',
     element: <AuthContextProvider><ProductsContextProvider><CustomerContextProvider><Customer /></CustomerContextProvider></ProductsContextProvider></AuthContextProvider>,
   },
-
-
 
 ]);
 

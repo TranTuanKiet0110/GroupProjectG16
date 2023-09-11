@@ -1,11 +1,11 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 //import sellerData from '../api/sellerdata'; // Update the path to your sellerData file
 // import ordersData from '../api/orderproduct'; // Update the path to your ordersData file
-import '../../css/statistic.css';
-import statistic from '../../api/statistic';
-import Navbar from '../../components/Navbar';
+import "../../css/statistic.css";
+import statistic from "../../api/statistic";
+import Navbar from "../../components/Navbar";
 function StatisticsPage() {
-    const [statistics, setStatistics] = useState([]);
+  const [statistics, setStatistics] = useState([]);
 
   useEffect(() => {
     // Fetch the statistics data from the statistic array
@@ -13,11 +13,10 @@ function StatisticsPage() {
   }, []);
 
   return (
-    <div class='statisticpage'>
+    <div class="statisticpage">
       <Navbar />
-        <div class='statistic-container'>
-      <h2>Sales Statistics</h2>
-      <table>
+      <h2 className="table-title">Sales Statistics</h2>
+      <table class="rwd-table">
         <thead>
           <tr>
             <th>Product</th>
@@ -34,8 +33,6 @@ function StatisticsPage() {
         </tbody>
       </table>
     </div>
-    </div>
-    
   );
 }
 

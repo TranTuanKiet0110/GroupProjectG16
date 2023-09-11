@@ -7,7 +7,11 @@ const cartItemScheme = new mongoose.Schema(
             ref: 'Product'
         }
         ,
-        quantity: Number
+        quantity: Number,
+        status: {
+            type: String,
+            default: 'new'
+        }
     }
 );
 

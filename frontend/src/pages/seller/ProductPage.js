@@ -1,321 +1,395 @@
-import React, { useState, useEffect } from 'react';
-//import { useParams } from 'react-router-dom'; 
-import categories, {  getAllProducts,
-  getProductById,
-  addProduct as addProductApi,
-  updateProduct as updateProductApi,
-  deleteProduct as deleteProductApi, 
- } from '../../api/products'; 
-  import '../../css/ProductPage.css';
-  import Navbar from '../../components/Navbar';
+import React from 'react';
+// import Header from '../components/Header'
+import "../../css/admin/admin.css";
+import SellerSidebar from '../../components/SellerSidebar';
+import menu from '../../img/menu.png';
+import admin from '../../img/admin.png';
+import { useLoaderData } from 'react-router';
+import { useState, useEffect } from 'react';
 
-  const initialProduct = {
-    id: null,
-    name: '',
-    description: '',
-    price: 0,
-    dateadd: '',
-    categoryId: 0,
-    additionalAttr: [],
-  };
-  function ProductPage1() {
-    const [products, setProducts] = useState([]);
-    const [product, setProduct] = useState(initialProduct);
-    const [selectedCategory, setSelectedCategory] = useState(0);
-    const [additionalAttrInput, setAdditionalAttrInput] = useState('');
-    const [additionalAttr, setAdditionalAttr] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [filterText, setFilterText] = useState('');
-    const [sortOrder, setSortOrder] = useState('asc'); // 'asc' for ascending, 'desc' for descending
-    
-    
-    const [editing, setEditing] = useState(false);
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const productData = await getAllProducts();
-          const productsWithCategory = productData.map((product) => {
-            const categoryInfo = getCategoryInfo(product.categoryId);
-            return {
-              ...product,
-              categoryName: categoryInfo.name,
-            };
-          });
-          setProducts(productsWithCategory);
-          setIsLoading(false);
-        } catch (error) {
-          console.error('Error fetching products:', error);
-          setIsLoading(false);
-        }
-      };
-    
-      fetchData();
-    }, []);
-    
-  
-    // Define a function to get the additional attributes based on categoryId
-    const getAdditionalAttrByCategoryId = (categoryId) => {
-      const category = categories.find((cat) => cat.categoryId === categoryId);
-      return category ? category.additionalAttr : [];
-    };
-    
-    const addProduct = () => {
-        const currentDate = new Date();
-        const year = currentDate.getFullYear();
-        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-        const day = currentDate.getDate().toString().padStart(2, '0');
-    
-        if (products.some((p) => p.name.toLowerCase() === product.name.toLowerCase())) {
-          alert("Product with the same name already exists!");
-          return;
-        }
-    
-        const selectedCategoryInfo = getCategoryInfo(selectedCategory);
-    
-        const newProduct = {
-          ...product,
-          dateadd: `${day}/${month}/${year}`,
-          categoryId: selectedCategory,
-          categoryName: selectedCategoryInfo.name,
-          additionalAttr: additionalAttr,
-        };
-    
-        addProductApi(newProduct);
-        setProducts([...products, newProduct]);
-        setProduct(initialProduct);
-        setAdditionalAttr([]);
-      };
-    
-      const handleAddAttribute = () => {
-        if (additionalAttrInput.trim() === '') {
-          return;
-        }
-    
-        const [key, value] = additionalAttrInput.split(':').map((item) => item.trim());
-    
-        if (key && value) {
-          setAdditionalAttr([...additionalAttr, { [key]: value }]);
-          setAdditionalAttrInput('');
-        } else {
-          alert("Please enter additional attributes in the 'key: value' format.");
-        }
-      };
-    
-      const handleRemoveAttribute = (index) => {
-        const updatedAttributes = [...additionalAttr];
-        updatedAttributes.splice(index, 1);
-        setAdditionalAttr(updatedAttributes);
-      };
-    
-      const getCategoryInfo = (categoryId) => {
-        return categories.find((cat) => cat.categoryId === categoryId) || { name: '', additionalAttr: [] };
-      };
-    if (isLoading) {
-      return <div>Loading...</div>;
-    }
-  
 
-    const attributeKeys = Array.from(
-      new Set(
-        products.reduce((keys, product) => {
-          return keys.concat(
-            getAdditionalAttrByCategoryId(product.categoryId).flatMap((attr) => Object.keys(attr))
-          );
-        }, [])
-      )
-    );
-    const editProduct = (id) => {
-      const productToEdit = getProductById(id);
-      setEditing(true);
-      setProduct(productToEdit);
-      
+export async function loaderForProductPage() {
+  const [products, categories] = await Promise.all([
+    fetch("http://localhost:8080/api/product/getallproduct").then((response) => response.json()),
+    fetch("http://localhost:8080/api/category/getallcategory").then((response) => response.json()),
+  ]);
+  return { products, categories };
+}
+
+export default function ProductPage() {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("")
+  const [imageURL, setImagegURL] = useState("");
+  const [price, setPrice] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [additionalAttributes, setAdditionalAttributes] = useState([]);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [editId, setEditId] = useState("");
+  const [newName, setNewName] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [newImgURL, setNewImgURL] = useState("");
+  const [newPrice, setNewPrice] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/user/sellerData", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        token: window.localStorage.getItem("token"),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setUserName(data.data.name);
+        setUserId(data.data._id);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const { products, categories } = useLoaderData();
+  const data = products.data && products.data.map((product, index) => {
+    if (product.seller === userId) {
+      return <React.Fragment key={index + 1}>
+        <tr>
+          <td>{index + 1}</td>
+          <td>{product.name}</td>
+          <td>{product.description}</td>
+          <td>{product.imgURL}</td>
+          <td>{product.price}</td>
+          <td>{categories && categories.data.map((category) => (category._id === product.category ? category.name : null))}</td>
+          <td>{product.additionalAttributes.map((attribute) => <div><span>{attribute.name}:</span><span> {attribute.value}</span></div>)}</td>
+          <td>
+            <button className="editBtn" onClick={() => handleEdit(product._id)}>Edit</button>
+            <button className="deleteBtn" onClick={() => handleDelete(product._id, product.name)}>Delete</button>
+          </td>
+        </tr>
+      </React.Fragment>
     }
-  
-    const updateProduct = () => {
-      updateProductApi(product); // Update the product in the API
-      setEditing(false);
-      setProducts(
-        products.map((p) => (p.id === product.id ? product : p))
-      );
-      setProduct(initialProduct);
-    };
-  
-    // Delete a product
-    const deleteProduct = (id) => {
-      deleteProductApi(id); // Delete the product from the API
-      setProducts(products.filter((p) => p.id !== id));
-      setEditing(false);
-      setProduct(initialProduct);
-    }
- // Filter products based on the filterText and selectedCategory
-const filteredProducts = products.filter((product) => {
-  return (
-    (selectedCategory === 0 || product.categoryId === selectedCategory) &&
-    (filterText === '' || product.name.toLowerCase().includes(filterText.toLowerCase()))
+    return null;
+  });
+
+  const dataForSelector = categories && categories.data.map((category, index) =>
+    <React.Fragment key={index + 1}>
+      <option value={category._id}>{category.name}</option>
+    </React.Fragment>
   );
-});
 
-// Sort products based on the sortOrder
-filteredProducts.sort((a, b) => {
-  if (sortOrder === 'asc') {
-    return a.name.localeCompare(b.name);
-  } else {
-    return b.name.localeCompare(a.name);
+
+  function handleShowForm() {
+    setShowForm(!showForm);
+    setShowEditForm(false);
   }
-});
 
+  function dropdownHandler(selectedCategory) {
+    const storeAttribute = []
+    if (selectedCategory === "none") {
+      setAdditionalAttributes([]);
+    } else {
+      for (const category of categories.data) {
+        if (category._id === selectedCategory) {
+          setSelectedCategory(selectedCategory);
 
+          for (const attribute of category.additionalAttributes) {
+            storeAttribute.push({ name: attribute.name, value: attribute.value });
+            setAdditionalAttributes(storeAttribute);
+          }
+        }
+      }
+      // setAdditionalAttributes(storeAttribute);
+    }
+  };
 
-
-    return (
-      
-      <div class='productpage'>
-        <Navbar />
-        <div className="product-form-container">
-        <h2>{editing ? 'Edit Product' : 'Add New Product'}</h2>
-        <form className="form" id="form">
-          <input
-            type="text"
-            placeholder="Name"
-            name="name"
-            value={product.name}
-            onChange={(e) => setProduct({ ...product, name: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Description"
-            name="description"
-            value={product.description}
-            onChange={(e) =>
-              setProduct({ ...product, description: e.target.value })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Price"
-            name="price"
-            value={product.price}
-            onChange={(e) =>
-              setProduct({ ...product, price: parseFloat(e.target.value) })
-            }
-          />
-          <select
-            name="category"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(parseInt(e.target.value))}
-          >
-            <option value={0}>Select Category</option>
-            {categories.map((category) => (
-              <option key={category.categoryId} value={category.categoryId}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-            <div className="attr-input">
-              <input
-                type="text"
-                placeholder="Key: Value"
-                value={additionalAttrInput}
-                onChange={(e) => setAdditionalAttrInput(e.target.value)}
-              />
-              <button class="second-button"  onClick={handleAddAttribute}>
-                Add
-              </button>
-            
-            <ul>
-              {additionalAttr.map((attr, index) => (
-                <li key={index}>
-                  {Object.keys(attr)[0]}: {Object.values(attr)[0]}
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveAttribute(index)}
-                  >
-                    Remove
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          { editing ? (
-            <button class="primary-button"type="button" onClick={updateProduct}>
-              Save Changes
-            </button>
-          ) : (
-            <button  class="primary-button" type="button" onClick={addProduct}>
-              Add Product
-            </button>
-          )}
-        </form>
-      </div>
-     <div className='filterandsort'>{/* Filter input */}
-      <input className='filter'
-      type="text"
-      placeholder="Filter by Product Name"
-      value={filterText}
-      onChange={(e) => setFilterText(e.target.value)}
-      />
-
-      {/* Sort order selection */}
-      <select className='sort'
-      name="sortOrder"
-      value={sortOrder}
-      onChange={(e) => setSortOrder(e.target.value)}
-    >
-      <option value="asc">Ascending</option>
-      <option value="desc">Descending</option>
-      </select>
-    </div>
-
-      <div class='product-table'>
-      {/* {categories.map((category) => (
-          <div key={category.categoryId}>
-            <h2>Category: {category.name}</h2> */}
-            <table>
-              <thead>
-                <tr>
-                  <th>Product Name</th>
-                  <th>Description</th>
-                  <th>Price</th>
-                  <th>Date Add</th>
-                  {attributeKeys.map((key) => (
-                    <th key={key}>{key}</th>
-                  ))}
-                  <th>Category</th>
-                </tr>
-              </thead>
-              <tbody>
-              {filteredProducts
-                .map((product) => (
-                    <tr key={product.id}>
-                      <td>{product.name}</td>
-                      <td>{product.description}</td>
-                      <td>${product.price}</td>
-                      <td>{product.dateadd}</td>
-                      {attributeKeys.map((key) => (
-                      <td key={key}>
-                      {getAdditionalAttrByCategoryId(product.categoryId).map((attr, index) => (
-                      <span key={index}>
-                      {attr[key] || ''} {/* Display '-' for missing attributes */}
-                    {index < getAdditionalAttrByCategoryId(product.categoryId).length - 1 && ', '}
-                  </span>
-                ))}
-              </td>
-            ))}
-            <td>{product.categoryName}</td> {/* Display the category name */}
-            <button className="edit-button" onClick={() => editProduct(product.id)}>Edit</button>
-            <button className="delete-button" onClick={() => deleteProduct(product.id)}>Delete</button>
-            
-            
-          </tr>
-        ))}
-            </tbody>
-            </table>
-          </div>
-        {/* ))}</div>     */}
-        
-      </div>
-    );
+  function handleAttributeValue(e, index) {
+    const list = [...additionalAttributes];
+    list[index].value = e.target.value;
+    setAdditionalAttributes(list);
   }
-  
-  export default ProductPage1;
 
+  function handleEdit(productId) {
+    setShowEditForm(!showEditForm);
+    setShowForm(false);
+    setEditId(productId);
+  };
+
+  const handleDelete = (productId, productName) => {
+    if (window.confirm(`Are you sure you want to delete ${productName}?`)) {
+      fetch("http://localhost:8080/api/product/deleteproduct", {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          id: productId,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === 204) {
+            window.location.href = "./product";
+          }
+        })
+        .catch((error) => console.log(error));
+    } else {
+
+    }
+  };
+
+  function handleUpdate(productId) {
+    fetch(`http://localhost:8080/api/product/updateproduct/${productId}`, {
+      method: "PATCH",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        id: productId,
+        newName: newName,
+        newDescription: newDescription,
+        newImgURL: newImgURL,
+        newPrice: newPrice,
+        newCategory: selectedCategory,
+        newAdditionalAttributes: additionalAttributes,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.status === 201) {
+          window.location.href = "./product";
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  function logOut() {
+    window.localStorage.clear();
+    window.location.href = "./signin";
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetch("http://localhost:8080/api/product/createproduct", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        name: name,
+        description: description,
+        imgURL: imageURL,
+        price: price,
+        category: selectedCategory,
+        seller: userId,
+        additionalAttributes: additionalAttributes,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 201) {
+          //   alert("create successful");
+          window.location.href = "./product";
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  return (
+    <>
+      <div className="admin-container">
+        <SellerSidebar />
+        <div className="main-content">
+          <header>
+            <div className="box">
+              <img src={menu} alt="Menu" />
+              <span>Product Management</span>
+            </div>
+
+            <div className="user-wrapper">
+              <button onClick={() => logOut()}>Log out</button>
+              <img src={admin} width="30px" height="30px" alt="Admin" />
+              <div>
+                <h4>Welcome,</h4>
+                <small>{userName} !</small>
+              </div>
+            </div>
+          </header>
+
+          <main>
+            {showForm && (
+              <div className="form-main">
+                <div className="form-container">
+                  <div className="title"> Create new product</div>
+                  <form>
+                    <div className="category-details">
+                      <div className="input-field">
+                        <span className="details">Product's name</span>
+                        <input type="text" placeholder="Enter product's name" required onChange={(e) => setName(e.target.value)} />
+                      </div>
+                      <div className="input-field">
+                        <span className="details">Product's description</span>
+                        <input type="text" placeholder="Enter product's description" required onChange={(e) => setDescription(e.target.value)} />
+                      </div>
+                      <div className="input-field">
+                        <span className="details">Image URL</span>
+                        <input type="text" placeholder="Enter product's imageURL" required onChange={(e) => setImagegURL(e.target.value)} />
+                      </div>
+                      <div className="input-field">
+                        <span className="details">Product's price</span>
+                        <input type="text" placeholder="Enter product's price" required onChange={(e) => setPrice(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="category-details">
+                      <div className="input-field">
+                        <span className="details">Category:</span>
+                        <select className="dropdown" onChange={(e) => dropdownHandler(e.target.value)}>
+                          <option value="none">--None--</option>
+                          {dataForSelector}
+                        </select>
+                      </div>
+                    </div>
+                    {additionalAttributes.map((attribute, index) => (
+                      <React.Fragment key={index + 1}>
+                        <div className="category-additional-details">
+                          <div className="input-field">
+                            <span className="details">Attribute's name</span>
+                            <input type="text" required defaultValue={attribute.name} />
+                          </div>
+                          <div className="input-field">
+                            <span className="details">Value</span>
+                            <input type="text" placeholder="Enter value" required onChange={(e) => handleAttributeValue(e, index)} />
+                          </div>
+                        </div>
+                      </React.Fragment>
+                    ))}
+                    <div className="button">
+                      <input type="submit" value="Create" onClick={(e) => handleSubmit(e)} />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+
+            {showEditForm && (
+              <div className="form-main">
+                <div className="form-container">
+                  <div className="title"> Edit product</div>
+                  {products.data && products.data.map((product) => {
+                    if (product._id === editId) {
+                      return <form>
+                        <div className="category-details">
+                          <div className="input-field">
+                            <span className="details">Product's name</span>
+                            <input type="text" placeholder={product.name} required onChange={(e) => setNewName(e.target.value)} />
+                          </div>
+                          <div className="input-field">
+                            <span className="details">Product's description</span>
+                            <input type="text" placeholder={product.description} required onChange={(e) => setNewDescription(e.target.value)} />
+                          </div>
+                          <div className="input-field">
+                            <span className="details">Image URL</span>
+                            <input type="text" placeholder={product.imgURL} required onChange={(e) => setNewImgURL(e.target.value)} />
+                          </div>
+                          <div className="input-field">
+                            <span className="details">Product's price</span>
+                            <input type="text" placeholder={product.price} required onChange={(e) => setNewPrice(e.target.value)} />
+                          </div>
+                        </div>
+                        <div className="category-details">
+                          <div className="input-field">
+                            <span className="details">Category:</span>
+                            <select className="dropdown" onChange={(e) => dropdownHandler(e.target.value)}>
+                              <option value="none">--None--</option>
+                              {categories.data && categories.data.map((category) => {
+                                if (category._id === product.category) {
+                                  return <option selected value={category._id}>{category.name}</option>
+                                } else {
+                                  return <option value={category._id}>{category.name}</option>
+                                }
+                              })}
+                            </select>
+                          </div>
+                        </div>
+                        {additionalAttributes.map((attribute, index) => (
+                          <React.Fragment key={index + 1}>
+                            <div className="category-additional-details">
+                              <div className="input-field">
+                                <span className="details">Attribute's name</span>
+                                <input type="text" required defaultValue={attribute.name} />
+                              </div>
+                              <div className="input-field">
+                                <span className="details">Value</span>
+                                <input type="text" placeholder="Enter value" required onChange={(e) => handleAttributeValue(e, index)} />
+                              </div>
+                            </div>
+                          </React.Fragment>
+                        ))}
+                        <div className="button">
+                          <input type="submit" value="Update" onClick={(e) => handleUpdate(product._id)} />
+                        </div>
+                        <div className="cancelButton">
+                          <input type="submit" value="Cancel" onClick={() => setShowEditForm(!showEditForm)} />
+                        </div>
+                      </form>
+                    }
+                    return null;
+                  }
+                  )}
+                </div>
+              </div>
+            )}
+
+            <div className="category-management">
+              <div className="category">
+                <div className="card">
+                  <div className="card-header">
+                    <h2>Products management</h2>
+                    <button onClick={handleShowForm}>+ Create</button>
+                  </div>
+
+                  <div className="card-body">
+                    <div className="table-responsive">
+                      <table>
+                        <thead>
+                          <tr>
+                            <td>ID</td>
+                            <td>Name</td>
+                            <td>Description</td>
+                            <td>Image</td>
+                            <td>Price $</td>
+                            <td>Category</td>
+                            <td>Additional Details</td>
+                            <td>Action</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {data}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </>
+  )
+}
