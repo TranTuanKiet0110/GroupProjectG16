@@ -68,9 +68,13 @@ function Customer() {
 
     return (
         <div className='main'>
+
+
             <div className='container body'>
-                <div className='container'>{(user !== null) ? ('User: ' + user.email) : ('Using as guest')}</div>
-                <div className='container'>{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
+                <div className='container d-flex justify-content-end pt-2'>
+                    <div className='d-flex align-items-center me-2'>{(user !== null) ? ('Hi, ' + user.name) : ('Using as guest')}</div>
+                    <div className=''>{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
+                </div>
 
                 <div className='container products'>
                     <div className='filter-box'>
@@ -109,6 +113,20 @@ function Customer() {
                                         My order list
                                     </Link>
                                 </li>
+
+                                {(user !== null) ? (<></>) : (
+                                    <li>
+                                    <Link
+                                        to="/login/customer"
+                                        className={({ isActive }) =>
+                                            isActive ? 'active' : ''
+                                        }
+                                    >
+                                        Login
+                                    </Link>
+                                </li>
+                                )}
+                                
                             </ul>
                         </div>
                     </div>

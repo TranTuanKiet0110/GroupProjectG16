@@ -92,11 +92,7 @@ const router = createBrowserRouter([
     path: '/order',
     element: isSellerLoggedIn === "true" ? <OrderPage /> : <SignIn />,
     loader: loaderForOrderManagement,
-  },
-  {
-    path: '/customer',
-    element: <AuthContextProvider><ProductsContextProvider><CustomerContextProvider><Customer /></CustomerContextProvider></ProductsContextProvider></AuthContextProvider>,
-  },
+  }
 
 ]);
 
