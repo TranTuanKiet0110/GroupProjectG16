@@ -8,9 +8,14 @@ import { useLoaderData } from 'react-router';
 import { useState, useEffect } from 'react';
 
 export async function loaderForCategory() {
-    const res = await fetch("http://localhost:8080/api/category/getallcategory");
-    const categories = await res.json();
-    return categories;
+    // const res = await fetch("http://localhost:8080/api/category/getallcategory");
+    // const categories = await res.json();
+    // return categories;
+    const [products, categories] = await Promise.all([
+        fetch("http://localhost:8080/api/product/getallproduct").then((response) => response.json()),
+        fetch("http://localhost:8080/api/category/getallcategory").then((response) => response.json()),
+    ]);
+    return { products, categories };
 }
 
 export default function AdminCategory() {
@@ -43,14 +48,14 @@ export default function AdminCategory() {
             .catch((error) => console.log(error));
     }, []);
 
-    const categories = useLoaderData();
+    const { products,categories } = useLoaderData();
     const data = categories.data && categories.data.map((category, index) => (
         category._id === editId ?
             <React.Fragment key={index + 1}>
                 <tr>
                     <td>{index + 1}</td>
                     <td><input type="text" placeholder={category.name} onChange={(e) => setNewName(e.target.value)}></input></td>
-                    <td>{categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
+                    <td>{categories.data && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
                     <td>0</td>
                     <td>
                         <button onClick={(e) => handleUpdate(category._id)}>Update</button>
@@ -62,12 +67,12 @@ export default function AdminCategory() {
                 <tr>
                     <td>{index + 1}</td>
                     <td>{category.name}</td>
-                    <td>{categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
-                    <td>{categories && categories.data.map((subcategory) => (category.subcategoryOf === subcategory._id ? subcategory.name : null))}</td>
-                    <td>0</td>
+                    <td>{categories.data && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length}</td>
+                    <td>{categories.data && categories.data.map((subcategory) => (category.subcategoryOf === subcategory._id ? subcategory.name : null))}</td>
+                    <td>{products.data && products.data.filter((product) => product.category === category._id).length}</td>
                     <td>
                         <button className="editBtn" onClick={() => handleEdit(category._id)}>Edit</button>
-                        {categories && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length === 0 ? <button className="deleteBtn" onClick={() => handleDelete(category._id, category.name)}>Delete</button> : <button className="deleteBtnDisable" disabled>Delete</button>}
+                        {categories.data && categories.data.filter((subcategory) => category._id === subcategory.subcategoryOf).length === 0 && products.data && products.data.filter((product) => product.category === category._id).length === 0 ? <button className="deleteBtn" onClick={() => handleDelete(category._id, category.name)}>Delete</button> : <button className="deleteBtnDisable" disabled>Delete</button>}
                         {/* <button>Delete</button> */}
                     </td>
                 </tr>

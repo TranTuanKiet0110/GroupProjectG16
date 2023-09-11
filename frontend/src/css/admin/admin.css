@@ -399,6 +399,18 @@
     background: red;
 }
 
+.admin-container .status.new {
+    background: yellow;
+}
+
+.admin-container .status.shipped {
+    background: green;
+}
+
+.admin-container .status.canceled {
+    background: red;
+}
+
 .admin-container .table-responsive {
     width: 100%;
     overflow-x: auto;

@@ -23,13 +23,13 @@ export default function SellerSidebar() {
                     <li>
                         <NavLink to="/product" className={({ isActive }) => isActive ? 'active' : ''}>
                             <img src={product} alt="Product" />
-                            <span>Product management</span>
+                            <span>Products management</span>
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="#" className={({ isActive }) => isActive ? 'active' : ''}>
-                            <img src={seller} alt="Seller" />
-                            <span>Sellers Management</span>
+                        <NavLink to="/order" className={({ isActive }) => isActive ? 'active' : ''}>
+                            <img src={seller} alt="Order" />
+                            <span>Orders Management</span>
                         </NavLink>
                     </li>
                 </ul>
