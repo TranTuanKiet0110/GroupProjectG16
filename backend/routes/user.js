@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "hfdsah984yth3ofnw9fyhfh984yt93h98wy98shfdvsdfyg8s7ghfuibvaiuv9"
 
+//register user (actually there is no admin option for register, I put it there to make it easy for testing)
 router.post("/register", async (req, res) => {
     if (req.body.selected == 'seller') {
         //validate for missing input
@@ -119,6 +120,7 @@ router.post("/register", async (req, res) => {
     }
 });
 
+//sign in 
 router.post("/signin", async (req, res) => {
     const { email, phone, password } = req.body
 
@@ -207,6 +209,7 @@ router.post("/signin", async (req, res) => {
     }
 });
 
+//get a specific admin's data
 router.post("/adminData", async (req, res) => {
     const { token } = req.body
 
@@ -238,6 +241,7 @@ router.post("/adminData", async (req, res) => {
     }
 });
 
+//get a specific seller's data
 router.post("/sellerData", async (req, res) => {
     const { token } = req.body
 
@@ -269,6 +273,7 @@ router.post("/sellerData", async (req, res) => {
     }
 });
 
+//get all sellers
 router.get("/getAllSeller", async (req, res) => {
     try {
         const allSeller = await Seller.find({})
@@ -278,6 +283,7 @@ router.get("/getAllSeller", async (req, res) => {
     }
 });
 
+//update a seller
 router.patch("/updateSeller/:id", async (req, res) => {
     const { id, newStatus } = req.body
 

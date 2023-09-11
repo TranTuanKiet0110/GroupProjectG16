@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Product = require("../models/product");
 
+//get all products
 router.get("/getAllProduct", async (req, res) => {
     try {
         const allProduct = await Product.find({})
@@ -11,6 +12,7 @@ router.get("/getAllProduct", async (req, res) => {
     }
 });
 
+//create product
 router.post("/createProduct", async (req, res) => {
     const {name, description, imgURL, price, category, seller,additionalAttributes} = req.body;
     try {
@@ -30,6 +32,7 @@ router.post("/createProduct", async (req, res) => {
     }
 });
 
+//delete product
 router.post("/deleteProduct", async (req, res) => {
     const { id } = req.body
     try {
@@ -40,6 +43,7 @@ router.post("/deleteProduct", async (req, res) => {
     }
 });
 
+//update product
 router.patch("/updateProduct/:id", async (req, res) => {
     const { id, newName, newDescription, newImgURL, newPrice, newCategory, newAdditionalAttributes } = req.body
 

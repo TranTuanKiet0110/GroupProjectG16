@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Category = require('../models/category');
 
+//create category
 router.post("/createCategory", async (req, res) => {
     if(req.body.subcategoryOf == '') {
         const category = new Category({
@@ -29,6 +30,7 @@ router.post("/createCategory", async (req, res) => {
     }
 });
 
+//get all categories
 router.get("/getAllCategory", async (req, res) => {
     try {
         const allCategory = await Category.find({})
@@ -38,6 +40,7 @@ router.get("/getAllCategory", async (req, res) => {
     }
 });
 
+//update category
 router.patch("/updateCategory/:id", async (req, res) => {
     const { id, newName } = req.body
 
@@ -57,6 +60,7 @@ router.patch("/updateCategory/:id", async (req, res) => {
     }
 });
 
+//delete category
 router.post("/deleteCategory", async (req, res) => {
     const { id } = req.body
     try {
