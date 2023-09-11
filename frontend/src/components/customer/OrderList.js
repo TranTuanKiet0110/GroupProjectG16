@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { CustomerContext } from '../../contexts/CustomerContext';
 import OrderCard from './OrderCard';
-// import '../../css/order.css'
+import '../../css/customer/order.css'
 
 function OrderList() {
     const {orders} = useContext(CustomerContext);

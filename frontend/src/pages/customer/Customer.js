@@ -7,7 +7,7 @@ import { ProductContext } from '../../contexts/ProductContext'
 import { AuthContext } from '../../contexts/AuthContext'
 import OrderList from '../../components/customer/OrderList'
 import { CustomerContext } from '../../contexts/CustomerContext'
-// import '../css/customer.css'
+import '../../css/customer/customer.css'
 
 function Customer() {
     const { products } = useContext(ProductContext);
