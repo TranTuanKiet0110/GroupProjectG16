@@ -10,7 +10,7 @@ import AdminCategory, { loaderForCategory } from './pages/admin/AdminCategory';
 import AdminSellerManagement, { loaderForSellerManagement } from './pages/admin/AdminSellerManagement';
 import SellerPage from './pages/seller/SellerPage';
 import ProductPage, { loaderForProductPage } from './pages/seller/ProductPage';
-import OrderPage from './pages/seller/OrderPage';
+import OrderPage, {loaderForOrderManagement} from './pages/seller/OrderPage';
 import StatisticsPage from './pages/seller/StatisticsPage';
 import Customer from './pages/customer/Customer';
 
@@ -58,7 +58,8 @@ const router = createBrowserRouter([
   },
   {
     path: '/order',
-    element: <OrderPage />,
+    element: isSellerLoggedIn === "true" ? <OrderPage /> : <SignIn />,
+    loader: loaderForOrderManagement,
   },
   {
     path: '/statistic',

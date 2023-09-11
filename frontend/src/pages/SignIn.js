@@ -82,7 +82,7 @@ export default function SignIn() {
                             </div>
                             <div className="input-field">
                                 <span className="details">Password</span>
-                                <input type="text" placeholder="Your password" required onChange={(e) => setPassword(e.target.value)} />
+                                <input type="password" placeholder="Your password" required onChange={(e) => setPassword(e.target.value)} />
                             </div>
                         </div>
                         <div className="user-type">

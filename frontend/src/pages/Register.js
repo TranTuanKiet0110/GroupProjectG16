@@ -71,7 +71,7 @@ export default function Register() {
               </div>
               <div className="input-field">
                 <span className="details">Password</span>
-                <input type="text" placeholder="Enter your password" required onChange={(e) => setPassword(e.target.value)} />
+                <input type="password" placeholder="Enter your password" required onChange={(e) => setPassword(e.target.value)} />
               </div>
             </div>
             <div className="user-type">
