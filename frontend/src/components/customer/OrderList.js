@@ -3,7 +3,6 @@ import { CustomerContext } from '../../contexts/CustomerContext';
 import OrderCard from './OrderCard';
 // import '../../css/order.css'
 
-
 function OrderList() {
     const {orders} = useContext(CustomerContext);
     return (
