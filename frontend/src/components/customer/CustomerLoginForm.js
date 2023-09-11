@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import '../../css/customer/signin.css'
+import { Link } from "react-router-dom";
+
 
 function CustomerLoginForm() {
   const { authState } = useContext(AuthContext);
@@ -102,6 +104,14 @@ function CustomerLoginForm() {
                 </select>
               </div>
             {(loginMethod === 'emailLogin') ? emailLoginForm : phoneLoginForm}
+            <div>
+              <div>
+                <div>Not a member yet? <Link to={'/register'}>Register Now</Link></div>
+              </div>
+              <span>OR</span>
+              <button className='button'><Link to={'/signIn'} style={{textDecoration:'none', color:'white'}}>Login as seller/admin</Link></button>
+
+            </div>
             <div className='message'>{message}</div>
           </div>
         </div>
