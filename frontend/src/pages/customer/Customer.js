@@ -90,7 +90,7 @@ function Customer() {
                             <h4 className='s-title'>Search</h4>
                             <input type="text" onChange={handleSearchKeyChange} />
                         </div>
-                        <div className='container'>
+                        <div className='container mt-2'>
                             <h4 className='s-title'>Navigation</h4>
                             <ul>
                                 <li>
