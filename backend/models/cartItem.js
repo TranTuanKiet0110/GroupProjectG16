@@ -7,7 +7,10 @@ const cartItemScheme = new mongoose.Schema(
             ref: 'Product'
         }
         ,
-        quantity: Number,
+        quantity: {
+            type: Number,
+            required: true
+        },
         status: {
             type: String,
             default: 'new'
