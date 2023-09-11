@@ -8,9 +8,7 @@ import { useLoaderData } from 'react-router';
 import { useState, useEffect } from 'react';
 
 export async function loaderForCategory() {
-    // const res = await fetch("http://localhost:8080/api/category/getallcategory");
-    // const categories = await res.json();
-    // return categories;
+    
     const [products, categories] = await Promise.all([
         fetch("http://localhost:8080/api/product/getallproduct").then((response) => response.json()),
         fetch("http://localhost:8080/api/category/getallcategory").then((response) => response.json()),
