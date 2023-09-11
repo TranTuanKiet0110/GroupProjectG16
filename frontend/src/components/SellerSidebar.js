@@ -1,9 +1,7 @@
 import React from "react";
-// import { useState } from "react";
 import { NavLink } from 'react-router-dom';
-import home from '../img/home.png';
 import product from '../img/product.png';
-import seller from '../img/seller.png';
+import order from '../img/order.png'
 
 export default function SellerSidebar() {
     return (
@@ -15,12 +13,6 @@ export default function SellerSidebar() {
             <div className="sidebar-menu">
                 <ul>
                     <li>
-                        <NavLink to="/sellerpage" className={({ isActive }) => isActive ? 'active' : ''}>
-                            <img src={home} alt="Dashboard" />
-                            <span>Dashboard</span>
-                        </NavLink>
-                    </li>
-                    <li>
                         <NavLink to="/product" className={({ isActive }) => isActive ? 'active' : ''}>
                             <img src={product} alt="Product" />
                             <span>Products management</span>
@@ -28,7 +20,7 @@ export default function SellerSidebar() {
                     </li>
                     <li>
                         <NavLink to="/order" className={({ isActive }) => isActive ? 'active' : ''}>
-                            <img src={seller} alt="Order" />
+                            <img src={order} alt="Order" />
                             <span>Orders Management</span>
                         </NavLink>
                     </li>

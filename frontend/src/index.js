@@ -1,17 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import './index.css';
-// import App from './App';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
 import AdminDashboard, { loaderForDashboard } from './pages/admin/AdminDashboard';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminCategory, { loaderForCategory } from './pages/admin/AdminCategory';
 import AdminSellerManagement, { loaderForSellerManagement } from './pages/admin/AdminSellerManagement';
-import SellerPage from './pages/seller/SellerPage';
 import ProductPage, { loaderForProductPage } from './pages/seller/ProductPage';
 import OrderPage, {loaderForOrderManagement} from './pages/seller/OrderPage';
-import StatisticsPage from './pages/seller/StatisticsPage';
 import Customer from './pages/customer/Customer';
 
 // import ProductList from '.pages/ProductList';
@@ -47,10 +43,6 @@ const router = createBrowserRouter([
     // errorElement: <NotFound />,
   },
   {
-    path: '/sellerpage',
-    element: isSellerLoggedIn === "true" ? <SellerPage /> : <SignIn />,
-  },
-  {
     path: '/product',
     element: isSellerLoggedIn === "true" ? <ProductPage /> : <SignIn />,
     loader: loaderForProductPage,
@@ -60,10 +52,6 @@ const router = createBrowserRouter([
     path: '/order',
     element: isSellerLoggedIn === "true" ? <OrderPage /> : <SignIn />,
     loader: loaderForOrderManagement,
-  },
-  {
-    path: '/statistic',
-    element: <StatisticsPage />,
   },
   {
     path: '/customer',
