@@ -4,15 +4,19 @@ import ReactDOM from 'react-dom/client';
 // import App from './App';
 import Register from './pages/Register';
 import SignIn from './pages/SignIn';
-import AdminDashboard, {loaderForDashboard} from './pages/admin/AdminDashboard';
+import AdminDashboard, { loaderForDashboard } from './pages/admin/AdminDashboard';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AdminCategory, {loaderForCategory} from './pages/admin/AdminCategory';
-import AdminSellerManagement, {loaderForSellerManagement} from './pages/admin/AdminSellerManagement';
+import AdminCategory, { loaderForCategory } from './pages/admin/AdminCategory';
+import AdminSellerManagement, { loaderForSellerManagement } from './pages/admin/AdminSellerManagement';
 import SelerPage from './pages/seller/SelerPage';
 import ProductPage from './pages/seller/ProductPage';
 import OrderPage from './pages/seller/OrderPage';
 import StatisticsPage from './pages/seller/StatisticsPage';
 import Customer from './pages/customer/Customer';
+import ProductsContextProvider from './contexts/ProductContext';
+import CustomerContextProvider from './contexts/CustomerContext';
+import AuthContextProvider from './contexts/AuthContext';
+import App from './App';
 
 // import ProductList from '.pages/ProductList';
 
@@ -52,7 +56,7 @@ const router = createBrowserRouter([
   {
     path: '/product',
     element: <ProductPage />,
-   
+
   },
   {
     path: '/order',
@@ -64,7 +68,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/customer',
-    element: <Customer />,
+    element: <AuthContextProvider><ProductsContextProvider><CustomerContextProvider><Customer /></CustomerContextProvider></ProductsContextProvider></AuthContextProvider>,
   },
 
 
@@ -75,6 +79,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    {/* <App /> */}
   </React.StrictMode>
 );
 
