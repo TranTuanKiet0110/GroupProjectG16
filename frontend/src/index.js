@@ -16,63 +16,99 @@ import Customer from './pages/customer/Customer';
 import ProductsContextProvider from './contexts/ProductContext';
 import CustomerContextProvider from './contexts/CustomerContext';
 import AuthContextProvider from './contexts/AuthContext';
-import App from './App';
+import CustomerLoginForm from './components/customer/CustomerLoginForm';
+import ShoppingCart from './components/customer/ShoppingCart';
+import OrderList from './components/customer/OrderList';
 
 // import ProductList from '.pages/ProductList';
 const isAdminLoggedIn = window.localStorage.getItem("adminLoggedIn");
 const isSellerLoggedIn = window.localStorage.getItem("sellerLoggedIn");
 const router = createBrowserRouter([
   {
-    path: "/dashboard",
-    element: isAdminLoggedIn === "true" ? <AdminDashboard /> : <SignIn />,
-    loader: loaderForDashboard,
-    // errorElement: <NotFound />,
+    path: "/",
+    element: <AuthContextProvider />,
+    children: [
+      {
+        path: "/",
+        element: <ProductsContextProvider />,
+        children: [
+          {
+            path: "/",
+            element: <CustomerContextProvider />,
+            children: [
+              {
+                path: "/",
+                element: <Customer />
+              },
+              {
+                path: "/customer/cart",
+                element: <ShoppingCart />
+              },
+              {
+                path: "/customer/orders",
+                element: <OrderList/>
+              }
+            ]
+          }
+        ]
+      },
+      {
+        path: "/login",
+        element: <CustomerLoginForm />,
+      }
+    ]
   },
-  {
-    path: "/category",
-    element: isAdminLoggedIn === "true" ? <AdminCategory /> : <SignIn />,
-    loader: loaderForCategory,
-    // errorElement: <NotFound />,
-  },
-  {
-    path: "/sellerManagement",
-    element: isAdminLoggedIn === "true" ? <AdminSellerManagement /> : <SignIn />,
-    loader: loaderForSellerManagement,
-    // errorElement: <NotFound />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-    // errorElement: <NotFound />,
-  },
-  {
-    path: "/signIn",
-    element: <SignIn />,
-    // errorElement: <NotFound />,
-  },
-  {
-    path: '/sellerpage',
-    element: isSellerLoggedIn === "true" ? <SellerPage /> : <SignIn />,
-  },
-  {
-    path: '/product',
-    element: isSellerLoggedIn === "true" ? <ProductPage /> : <SignIn />,
-    loader: loaderForProductPage,
+  // {
+  //   path: "/dashboard",
+  //   element: isAdminLoggedIn === "true" ? <AdminDashboard /> : <SignIn />,
+  //   loader: loaderForDashboard,
+  //   // errorElement: <NotFound />,
+  // },
+  // {
+  //   path: "/category",
+  //   element: isAdminLoggedIn === "true" ? <AdminCategory /> : <SignIn />,
+  //   loader: loaderForCategory,
+  //   // errorElement: <NotFound />,
+  // },
+  // {
+  //   path: "/sellerManagement",
+  //   element: isAdminLoggedIn === "true" ? <AdminSellerManagement /> : <SignIn />,
+  //   loader: loaderForSellerManagement,
+  //   // errorElement: <NotFound />,
+  // },
+  // {
+  //   path: "/register",
+  //   element: <Register />,
+  //   // errorElement: <NotFound />,
+  // },
+  // {
+  //   path: "/signIn",
+  //   element: <SignIn />,
+  //   // errorElement: <NotFound />,
+  // },
+  // {
+  //   path: '/sellerpage',
+  //   element: isSellerLoggedIn === "true" ? <SellerPage /> : <SignIn />,
+  // },
+  // {
+  //   path: '/product',
+  //   element: isSellerLoggedIn === "true" ? <ProductPage /> : <SignIn />,
+  //   loader: loaderForProductPage,
 
-  },
-  {
-    path: '/order',
-    element: isSellerLoggedIn === "true" ? <OrderPage /> : <SignIn />,
-    loader: loaderForOrderManagement,
-  },
-  {
-    path: '/statistic',
-    element: <StatisticsPage />,
-  },
-  {
-    path: '/customer',
-    element: <AuthContextProvider><ProductsContextProvider><CustomerContextProvider><Customer /></CustomerContextProvider></ProductsContextProvider></AuthContextProvider>,
-  },
+  // },
+  // {
+  //   path: '/order',
+  //   element: isSellerLoggedIn === "true" ? <OrderPage /> : <SignIn />,
+  //   loader: loaderForOrderManagement,
+  // },
+  // {
+  //   path: '/statistic',
+  //   element: <StatisticsPage />,
+  // },
+  // {
+  //   path: '/customer',
+  //   element: <AuthContextProvider><ProductsContextProvider><CustomerContextProvider><Customer /></CustomerContextProvider></ProductsContextProvider></AuthContextProvider>,
+  // },
 
 ]);
 

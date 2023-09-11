@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { createContext } from "react";
+import { Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
+
 const API_URL = 'http://localhost:8080';
 const SHOPPING_CART_NAME = "MY-SHOPPING-CART";
 
 export const CustomerContext = createContext();
 
-const CustomerContextProvider = ({ children }) => {
+const CustomerContextProvider = () => {
     const { authState, doLogout } = useContext(AuthContext);
     const { user } = authState;
     const [shoppingCart, setShoppingCart] = useState([]);
@@ -234,6 +236,30 @@ const CustomerContextProvider = ({ children }) => {
         }
     }
 
+    const acceptOrder = async (itemID) => {
+        try {
+            const res = await axios.put(`${API_URL}/customers/${user._id}/cart/${itemID}`, { status: "accepted" });
+            // const res = await axios.put(`${API_URL}/orders/${orderID}`, { status: "Accepted" });
+            if (res.data.success) {
+                await loadOrders();
+            }
+        } catch (error) {
+            return { success: false, msg: error.message }
+        }
+    }
+
+    const rejectOrder = async (itemID) => {
+        try {
+            const res = await axios.put(`${API_URL}/customers/${user._id}/cart/${itemID}`, { status: "rejected" });
+            // const res = await axios.put(`${API_URL}/orders/${orderID}`, { status: "Rejected" });
+            if (res.data.success) {
+                await loadOrders();
+            }
+        } catch (error) {
+            return { success: false, msg: error.message }
+        }
+    }
+
     const customerData = {
         shoppingCart,
         totalPrice,
@@ -245,10 +271,12 @@ const CustomerContextProvider = ({ children }) => {
         handleItemDecrease,
         handlePlaceOrder,
         handlePlaceOrder,
-        handleCustomerLogout
+        handleCustomerLogout,
+        rejectOrder,
+        acceptOrder
     }
     return (
-        <CustomerContext.Provider value={customerData}>{children}</CustomerContext.Provider>
+        <CustomerContext.Provider value={customerData}><Outlet/></CustomerContext.Provider>
     )
 }
 

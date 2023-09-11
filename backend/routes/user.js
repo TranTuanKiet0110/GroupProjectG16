@@ -196,47 +196,49 @@ router.post("/signin", async (req, res) => {
             res.send({ status: 404, msg: "Account not yet approved"})
         }   
     }
+});
+router.post('/signin/customer', async (req, res) => {
+    const { phone, email, password, loginMethod } = req.body
 
-    if (radioSelected == 'customer') {
-        if (email != '') {
-            try {
-                const customer = await Customer.findOne({ email: email });
-                if (!customer) {
-                    return res.status(400).json({ success: false, msg: 'Invalid email or password' })
-                }
-
-                const passwordMatched = await bcrypt.compare(password, customer.password)
-                if (!passwordMatched) {
-                    return res.status(400).json({ success: false, msg: 'Invalid email or password' })
-                }
-                const accessToken = jwt.sign({ customerID: customer._id }, JWT_SECRET)
-                res.json({ success: true, msg: 'Successfully logged in', accessToken })
-            } catch (error) {
-                console.log(error)
-                res.status(500).json({ success: false, msg: 'Server error' })
+    if (loginMethod == 'emailLogin') {
+        try {
+            const customer = await Customer.findOne({ email: email });
+            if (!customer) {
+                return res.status(400).json({ success: false, msg: 'Invalid email or password' })
             }
-        } else {
-            try {
-                const customer = await Customer.findOne({ phone: phone })
-                if (!customer) {
-                    return res.status(400).json({ success: false, msg: 'Invalid phone or password' })
-                }
 
-                const passwordMatched = await bcrypt.compare(password, user.password)
-                if (!passwordMatched) {
-                    return res.status(400).json({ success: false, msg: 'Invalid phone or password' })
-                }
-
-                const accessToken = jwt.sign({ customerID: customer._id }, JWT_SECRET)
-
-                res.json({ success: true, msg: 'Successfully logged in', accessToken })
-            } catch (error) {
-                console.log(error)
-                res.status(500).json({ success: false, msg: 'Server error' })
+            const passwordMatched = await bcrypt.compare(password, customer.password)
+            if (!passwordMatched) {
+                return res.status(400).json({ success: false, msg: 'Invalid email or password' })
             }
+            const accessToken = jwt.sign({ customerID: customer._id }, JWT_SECRET)
+            res.json({ status: 201, success: true, msg: 'Successfully logged in', accessToken })
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ success: false, msg: 'Server error' })
         }
     }
-});
+    if (loginMethod == 'phoneLogin') {
+        try {
+            const customer = await Customer.findOne({ phone: phone })
+            if (!customer) {
+                return res.status(400).json({ success: false, msg: 'Invalid phone or password' })
+            }
+
+            const passwordMatched = await bcrypt.compare(password, user.password)
+            if (!passwordMatched) {
+                return res.status(400).json({ success: false, msg: 'Invalid phone or password' })
+            }
+
+            const accessToken = jwt.sign({ customerID: customer._id }, JWT_SECRET)
+
+            res.json({ status: 201, success: true, msg: 'Successfully logged in', accessToken })
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ success: false, msg: 'Server error' })
+        }
+    }
+})
 
 router.get('/auth', verifyToken, async (req, res) => {
     try {

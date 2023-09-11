@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { createContext } from "react";
 import axios from 'axios';
+import { Outlet } from 'react-router-dom';
+
 const API_URL = 'http://localhost:8080/api/user';
 
 export const AuthContext = createContext();
 
-const AuthContextProvider = ({ children }) => {
+const AuthContextProvider = () => {
     const [authState, setAuthState] = useState({
         user: null,
         isAuthenticated: false,
@@ -38,18 +40,18 @@ const AuthContextProvider = ({ children }) => {
         }
     }
 
-    // const doCustomerLogin = async (loginData) => {
-    //     try {
-    //         const res = await axios.post(`${API_URL}/auth/login/customer`, loginData);
-    //         if (res.data.success) {
-    //             localStorage.setItem(WEB_TOKEN_NAME, res.data.accessToken)
-    //         }
-    //         await doAuthenticate()
-    //         return { success: true, message: "Successfully logged in" }
-    //     } catch (error) {
-    //         return { success: false, message: error.message }
-    //     }
-    // }
+    const doCustomerLogin = async (loginData) => {
+        try {
+            const res = await axios.post(`${API_URL}/signin/customer`, loginData);
+            if (res.data.success) {
+                localStorage.setItem(WEB_TOKEN_NAME, res.data.accessToken)
+            }
+            await doAuthenticate()
+            return { success: true, message: "Successfully logged in" }
+        } catch (error) {
+            return { success: false, message: error.message }
+        }
+    }
 
     const doLogout = () => {
         localStorage.removeItem(WEB_TOKEN_NAME)
@@ -61,7 +63,7 @@ const AuthContextProvider = ({ children }) => {
     const authData = { authState, doCustomerLogin, doLogout }
     
     return (
-        <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={authData}><Outlet/></AuthContext.Provider>
     )
 }
 
