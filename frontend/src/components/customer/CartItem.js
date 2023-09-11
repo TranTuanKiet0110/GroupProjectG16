@@ -15,7 +15,7 @@ function CartItem({ item }) {
                 </div>
                 <div className="col-sm-8">
                     <div className='card-body'>
-                        <div className="product-text title card-title">Name: {item.product.name} </div>
+                        <div className="product-text card-title">Name: {item.product.name} </div>
                         <div className='product-text description card-text'>Description: {item.product.description}</div>
                         <div className='product-text price card-text'>Price: ${item.product.price}</div>
                         <div className='d-flex'>
