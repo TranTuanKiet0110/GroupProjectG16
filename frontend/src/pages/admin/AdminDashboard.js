@@ -98,7 +98,7 @@ export default function AdminDashboard() {
                             <div className="card">
                                 <div>
                                     <h1>{numOfCustomers.length}</h1>
-                                    <span>Customers</span>
+                                    {numOfCustomers.length < 2 ? <span>Customer</span> : <span>Customers</span>}
                                 </div>
                                 <div>
                                     <img src={customer} width="30px" height="30px" alt="Customer" />
