@@ -72,7 +72,10 @@ function Customer() {
 
             <div className='container body'>
                 <div className='container d-flex justify-content-end pt-2'>
-                    <div className='d-flex align-items-center me-2'>{(user !== null) ? ('Hi, ' + user.name) : ('Using as guest')}</div>
+                    <div className='d-flex align-items-center me-2'>
+                        {(user !== null) ? ('Hi, ' + user.name) : ('Using as guest,   ')}
+                        <Link to="/login/customer"> login now</Link>
+                    </div>
                     <div className=''>{(user !== null) ? (<button className='btn btn-primary' onClick={() => handleLogout()}>Log out</button>) : (<></>)}</div>
                 </div>
 
@@ -114,18 +117,7 @@ function Customer() {
                                     </Link>
                                 </li>
 
-                                {(user !== null) ? (<></>) : (
-                                    <li>
-                                    <Link
-                                        to="/login/customer"
-                                        className={({ isActive }) =>
-                                            isActive ? 'active' : ''
-                                        }
-                                    >
-                                        Login
-                                    </Link>
-                                </li>
-                                )}
+                               
                                 
                             </ul>
                         </div>
