@@ -7,7 +7,8 @@ const userRouter = require('./routes/user');
 const categoryRouter = require('./routes/category');
 const productRouter = require('./routes/productForSeller');
 const cartItemRouter = require('./routes/cartItem');
-const orderRouter =require('./routes/orderForSeller')
+const orderRouter =require('./routes/orderForSeller');
+const customerRouter = require('./routes/customerForAdmin');
 const { productRoute } = require("./routes/product");
 const { customerRoute } = require("./routes/customer");
 const { orderRoute } = require("./routes/order");
@@ -19,6 +20,7 @@ app.use('/api/category', categoryRouter);
 app.use('/api/product', productRouter);
 app.use('/api/cartitem', cartItemRouter);
 app.use('/api/order', orderRouter);
+app.use('/api/customer', customerRouter);
 app.use("/products", productRoute);
 app.use("/customers", customerRoute);
 app.use("/orders", orderRoute);
