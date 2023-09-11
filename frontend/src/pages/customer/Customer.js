@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-// import RegisterForm from '../components/RegisterForm'
 import 'bootstrap/dist/css/bootstrap.css';
 import ProductCard from '../../components/customer/ProductCard'
 import ShoppingCart from '../../components/customer/ShoppingCart'
@@ -7,10 +6,12 @@ import { ProductContext } from '../../contexts/ProductContext'
 import { AuthContext } from '../../contexts/AuthContext'
 import OrderList from '../../components/customer/OrderList'
 import { CustomerContext } from '../../contexts/CustomerContext'
+import { Link } from "react-router-dom";
+
 import '../../css/customer/customer.css'
 
 function Customer() {
-    const { products } = useContext(ProductContext);
+    const { products, categories } = useContext(ProductContext);
     const { authState } = useContext(AuthContext);
     const { handleCustomerLogout } = useContext(CustomerContext)
     const { user } = authState;
@@ -22,19 +23,13 @@ function Customer() {
         { id: 'Clothes', text: 'Clothes' },
     ])
 
-    // active class state
-    const [active, setActive] = useState('');
-
     // category state
     const [category, setCategory] = useState('');
 
-    const [searchKey, setSearchKey] = useState('');
-
     // handle change ... it will set category and active states
     const handleSpanChange = (individualSpan) => {
-        setActive(individualSpan.id);
-        setCategory(individualSpan.text);
-        doProductFilter(individualSpan.text);
+        setCategory(individualSpan.name);
+        doProductFilter(individualSpan.name);
     }
 
     // filtered products state
@@ -43,7 +38,7 @@ function Customer() {
     // filter function
     const doProductFilter = (text) => {
         if (products.length > 1) {
-            const filter = products.filter((product) => product.category === text);
+            const filter = products.filter((product) => product.category.name === text);
             setFilteredProducts(filter);
         }
         else {
@@ -53,7 +48,6 @@ function Customer() {
 
     // return to all products
     const returntoAllProducts = () => {
-        setActive('');
         setCategory('');
         setFilteredProducts([]);
     }
@@ -82,24 +76,47 @@ function Customer() {
                     <div className='filter-box'>
                         <h4 className='s-title'>Filter by category</h4>
                         <ul>
-                            {spans.map((span, index) => (
-                                <li key={index} id={span.id}
-                                    onClick={() => handleSpanChange(span)}
-                                    className={span.id == active ? active : 'deactive'}>{span.text}</li>
+                            {categories.map((category) => (
+                                <li key={category._id}
+                                    onClick={() => handleSpanChange(category)}
+                                >{category.name}</li>
                             ))}
                         </ul>
                         <div className='container search-box'>
+                            <h4 className='s-title'>Search</h4>
                             <input type="text" onChange={handleSearchKeyChange} />
+                        </div>
+                        <div className='container'>
+                            <h4 className='s-title'>Navigation</h4>
+                            <ul>
+                                <li>
+                                    <Link
+                                        to="/customer/cart"
+                                        className={({ isActive }) =>
+                                            isActive ? 'active' : ''
+                                        }
+                                    >
+                                        My shopping cart
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        to="/customer/orders"
+                                        className={({ isActive }) =>
+                                            isActive ? 'active' : ''
+                                        }
+                                    >
+                                        My order list
+                                    </Link>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
-
-
-
                     {filteredProducts.length > 0 && (
                         <div className='my-products'>
-                            <div className='main-title'>{category? category: 'Search result'}</div>
-                            <button className="btn btn-link" onClick={returntoAllProducts} style={{ color: 'black'}}>Return to All Products</button>
+                            <div className='main-title'>{category ? category : 'Search result'}</div>
+                            <button className="btn btn-link" onClick={returntoAllProducts} style={{ color: 'black' }}>Return to All Products</button>
                             <div className="container">
                                 <div className='products-box row row-cols-1 row-cols-sm-2 row-cols-lg-3'>
                                     {filteredProducts.map(product => (

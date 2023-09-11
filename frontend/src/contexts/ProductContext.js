@@ -11,19 +11,35 @@ export const ProductContext = createContext();
 
 const ProductContextProvider = () => {
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
 
-    const loadProducts = async () => {
-        try {
-            const res = await axios.get(`${API_URL}/products`);
-            setProducts(res.data.products);
-        } catch (error) {
-            return {success: false, msg: error.message};
+    useEffect(() => {
+        const loadProducts = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/products`);
+                setProducts(res.data.products);
+            } catch (error) {
+                return {success: false, msg: error.message};
+            }
         }
-    }
+        loadProducts();
+    }, []);
 
-    useEffect(() => loadProducts, []);
+    useEffect(() => {
+        const loadCategories = async () => {
+            try {
+                const res = await axios.get(`${API_URL}/api/category/getAllCategory`);
+                if (res.data.data) {
+                    setCategories(res.data.data);
+                }
+            } catch (error) {
+                return { success: false, msg: error.message }
+            }
+        }
+        loadCategories()
+    }, [])
 
-    const productContextData = {products};
+    const productContextData = {products, categories};
 
     return (
         <ProductContext.Provider value={productContextData}><Outlet/></ProductContext.Provider>
