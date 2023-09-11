@@ -11,7 +11,7 @@ import { useLoaderData } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-
+//loader function
 export async function loaderForDashboard() {
     const [sellers, categories, customers] = await Promise.all([
         fetch("http://localhost:8080/api/user/getallseller").then((response) => response.json()),
@@ -23,8 +23,9 @@ export async function loaderForDashboard() {
 
 export default function AdminDashboard() {
 
+    //username of logged in account
     const [userName, setUserName] = useState("");
-
+    //get accoutn data
     useEffect(() => {
         fetch("http://localhost:8080/api/user/admindata", {
             method: "POST",
@@ -46,6 +47,7 @@ export default function AdminDashboard() {
             .catch((error) => console.log(error));
     }, []);
 
+    //user loader and fetch data into table
     const { sellers, categories, customers } = useLoaderData();
     const data = sellers.data && sellers.data.map((seller, index) =>
         <React.Fragment key={index + 1}>
@@ -61,12 +63,12 @@ export default function AdminDashboard() {
             </tr>
         </React.Fragment>
     );
-
+    //get additional data
     const numOfPendingSellers = sellers.data && sellers.data.filter((seller) => seller.status === 'pending');
     const numOfApprovedSellers = sellers.data && sellers.data.filter((seller) => seller.status === 'approved');
     const numOfCategories = categories.data && categories.data.filter((category) => category.name !== '');
     const numOfCustomers = customers.data && customers.data.filter((customer) => customer.name !== '');
-
+    //log out function
     function logOut() {
         window.localStorage.clear();
         window.location.href = "./signin";
@@ -98,7 +100,7 @@ export default function AdminDashboard() {
                             <div className="card">
                                 <div>
                                     <h1>{numOfCustomers.length}</h1>
-                                    <span>Customers</span>
+                                    {numOfCustomers.length < 2 ? <span>Customer</span> : <span>Customers</span>}
                                 </div>
                                 <div>
                                     <img src={customer} width="30px" height="30px" alt="Customer" />

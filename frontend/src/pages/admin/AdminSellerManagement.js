@@ -1,5 +1,4 @@
 import React from 'react'
-// import Header from '../components/Header'
 import "../../css/admin/admin.css";
 import Sidebar from '../../components/Sidebar';
 import menu from '../../img/menu.png';
@@ -7,6 +6,7 @@ import admin from '../../img/admin.png';
 import { useLoaderData } from 'react-router';
 import { useState, useEffect } from 'react';
 
+//loader function
 export async function loaderForSellerManagement() {
     const res = await fetch("http://localhost:8080/api/user/getallseller");
     const sellers = await res.json();
@@ -14,10 +14,11 @@ export async function loaderForSellerManagement() {
 }
 
 export default function AdminSellerManagement() {
-
+    //options for select
     const options = ['approved', 'pending', 'rejected'];
+    //useState
     const [userName, setUserName] = useState("");
-
+    //get logged in account's data
     useEffect(() => {
         fetch("http://localhost:8080/api/user/admindata", {
             method: "POST",
@@ -39,6 +40,7 @@ export default function AdminSellerManagement() {
             .catch((error) => console.log(error));
     }, []);
 
+    //useLoader and retrieve data into table
     const sellers = useLoaderData();
     const data = sellers && sellers.data.map((seller, index) =>
         <React.Fragment key={index + 1}>
@@ -68,11 +70,12 @@ export default function AdminSellerManagement() {
         </React.Fragment>
     );
 
+    //logout function
     function logOut() {
         window.localStorage.clear();
         window.location.href = "./signin";
     };
-
+    //changing status of a seller
     function handleStatusChange(sellerID, newStatus) {
         fetch(`http://localhost:8080/api/user/updateseller/${sellerID}`, {
             method: "PATCH",
