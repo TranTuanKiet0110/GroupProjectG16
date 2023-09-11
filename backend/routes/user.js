@@ -7,9 +7,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "hfdsah984yth3ofnw9fyhfh984yt93h98wy98shfdvsdfyg8s7ghfuibvaiuv9"
 
+//register user (actually there is no admin option for register, I put it there to make it easy for testing)
 router.post("/register", async (req, res) => {
     if (req.body.selected == 'seller') {
-
+        //validate for missing input
+        if (req.body.name == '' || req.body.email == '' || req.body.phone == '' || req.body.password == '' || req.body.businessName == '') {
+            return res.send({error: "Cannot register due to invalid input"})
+        }
         //validate seller's email
         const existEmail = await Seller.findOne({ email: req.body.email })
 
@@ -43,6 +47,9 @@ router.post("/register", async (req, res) => {
             res.send({ status: 400, message: err.message })
         }
     } else if (req.body.selected == 'customer') {
+        if (req.body.name == '' || req.body.email == '' || req.body.phone == '' || req.body.password == '' || req.body.address == '') {
+            return res.send({error: "Cannot register due to invalid input"})
+        }
         //validate customer's email
         const existEmail = await Customer.findOne({ email: req.body.email })
 
@@ -76,6 +83,9 @@ router.post("/register", async (req, res) => {
             res.send({ status: 400, message: err.message })
         }
     } else {
+        if (req.body.name == '' || req.body.email == '' || req.body.phone == '' || req.body.password == '' ) {
+            return res.send({error: "Cannot register due to invalid input"})
+        }
         //validate admin's email
         const existEmail = await Customer.findOne({ email: req.body.email })
 
@@ -90,7 +100,6 @@ router.post("/register", async (req, res) => {
             email: req.body.email,
             phone: req.body.phone,
             password: encryptedPassword,
-            address: req.body.address
         })
 
         try {
@@ -111,6 +120,7 @@ router.post("/register", async (req, res) => {
     }
 });
 
+//sign in 
 router.post("/signin", async (req, res) => {
     const { email, phone, password } = req.body
 
@@ -169,6 +179,7 @@ router.post("/signin", async (req, res) => {
                         return res.json({ error: "error " })
                     }
                 }
+                //failed to login
                 res.json({ status: "error", error: "Invalid email or password!" })
             }
             res.send({status: 404, msg: "Acount not yet approved"})
@@ -178,7 +189,7 @@ router.post("/signin", async (req, res) => {
             if (!seller) {
                 return res.json({ error: "User not found!" })
             }
-
+            //check account's status
             if (seller.status == "approved") {
                 if (await bcrypt.compare(password, seller.password)) {
                     const token = jwt.sign({ phone: seller.phone }, JWT_SECRET)
@@ -189,6 +200,7 @@ router.post("/signin", async (req, res) => {
                         return res.json({ error: "error " })
                     }
                 }
+                //failed to login
                 res.json({ status: "error", error: "Invalid email or password!" })
             }
             //failed to login
@@ -197,13 +209,16 @@ router.post("/signin", async (req, res) => {
     }
 });
 
+//get a specific admin's data
 router.post("/adminData", async (req, res) => {
     const { token } = req.body
 
     try {
+        //verify token and account
         const admin = jwt.verify(token, JWT_SECRET)
         const adminEmail = admin.email;
         const adminPhone = admin.phone;
+        //login by email
         if (adminEmail != null) {
             Admin.findOne({ email: adminEmail })
                 .then((data) => {
@@ -212,7 +227,7 @@ router.post("/adminData", async (req, res) => {
                 .catch((error) => {
                     res.send({ status: "error", data: error })
                 })
-        } else {
+        } else { //login by phone
             Admin.findOne({ phone: adminPhone })
                 .then((data) => {
                     res.send({ status: 201, data: data })
@@ -222,18 +237,20 @@ router.post("/adminData", async (req, res) => {
                 })
         }
     } catch (err) {
-
+        res.send({ status: "error", data: error })
     }
 });
 
+//get a specific seller's data
 router.post("/sellerData", async (req, res) => {
     const { token } = req.body
 
     try {
+        //verify token and account
         const seller = jwt.verify(token, JWT_SECRET)
         const sellerEmail = seller.email;
         const sellerPhone = seller.phone;
-        
+        //login by email
         if (sellerEmail != null) {
             Seller.findOne({ email: sellerEmail })
                 .then((data) => {
@@ -242,7 +259,7 @@ router.post("/sellerData", async (req, res) => {
                 .catch((error) => {
                     res.send({ status: "error", data: error })
                 })
-        } else {
+        } else { //login by phone
             Seller.findOne({ phone: sellerPhone })
                 .then((data) => {
                     res.send({ status: 201, data: data })
@@ -252,10 +269,11 @@ router.post("/sellerData", async (req, res) => {
                 })
         }
     } catch (err) {
-
+        res.send({ status: "error", data: error })
     }
 });
 
+//get all sellers
 router.get("/getAllSeller", async (req, res) => {
     try {
         const allSeller = await Seller.find({})
@@ -265,6 +283,7 @@ router.get("/getAllSeller", async (req, res) => {
     }
 });
 
+//update a seller
 router.patch("/updateSeller/:id", async (req, res) => {
     const { id, newStatus } = req.body
 

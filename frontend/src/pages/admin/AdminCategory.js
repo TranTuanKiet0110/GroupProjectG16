@@ -1,5 +1,5 @@
 import React from 'react';
-// import Header from '../components/Header'
+
 import "../../css/admin/admin.css";
 import Sidebar from '../../components/Sidebar';
 import menu from '../../img/menu.png';
@@ -7,8 +7,8 @@ import admin from '../../img/admin.png';
 import { useLoaderData } from 'react-router';
 import { useState, useEffect } from 'react';
 
+//loader function
 export async function loaderForCategory() {
-    
     const [products, categories] = await Promise.all([
         fetch("http://localhost:8080/api/product/getallproduct").then((response) => response.json()),
         fetch("http://localhost:8080/api/category/getallcategory").then((response) => response.json()),
@@ -17,6 +17,7 @@ export async function loaderForCategory() {
 }
 
 export default function AdminCategory() {
+    //useState
     const [name, setName] = useState("");
     const [userName, setUserName] = useState("");
     const [showForm, setShowForm] = useState(false);
@@ -24,7 +25,7 @@ export default function AdminCategory() {
     const [additionalAttributes, setAdditionalAttributes] = useState([]);
     const [editId, setEditId] = useState("");
     const [newName, setNewName] = useState("");
-
+    //get logged in account's data
     useEffect(() => {
         fetch("http://localhost:8080/api/user/adminData", {
             method: "POST",
@@ -46,9 +47,10 @@ export default function AdminCategory() {
             .catch((error) => console.log(error));
     }, []);
 
+    //useLoader to retrieve data and load into table
     const { products,categories } = useLoaderData();
     const data = categories.data && categories.data.map((category, index) => (
-        category._id === editId ?
+        category._id === editId ? //condition for editing data
             <React.Fragment key={index + 1}>
                 <tr>
                     <td>{index + 1}</td>
@@ -76,34 +78,39 @@ export default function AdminCategory() {
                 </tr>
             </React.Fragment>)
     );
-
+    
+    //get all category into option in select
     const dataForSelector = categories && categories.data.map((category, index) =>
         <React.Fragment key={index + 1}>
             <option value={category._id}>{category.name}</option>
         </React.Fragment>
     );
 
-
+    //create category form
     function handleShowForm() {
         setShowForm(!showForm);
     }
 
+    //add additional attribute 
     function handleAddAttribute() {
         setAdditionalAttributes([...additionalAttributes, { name: "", value: null }])
     }
 
+    //remove addition attribute
     function handleRemoveAttribute(index) {
         const list = [...additionalAttributes];
         list.splice(index, 1);
         setAdditionalAttributes(list);
     }
 
+    //add existing attribute from a category into form
     function handleAttributeName(e, index) {
         const list = [...additionalAttributes];
         list[index].name = e.target.value;
         setAdditionalAttributes(list);
     }
 
+    //handle when select's option change
     function dropdownHandler(selectedCategory) {
         const storeAttribute = []
         if (selectedCategory === "none") {
@@ -117,15 +124,16 @@ export default function AdminCategory() {
                     }
                 }
             }
-            // setAdditionalAttributes([]);
             setAdditionalAttributes(storeAttribute);
         }
     };
 
+    //get category id
     function handleEdit(categoryId) {
         setEditId(categoryId);
     };
 
+    //delete category
     const handleDelete = (categoryId, categoryName) => {
         if (window.confirm(`Are you sure you want to delete ${categoryName}?`)) {
             fetch("http://localhost:8080/api/category/deletecategory", {
@@ -152,6 +160,7 @@ export default function AdminCategory() {
         }
     };
 
+    //update category
     function handleUpdate(categoryId) {
         fetch(`http://localhost:8080/api/category/updatecategory/${categoryId}`, {
             method: "PATCH",
@@ -176,11 +185,13 @@ export default function AdminCategory() {
             .catch((error) => console.log(error));
     };
 
+    //logout function
     function logOut() {
         window.localStorage.clear();
         window.location.href = "./signin";
     };
 
+    //submit category creation form
     function handleSubmit(e) {
         e.preventDefault();
         fetch("http://localhost:8080/api/category/createcategory", {
@@ -200,7 +211,6 @@ export default function AdminCategory() {
             .then((res) => res.json())
             .then((data) => {
                 if (data.status === 201) {
-                    //   alert("create successful");
                     window.location.href = "./category";
                 }
             })
